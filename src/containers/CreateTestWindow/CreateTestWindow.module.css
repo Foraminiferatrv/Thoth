@@ -1,5 +1,7 @@
 .CreateTestWindow{
+  display: flex;
+  flex-direction: column;
   border: 1px solid indigo;
-  height: 100px;
+  min-height: 100%;
   width: 100%;
 }

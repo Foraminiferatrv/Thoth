@@ -1,0 +1,17 @@
+.PlusButton {
+  background-color: rgb(171, 239, 248);
+  border: none;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0;
+  border-radius: 10%;
+}
+
+.PlusButton:active{
+  background-color: rgb(50, 202, 223);
+}
