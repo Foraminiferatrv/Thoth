@@ -2,44 +2,32 @@ import React from 'react';
 
 import classes from './Sidebar.module.css';
 
-import { TestTag } from '../../components/TestTag/TestTag';
-import { NewTestTag } from '../../components/NewTestTag/NewTestTag';
+import { connect } from 'react-redux';
 
-function Sidebar() {
+import { createNewTest } from '../../store/actions/index';
+
+import { TestTag } from '../../components/TestTag/TestTag';
+import NewTestTag from '../../components/NewTestTag/NewTestTag';
+
+function Sidebar( props ) {
   return (
     <div className={ classes.Sidebar }>
-      <NewTestTag addNewTest={ () => { console.log('new test')} } />
+      <NewTestTag addNewTest={ props.onCreateNewTest } />
       <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 1' />
-      <TestTag testName='Test 2' />
     </div>
   );
 }
 
-export {
-  Sidebar
-};
+function mapStateToProps( state ) {
+  return {
+    newTestObject: state.testCreator
+  }
+}
+
+function mapDispatchToProps( dispatch ) {
+  return {
+    onCreateNewTest: () => dispatch( createNewTest() )
+  }
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Sidebar );

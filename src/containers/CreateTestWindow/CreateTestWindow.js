@@ -1,42 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './CreateTestWindow.module.css';
+
+import { connect } from 'react-redux';
+
+import { addTestName } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
 import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
 
 function CreateTestWindow( props ) {
-
-  const [testData, setTestData] = useState( {
-    testName: "",
-    testId: "",
-    testScales: {
-      "scaleId": {
-        scaleName: "",
-        scaleValue: 0
-      }
-    },
-    testQuestions: [{
-      questionText: "",
-      scaleDependencies: [
-        {
-          scaleId: "",
-          questionValue: "-1"
-        }
-      ]
-    }]
-  } );
-
+  console.log( props )
   return (
     <div className={ classes.CreateTestWindow }>
-      <Input inputtype={ 'input' } type={ 'text' } inputlabel={ "Назва тесту" } />
+      <span>{ props.newTestData.testName }</span>
+      <Input
+        inputtype={ 'input' }
+        type={ 'text' }
+        inputlabel={ "Назва тесту"
+        } onChange={ ( event ) => props.onAddTestName( event.target.value ) }
+      />
       <Input inputtype={ 'input' } inputlabel={ "Назва шкали" } />
 
-      <NewQuestion questionText={"Запитання?"} />
-
-
+      <NewQuestion questionText={ "Запитання?" } />
     </div>
   );
 }
 
-export { CreateTestWindow };
+function mapStateToProps( state ) {
+  return {
+    newTestData: state.newTestData
+  }
+}
+
+function mapDispatchToProps( dispatch ) {
+  return {
+    onAddTestName: ( testNameValue ) => dispatch( addTestName( testNameValue ) )
+  }
+}
+export default connect( mapStateToProps, mapDispatchToProps )( CreateTestWindow );

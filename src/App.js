@@ -1,11 +1,11 @@
 import classes from './App.module.css';
 
-import { Sidebar } from './containers/Sidebar/Sidebar';
-import {CreateTestWindow} from './containers/CreateTestWindow/CreateTestWindow';
+import Sidebar from './containers/Sidebar/Sidebar';
+import CreateTestWindow from './containers/CreateTestWindow/CreateTestWindow';
 
 function App() {
   return (
-    <div className={classes.App}>
+    <div className={ classes.App }>
 
       <Sidebar />
 
