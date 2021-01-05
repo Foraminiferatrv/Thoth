@@ -9,7 +9,9 @@ function Input( props ) {
 
   switch ( props.inputtype ) {
     case 'input':
-      inputElement = <input className={ classes.InputElement } { ...props } />
+      inputElement = <input
+        className={ classes.InputElement }
+        { ...props } />
       break;
 
     case 'select':
@@ -22,11 +24,8 @@ function Input( props ) {
 
   return (
     <div className={ classes.Input }>
-      <form >
-        <label className={ classes.Label }>{ props.inputlabel }</label>
-        { inputElement }
-      </form>
-
+      <label className={ classes.Label }>{ props.inputlabel }</label>
+      { inputElement }
     </div>
   );
 };

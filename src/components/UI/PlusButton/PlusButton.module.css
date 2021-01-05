@@ -10,8 +10,9 @@
   font-weight: bold;
   padding: 0;
   border-radius: 10%;
+  cursor: pointer;
 }
 
-.PlusButton:active{
+.PlusButton:active {
   background-color: rgb(50, 202, 223);
 }

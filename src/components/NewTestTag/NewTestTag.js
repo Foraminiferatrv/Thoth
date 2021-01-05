@@ -2,14 +2,16 @@ import React from 'react';
 
 import classes from './NewTestTag.module.css';
 
+import { Link } from 'react-router-dom'
+
 function NewTestTag( props ) {
   return (
-    <div
+    <Link to="/createNewTest"
       className={ classes.NewTestTag }
       onClick={ props.addNewTest }
     >
-      <span >Додати Методику</span>
-    </div>
+      Додати Методику
+    </Link>
   );
 }
 

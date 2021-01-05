@@ -2,11 +2,16 @@ import React from 'react';
 
 import classes from './TestTag.module.css';
 
+import { Link } from 'react-router-dom';
+
 function TestTag( props ) {
   return (
-    <div className={ classes.TestTag }>
-      <span>{ props.testName }</span>
-    </div>
+    <Link
+    to="/"
+    className={ classes.TestTag } 
+    >
+      { props.testName }
+    </Link>
   );
 }
 

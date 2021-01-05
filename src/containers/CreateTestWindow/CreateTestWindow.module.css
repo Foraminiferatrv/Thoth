@@ -1,7 +1,19 @@
-.CreateTestWindow{
+.CreateTestWindow {
   display: flex;
+  align-items: flex-end;
   flex-direction: column;
   border: 1px solid indigo;
   min-height: 100%;
+  width: 100%;
+  padding: 13px;
+}
+
+.ScalesField {
+  background-color: green;
+  width: 100%;
+}
+
+.QuestionsField {
+  background-color: orange;
   width: 100%;
 }

@@ -12,3 +12,11 @@ export const addTestName = ( testName ) => {
     testName: testName
   }
 }
+
+export const changeScaleName = ( scaleName, targetScaleId ) => {
+  return {
+    type: actionTypes.CHANGE_SCALE_NAME,
+    scaleName: scaleName,
+    targetScaleId: targetScaleId
+  }
+}

@@ -3,6 +3,7 @@
   align-items: flex-end;
   flex-direction: column;
   /* padding: 10px; */
+  width: 100%;
 }
 
 .QuestionBlock {

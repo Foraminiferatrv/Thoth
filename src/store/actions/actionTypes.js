@@ -1,2 +1,3 @@
 export const CREATE_NEW_TEST = "CREATE_NEW_TEST";
 export const ADD_TEST_NAME = "ADD_TEST_NAME";
+export const CHANGE_SCALE_NAME = "CHANGE_SCALE_NAME";

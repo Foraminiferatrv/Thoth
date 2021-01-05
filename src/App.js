@@ -3,10 +3,11 @@ import classes from './App.module.css';
 import Sidebar from './containers/Sidebar/Sidebar';
 import CreateTestWindow from './containers/CreateTestWindow/CreateTestWindow';
 
+import { Route, Switch } from 'react-router-dom';
+
 function App() {
   return (
     <div className={ classes.App }>
-
       <Sidebar />
 
       {/*
@@ -24,10 +25,17 @@ function App() {
         <ButtonBack/>
         <ButtonNext/>
       </TestWindow> 
-
     */}
-      <CreateTestWindow />
 
+      <Switch>
+        <Route
+          exact
+          path="/createNewTest"
+          component={ () => <CreateTestWindow /> }
+        >
+
+        </Route>
+      </Switch>
 
     </div>
   );

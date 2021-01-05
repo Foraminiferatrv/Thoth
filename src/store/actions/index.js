@@ -1,5 +1,6 @@
 export {
   createNewTest,
-  addTestName
+  addTestName,
+  changeScaleName
 }
 from './testCreator';

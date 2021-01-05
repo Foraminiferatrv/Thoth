@@ -9,9 +9,12 @@ import { createNewTest } from '../../store/actions/index';
 import { TestTag } from '../../components/TestTag/TestTag';
 import NewTestTag from '../../components/NewTestTag/NewTestTag';
 
+import { Link } from 'react-router-dom';
+
 function Sidebar( props ) {
   return (
     <div className={ classes.Sidebar }>
+
       <NewTestTag addNewTest={ props.onCreateNewTest } />
       <TestTag testName='Test 1' />
     </div>
