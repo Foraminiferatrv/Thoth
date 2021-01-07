@@ -8,7 +8,7 @@ function addIttemButton( props ) {
     <button
       type='button'
       className={ classes.AddIttemButton }
-      onClick={ props.cliked }
+      onClick={ props.clicked }
     >
       <span>{ props.buttonText }</span>
     </button  >

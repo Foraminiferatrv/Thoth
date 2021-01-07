@@ -1,6 +1,8 @@
 export {
   createNewTest,
   addTestName,
-  changeScaleName
+  createNewScale,
+  changeScaleName,
+  deleteScale
 }
 from './testCreator';

@@ -9,7 +9,7 @@ import { createNewTest } from '../../store/actions/index';
 import { TestTag } from '../../components/TestTag/TestTag';
 import NewTestTag from '../../components/NewTestTag/NewTestTag';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function Sidebar( props ) {
   return (

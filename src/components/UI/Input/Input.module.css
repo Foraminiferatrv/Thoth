@@ -1,12 +1,9 @@
 .Input {
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
-
-
 
 .InputElement {
   border-radius: 5px;
@@ -14,9 +11,7 @@
   border: 1px solid rgb(122, 122, 122);
   font: inherit;
   padding: 6px 10px;
-
   display: flex;
-
   align-items: center;
   max-width: 1400px;
   width: 100%;

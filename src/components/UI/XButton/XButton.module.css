@@ -1,0 +1,26 @@
+.XButton {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+  background-color: rgb(10, 167, 10);
+  border-radius: 4px;
+}
+
+.FirstAxis,
+.SecondAxis {
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background-color: #f00;
+  top: 13px;
+  border-radius: 3px;
+}
+
+.FirstAxis {
+  transform: rotate(45deg);
+}
+
+.SecondAxis {
+   transform: rotate(-45deg);
+}

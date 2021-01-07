@@ -17,17 +17,7 @@ function createNewTest( state ) {
   const newTestObject = {
     testName: " ",
     testId: uuidv4(),
-    testScales: [ {
-        scaleId: uuidv4(),
-        scaleName: "someScale",
-        scaleValue: 0
-      },
-      {
-        scaleId: uuidv4(),
-        scaleName: "anotherScale",
-        scaleValue: 0
-      }
-    ],
+    testScales: [],
     testQuestions: [ {
       questionNumber: null,
       questionText: "",
@@ -47,15 +37,41 @@ function addTestName( state, testName ) {
   } )
 }
 
+function createNewScale( state ) {
+  const updatedScales = [ ...state.testScales ];
+  updatedScales.push( {
+    scaleId: uuidv4(),
+    scaleName: "",
+    scaleValue: 0
+  } );
+
+  return updateObject( state, {
+    testScales: updatedScales
+  } );
+}
+
 function changeScaleName( state, scaleName, targetScaleId ) {
   const targetScaleIndex = state.testScales.indexOf( state.testScales.filter( ( element ) => element.scaleId === targetScaleId )[ 0 ] );
+  const newScalesData = [ ...state.testScales ];
 
-  console.log( targetScaleIndex, targetScaleId );
-  console.log( state );
-  return updateObject( state, {
-    testScales: [ ...state.testScales, state.testScales[ targetScaleIndex ] ]
-  } )
-  return ( state );
+  newScalesData[ targetScaleIndex ] = {
+    ...newScalesData[ targetScaleIndex ],
+    scaleName: scaleName
+  }
+  return ( updateObject( state, {
+    testScales: newScalesData
+  } ) )
+
+}
+
+function deleteScale( state, scaleId ) {
+  const targetScaleIndex = state.testScales.indexOf( state.testScales.filter( ( element ) => element.scaleId === scaleId )[ 0 ] );
+  const newScalesData = [ ...state.testScales ];
+  newScalesData.splice( targetScaleIndex, 1 );
+
+  return ( updateObject( state ), {
+    testScales: newScalesData
+  } );
 }
 
 
@@ -67,8 +83,14 @@ function testCreator( state = initialState, action ) {
     case actionTypes.ADD_TEST_NAME:
       return addTestName( state, action.testName );
 
+    case actionTypes.CREATE_NEW_SCALE:
+      return createNewScale( state );
+
     case actionTypes.CHANGE_SCALE_NAME:
       return changeScaleName( state, action.scaleName, action.targetScaleId );
+
+    case actionTypes.DELETE_SCALE:
+      return deleteScale( state, action.scaleId );
 
     default:
       return state;
