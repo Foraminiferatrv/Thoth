@@ -8,46 +8,30 @@ import {
   addTestName,
   changeScaleName,
   createNewScale,
-  deleteScale
+  deleteScale,
+  createNewQuestion,
+  changeQuestionText
 } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
 import ScaleInput from '../../components/ScaleInput/ScaleInput';
-// import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
+import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
 import AddIttemButton from '../../components/UI/AddIttemButton/AddIttemButton';
 // import {NewRadioAnswer} from '../../components/NewRadioAnswer/NewRadioAnswer';
-
-// // {
-//     testName: " ",
-//     testId: uuidv4(),
-//     testScales: [ {
-//       scaleId: '',
-//       scaleName: "",
-//       scaleValue: 0
-//     } ],
-//     testQuestions: [ {
-//       questionNumber: null,
-//       questionText: "",
-//       scaleDependencies: [ {
-//         scaleId: "",
-//         questionValue: "-1"
-//       } ]
-//     } ]
-//   }
 
 
 function CreateTestWindow( props ) {
 
   function scaleCreator( testScalesArray ) {
     if ( testScalesArray !== undefined ) {
-      return testScalesArray.map( ( scaleDataObject) => (
-
+      return testScalesArray.map( ( scaleDataObject, index ) => (
         <ScaleInput
           inputId={ scaleDataObject.scaleId }
           scaleName={ scaleDataObject.scaleName }
           key={ scaleDataObject.scaleId }
           changed={ props.onChangeScaleName }
           deleted={ props.onDeleteScale }
+          scaleIndex={ index }
         />
       )
       );
@@ -55,11 +39,24 @@ function CreateTestWindow( props ) {
     return null;
   }
 
+  function qeustionCreator( testQuestionArray ) {
+    if ( testQuestionArray !== undefined ) {
+      return testQuestionArray.map( ( questionObject ) => (
+        <NewQuestion
+        questionText={questionObject.questionText}
+          key={ questionObject.questionId }
+          questionId={ questionObject.questionId }
+          changed={ props.onChangeQuestionText }
+        />
+      ) )
+    }
+    return null;
+  }
 
-  // input allways updates element - needs fixing
+
+  // FIXME:input allways updates element - needs fixing
   return (
     <form className={ classes.CreateTestWindow }>
-      <span>{ props.newTestData.testName }</span>
       <Input
         inputtype={ 'input' }
         type={ 'text' }
@@ -72,6 +69,7 @@ function CreateTestWindow( props ) {
       </div>
       <div className={ classes.QuestionsField }>
         <AddIttemButton buttonText="Додати запитання" />
+        { qeustionCreator( props.newTestData.testQuestions ) }
         {/* const question = <NewQuestion questionText={ "Запитання?" } />; */ }
       </div>
     </form>
@@ -89,7 +87,9 @@ function mapDispatchToProps( dispatch ) {
     onAddTestName: ( testNameValue ) => dispatch( addTestName( testNameValue ) ),
     onCreateScale: () => dispatch( createNewScale() ),
     onChangeScaleName: ( scaleNameValue, scaleId ) => dispatch( changeScaleName( scaleNameValue, scaleId ) ),
-    onDeleteScale: ( scaleId ) => dispatch( deleteScale( scaleId ) )
+    onDeleteScale: ( scaleId ) => dispatch( deleteScale( scaleId ) ),
+    onCreateNewQuestion: () => dispatch( createNewQuestion() ),
+    onChangeQuestionText: ( newQuestionText, targetQuestionId ) => dispatch( changeQuestionText( newQuestionText, targetQuestionId ) )
   }
 }
 

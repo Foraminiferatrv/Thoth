@@ -7,6 +7,9 @@ import * as actionTypes from '../actions/actionTypes';
 import {
   v4 as uuidv4
 } from 'uuid';
+import {
+  stat
+} from 'fs';
 
 const initialState = {
 
@@ -15,15 +18,30 @@ const initialState = {
 
 function createNewTest( state ) {
   const newTestObject = {
-    testName: " ",
+    testName: "",
     testId: uuidv4(),
     testScales: [],
     testQuestions: [ {
       questionNumber: null,
       questionText: "",
-      scaleDependencies: [ {
-        scaleId: "",
-        questionValue: "-1"
+      questionId: uuidv4(),
+      questionAnswers: [ {
+        answerText: "",
+        scaleDependencies: [ {
+          scaleId: "",
+          answerValue: "-1"
+        } ]
+      } ]
+    }, {
+      questionNumber: null,
+      questionText: "awdawdawdawdawdwd",
+      questionId: uuidv4(),
+      questionAnswers: [ {
+        answerText: "",
+        scaleDependencies: [ {
+          scaleId: "",
+          answerValue: "-1"
+        } ]
       } ]
     } ]
   };
@@ -31,12 +49,14 @@ function createNewTest( state ) {
   return updateObject( state, newTestObject );
 }
 
+
 function addTestName( state, testName ) {
   return updateObject( state, {
     testName: testName
   } )
 }
 
+// scale functions
 function createNewScale( state ) {
   const updatedScales = [ ...state.testScales ];
   updatedScales.push( {
@@ -51,28 +71,64 @@ function createNewScale( state ) {
 }
 
 function changeScaleName( state, scaleName, targetScaleId ) {
-  const targetScaleIndex = state.testScales.indexOf( state.testScales.filter( ( element ) => element.scaleId === targetScaleId )[ 0 ] );
-  const newScalesData = [ ...state.testScales ];
+  let scalesCopy = [ ...state.testScales ];
+  const targetScaleIndex = scalesCopy.indexOf( state.testScales.filter( ( element ) => element.scaleId === targetScaleId )[ 0 ] );
 
-  newScalesData[ targetScaleIndex ] = {
-    ...newScalesData[ targetScaleIndex ],
+  scalesCopy[ targetScaleIndex ] = {
+    ...scalesCopy[ targetScaleIndex ],
     scaleName: scaleName
   }
   return ( updateObject( state, {
-    testScales: newScalesData
+    testScales: scalesCopy
   } ) )
 
 }
 
-function deleteScale( state, scaleId ) {
-  const targetScaleIndex = state.testScales.indexOf( state.testScales.filter( ( element ) => element.scaleId === scaleId )[ 0 ] );
-  const newScalesData = [ ...state.testScales ];
-  newScalesData.splice( targetScaleIndex, 1 );
+function deleteScale( state, targetScaleId ) {
+  const scalesCopy = [ ...state.testScales ];
+  const targetScaleIndex = scalesCopy.indexOf( state.testScales.filter( ( element ) => element.scaleId === targetScaleId )[ 0 ] );
 
-  return ( updateObject( state ), {
-    testScales: newScalesData
+  scalesCopy.splice( targetScaleIndex, 1 );
+
+  return ( updateObject( state, {
+    testScales: scalesCopy
+  } ) );
+}
+//end scale functions
+
+
+// questions functions
+function createNewQuestion( state ) {
+  const questionsCopy = [ ...state.testQuestions ];
+  questionsCopy.push( {
+    questionNumber: null,
+    questionText: "",
+    scaleDependencies: [ {
+      scaleId: "",
+      questionValue: "-1"
+    } ]
+  } );
+  return updateObject( state, {
+    testQuestions: questionsCopy
   } );
 }
+
+function changeQuestionText( state, newQuestionText, targetQuestionId ) {
+  let questionsCopy = [ ...state.testQuestions ];
+  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+  console.log( questionsCopy );
+  console.log( targetQuestionIndex );
+
+  questionsCopy[ targetQuestionIndex ] = {
+    ...questionsCopy[ targetQuestionIndex ],
+    questionText: newQuestionText
+  }
+
+  return updateObject( state, {
+    testQuestions: questionsCopy
+  } )
+}
+//end question functions
 
 
 function testCreator( state = initialState, action ) {
@@ -91,6 +147,15 @@ function testCreator( state = initialState, action ) {
 
     case actionTypes.DELETE_SCALE:
       return deleteScale( state, action.scaleId );
+
+    case actionTypes.CREATE_NEW_QUESTION: {
+      return createNewQuestion( state );
+    }
+
+    case actionTypes.CHANGE_QUESTION_TEXT: {
+      return changeQuestionText( state, action.newQuestionText, action.targetQuestionId );
+    }
+
 
     default:
       return state;

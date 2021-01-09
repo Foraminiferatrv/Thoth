@@ -9,21 +9,24 @@ import CheckButton from '../UI/CheckButton/CheckButton';
 
 
 function ScaleInput( props ) {
-  const [editStatus, changeEditStatus] = useState( false );
+  const [editStatus, changeEditStatus] = useState( true );
 
   function toggleEditStatus( currentEdditStatus ) {
     changeEditStatus( !currentEdditStatus );
   }
 
   let scaleContent = <Input
-    noLabel
+    inputlabel={ props.scaleIndex + 1 }
     inputtype='input'
     defaultValue={ props.scaleName }
     onChange={ event => props.changed( event.target.value, props.inputId ) }
+    onBlur={ toggleEditStatus }
+    autoFocus
   />;
 
   if ( !editStatus ) {
     scaleContent = <div className={ classes.ScaleNameContainer }>
+      <span className={ classes.ScaleIndex }>{ props.scaleIndex + 1 }</span>
       <span className={ classes.ScaleName }>
         { props.scaleName }    {/* FIXME:Scale name should always be readble even if a name is too long. */ }
       </span>

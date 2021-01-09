@@ -3,28 +3,28 @@ import React from 'react';
 import classes from './Input.module.css';
 
 
-function Input( props ) {
+function Input( { inputtype, noLabel, inputlabel, ...rest } ) {
 
   let inputElement = null;
 
-  switch ( props.inputtype ) {
+  switch ( inputtype ) {
     case 'input':
       inputElement = <input
         className={ classes.InputElement }
-        { ...props } />
+        { ...rest } />
       break;
 
     case 'select':
-      inputElement = <select { ...props } />
+      inputElement = <select { ...rest } />
       break;
 
     default:
-      inputElement = <input { ...props } />
+      inputElement = <input { ...rest } />
   }
 
   return (
     <div className={ classes.Input }>
-      {!props.noLabel ? < label className={ classes.Label }>{ props.inputlabel }</label> : null }
+      {!noLabel ? < label className={ classes.Label }>{ inputlabel }</label> : null }
       { inputElement }
     </div >
   );

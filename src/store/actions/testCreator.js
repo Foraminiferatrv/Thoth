@@ -33,3 +33,17 @@ export const deleteScale = ( scaleId ) => {
     scaleId: scaleId
   }
 }
+
+export const createNewQuestion = () => {
+  return {
+    type: actionTypes.CREATE_NEW_QUESTION
+  }
+}
+
+export const changeQuestionText = ( newQuestionText, targetQuestionId ) => {
+  return {
+    type: actionTypes.CHANGE_QUESTION_TEXT,
+    newQuestionText: newQuestionText,
+    targetQuestionId: targetQuestionId
+  }
+}

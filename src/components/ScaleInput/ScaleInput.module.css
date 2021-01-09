@@ -6,8 +6,15 @@
 }
 
 .ScaleNameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   text-align: left;
   width: 100%;
+}
+
+.ScaleIndex {
+  margin-right: 8px;
 }
 
 .ScaleName {

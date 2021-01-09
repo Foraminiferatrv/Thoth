@@ -11,10 +11,14 @@ function NewQuestion( props ) {
         <span className={ classes.QuestionText } >
           { props.questionText }
         </span>
-        <input type="text" className={ classes.QuestionField } />
+        <input
+          type="text"
+          className={ classes.QuestionField }
+          onChange={event=>props.changed(event.target.value, props.questionId)}
+        />
       </div>
-      
-      <div className={classes.AnswerBlock}>
+
+      <div className={ classes.AnswerBlock }>
         <NewRadioAnswer answerText="How can octopus be so bald? " />
       </div>
     </div>

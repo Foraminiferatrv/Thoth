@@ -3,6 +3,8 @@ export {
   addTestName,
   createNewScale,
   changeScaleName,
-  deleteScale
+  deleteScale,
+  createNewQuestion,
+  changeQuestionText
 }
 from './testCreator';
