@@ -5,6 +5,7 @@ export {
   changeScaleName,
   deleteScale,
   createNewQuestion,
-  changeQuestionText
+  changeQuestionText,
+  deleteQestion
 }
 from './testCreator';

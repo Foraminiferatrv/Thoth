@@ -2,19 +2,19 @@ import React from 'react';
 
 import classes from './NewQuestion.module.css';
 
+import EditableInput from '../UI/EditableInput/EditableInput';
 import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
 
 function NewQuestion( props ) {
   return (
     <div className={ classes.NewQuestion }>
       <div className={ classes.QuestionBlock }>
-        <span className={ classes.QuestionText } >
-          { props.questionText }
-        </span>
-        <input
-          type="text"
-          className={ classes.QuestionField }
-          onChange={event=>props.changed(event.target.value, props.questionId)}
+        <EditableInput
+          inputValue={ props.questionText }
+          inputId={ props.questionId }
+          inputIndex={ props.questionIndex }
+          changed={ props.changed }
+          deleted={ props.deleted }
         />
       </div>
 

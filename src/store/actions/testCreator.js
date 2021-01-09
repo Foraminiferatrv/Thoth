@@ -47,3 +47,10 @@ export const changeQuestionText = ( newQuestionText, targetQuestionId ) => {
     targetQuestionId: targetQuestionId
   }
 }
+
+export const deleteQestion = ( targetQuestionId ) => {
+  return {
+    type: actionTypes.DELETE_QUESTION,
+    targetQuestionId: targetQuestionId
+  }
+}

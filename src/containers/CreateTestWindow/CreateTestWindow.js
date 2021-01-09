@@ -10,11 +10,12 @@ import {
   createNewScale,
   deleteScale,
   createNewQuestion,
-  changeQuestionText
+  changeQuestionText,
+  deleteQestion
 } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
-import ScaleInput from '../../components/ScaleInput/ScaleInput';
+import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
 import AddIttemButton from '../../components/UI/AddIttemButton/AddIttemButton';
 // import {NewRadioAnswer} from '../../components/NewRadioAnswer/NewRadioAnswer';
@@ -25,13 +26,13 @@ function CreateTestWindow( props ) {
   function scaleCreator( testScalesArray ) {
     if ( testScalesArray !== undefined ) {
       return testScalesArray.map( ( scaleDataObject, index ) => (
-        <ScaleInput
+        <EditableInput
           inputId={ scaleDataObject.scaleId }
-          scaleName={ scaleDataObject.scaleName }
+          inputValue={ scaleDataObject.scaleName }
           key={ scaleDataObject.scaleId }
           changed={ props.onChangeScaleName }
           deleted={ props.onDeleteScale }
-          scaleIndex={ index }
+          inputIndex={ index }
         />
       )
       );
@@ -41,12 +42,14 @@ function CreateTestWindow( props ) {
 
   function qeustionCreator( testQuestionArray ) {
     if ( testQuestionArray !== undefined ) {
-      return testQuestionArray.map( ( questionObject ) => (
+      return testQuestionArray.map( ( questionObject, index ) => (
         <NewQuestion
-        questionText={questionObject.questionText}
+          questionText={ questionObject.questionText }
           key={ questionObject.questionId }
           questionId={ questionObject.questionId }
           changed={ props.onChangeQuestionText }
+          questionIndex={ index }
+          deleted={props.onDeleteQestion}
         />
       ) )
     }
@@ -64,11 +67,17 @@ function CreateTestWindow( props ) {
         onChange={ ( event ) => props.onAddTestName( event.target.value ) }
       />
       <div className={ classes.ScalesField }>
-        <AddIttemButton buttonText="Додати шкалу" clicked={ props.onCreateScale } />
+        <AddIttemButton
+          buttonText="Додати шкалу"
+          clicked={ props.onCreateScale }
+        />
         { scaleCreator( props.newTestData.testScales ) }
       </div>
       <div className={ classes.QuestionsField }>
-        <AddIttemButton buttonText="Додати запитання" />
+        <AddIttemButton
+          buttonText="Додати запитання"
+          clicked={ props.onCreateNewQuestion }
+        />
         { qeustionCreator( props.newTestData.testQuestions ) }
         {/* const question = <NewQuestion questionText={ "Запитання?" } />; */ }
       </div>
@@ -89,7 +98,8 @@ function mapDispatchToProps( dispatch ) {
     onChangeScaleName: ( scaleNameValue, scaleId ) => dispatch( changeScaleName( scaleNameValue, scaleId ) ),
     onDeleteScale: ( scaleId ) => dispatch( deleteScale( scaleId ) ),
     onCreateNewQuestion: () => dispatch( createNewQuestion() ),
-    onChangeQuestionText: ( newQuestionText, targetQuestionId ) => dispatch( changeQuestionText( newQuestionText, targetQuestionId ) )
+    onChangeQuestionText: ( newQuestionText, targetQuestionId ) => dispatch( changeQuestionText( newQuestionText, targetQuestionId ) ),
+    onDeleteQestion: ( targetQuestionId ) => dispatch( deleteQestion(targetQuestionId) )
   }
 }
 

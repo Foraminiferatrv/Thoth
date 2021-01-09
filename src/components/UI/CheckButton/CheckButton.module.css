@@ -1,7 +1,6 @@
 .CheckButton {
   width: 30px;
   height: 30px;
-  background-color: rgb(10, 167, 10);
   border-radius: 4px;
   fill: #fff;
   background-image: url(../../../assets/icons/check.svg  );

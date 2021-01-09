@@ -7,13 +7,8 @@ import * as actionTypes from '../actions/actionTypes';
 import {
   v4 as uuidv4
 } from 'uuid';
-import {
-  stat
-} from 'fs';
 
-const initialState = {
-
-};
+const initialState = {};
 
 
 function createNewTest( state ) {
@@ -21,29 +16,7 @@ function createNewTest( state ) {
     testName: "",
     testId: uuidv4(),
     testScales: [],
-    testQuestions: [ {
-      questionNumber: null,
-      questionText: "",
-      questionId: uuidv4(),
-      questionAnswers: [ {
-        answerText: "",
-        scaleDependencies: [ {
-          scaleId: "",
-          answerValue: "-1"
-        } ]
-      } ]
-    }, {
-      questionNumber: null,
-      questionText: "awdawdawdawdawdwd",
-      questionId: uuidv4(),
-      questionAnswers: [ {
-        answerText: "",
-        scaleDependencies: [ {
-          scaleId: "",
-          answerValue: "-1"
-        } ]
-      } ]
-    } ]
+    testQuestions: []
   };
 
   return updateObject( state, newTestObject );
@@ -103,9 +76,13 @@ function createNewQuestion( state ) {
   questionsCopy.push( {
     questionNumber: null,
     questionText: "",
-    scaleDependencies: [ {
-      scaleId: "",
-      questionValue: "-1"
+    questionId: uuidv4(),
+    questionAnswers: [ {
+      answerText: "",
+      scaleDependencies: [ {
+        scaleId: "",
+        answerValue: "-1"
+      } ]
     } ]
   } );
   return updateObject( state, {
@@ -116,13 +93,22 @@ function createNewQuestion( state ) {
 function changeQuestionText( state, newQuestionText, targetQuestionId ) {
   let questionsCopy = [ ...state.testQuestions ];
   const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
-  console.log( questionsCopy );
-  console.log( targetQuestionIndex );
 
   questionsCopy[ targetQuestionIndex ] = {
     ...questionsCopy[ targetQuestionIndex ],
     questionText: newQuestionText
   }
+
+  return updateObject( state, {
+    testQuestions: questionsCopy
+  } )
+}
+
+function deleteQestion( state, targetQuestionId ) {
+  const questionsCopy = [ ...state.testQuestions ];
+  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+
+  questionsCopy.splice( targetQuestionIndex, 1 );
 
   return updateObject( state, {
     testQuestions: questionsCopy
@@ -148,13 +134,14 @@ function testCreator( state = initialState, action ) {
     case actionTypes.DELETE_SCALE:
       return deleteScale( state, action.scaleId );
 
-    case actionTypes.CREATE_NEW_QUESTION: {
+    case actionTypes.CREATE_NEW_QUESTION:
       return createNewQuestion( state );
-    }
 
-    case actionTypes.CHANGE_QUESTION_TEXT: {
+    case actionTypes.CHANGE_QUESTION_TEXT:
       return changeQuestionText( state, action.newQuestionText, action.targetQuestionId );
-    }
+
+    case actionTypes.DELETE_QUESTION:
+      return deleteQestion( state, action.targetQuestionId );
 
 
     default:

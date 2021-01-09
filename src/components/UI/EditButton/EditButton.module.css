@@ -1,7 +1,6 @@
 .EditButton {
   width: 30px;
   height: 30px;
-  background-color: rgb(10, 167, 10);
   border-radius: 4px;
   background-image: url(../../../assets/icons/edit.png  );
   background-size: cover;
