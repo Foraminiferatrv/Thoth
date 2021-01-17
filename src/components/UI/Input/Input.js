@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './Input.module.css';
 
 
-function Input( { inputtype, noLabel, inputlabel, ...rest } ) {
+function Input( { inputtype, noLabel, inputlabel, selectOptions, defaultSelectValue, ...rest } ) {
 
   let inputElement = null;
 
@@ -15,7 +15,19 @@ function Input( { inputtype, noLabel, inputlabel, ...rest } ) {
       break;
 
     case 'select':
-      inputElement = <select { ...rest } />
+      inputElement = <select
+        defaultValue={ defaultSelectValue }
+        { ...rest }
+        className={ classes.SelectElement }
+      >
+        { selectOptions !== undefined ? selectOptions.map( ( optionObject, index ) =>
+          <option
+            key={ 'questionDropdownOption' + index }
+            value={ optionObject.optionValue }>
+            { optionObject.optionName }
+          </option> )
+          : null }
+      </select>
       break;
 
     default:

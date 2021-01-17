@@ -54,3 +54,55 @@ export const deleteQestion = ( targetQuestionId ) => {
     targetQuestionId: targetQuestionId
   }
 }
+
+export const addNewRadioAnswer = ( targetQuestionIndex ) => {
+  return {
+    type: actionTypes.CREATE_NEW_RADIO_ANSWER,
+    targetQuestionIndex: targetQuestionIndex
+  }
+}
+
+export const changeRadioAnswerText = ( newAnswerText, targetQuestionId, answerIndex ) => {
+  return {
+    type: actionTypes.CHANGE_RADIO_ANSWER_TEXT,
+    newAnswerText: newAnswerText,
+    targetQuestionId: targetQuestionId,
+    answerIndex: answerIndex
+  }
+}
+
+export const deleteRadioAnswer = ( targetQuestionId, answerIndex ) => {
+  return {
+    type: actionTypes.DELETE_RADIO_ANSWER,
+    targetQuestionId: targetQuestionId,
+    answerIndex: answerIndex
+  }
+}
+
+export const addDependency = ( targetQuestionId, answerIndex ) => {
+  return {
+    type: actionTypes.ADD_DEPENDENCY,
+    targetQuestionId: targetQuestionId,
+    answerIndex: answerIndex
+  }
+}
+
+export const changeAnswerValue = ( targetQuestionId, answerIndex, depIndex, operationType, newValue ) => {
+  return {
+    type: actionTypes.CHANGE_ANSWER_VALUE,
+    targetQuestionId: targetQuestionId,
+    answerIndex: answerIndex,
+    depIndex: depIndex,
+    operationType:operationType,
+    newValue: newValue
+  }
+}
+
+export const deleteDependency = ( targetQuestionId, answerIndex, depIndex ) => {
+  return {
+    type: actionTypes.DELETE_DEPENDENCY,
+    targetQuestionId: targetQuestionId,
+    answerIndex: answerIndex,
+    depIndex: depIndex
+  }
+}

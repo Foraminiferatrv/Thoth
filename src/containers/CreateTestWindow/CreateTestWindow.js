@@ -11,14 +11,19 @@ import {
   deleteScale,
   createNewQuestion,
   changeQuestionText,
-  deleteQestion
+  deleteQestion,
+  addNewRadioAnswer,
+  changeRadioAnswerText,
+  deleteRadioAnswer,
+  addDependency,
+  changeAnswerValue,
+  deleteDependency
 } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
 import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
-import AddIttemButton from '../../components/UI/AddIttemButton/AddIttemButton';
-// import {NewRadioAnswer} from '../../components/NewRadioAnswer/NewRadioAnswer';
+import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
 
 
 function CreateTestWindow( props ) {
@@ -26,14 +31,18 @@ function CreateTestWindow( props ) {
   function scaleCreator( testScalesArray ) {
     if ( testScalesArray !== undefined ) {
       return testScalesArray.map( ( scaleDataObject, index ) => (
-        <EditableInput
-          inputId={ scaleDataObject.scaleId }
-          inputValue={ scaleDataObject.scaleName }
+        <div
           key={ scaleDataObject.scaleId }
-          changed={ props.onChangeScaleName }
-          deleted={ props.onDeleteScale }
-          inputIndex={ index }
-        />
+          className={ classes.ScaleField }
+        >
+          <EditableInput
+            inputId={ scaleDataObject.scaleId }
+            inputValue={ scaleDataObject.scaleName }
+            changed={ props.onChangeScaleName }
+            deleted={ props.onDeleteScale }
+            inputIndex={ index }
+          />
+        </div>
       )
       );
     }
@@ -44,12 +53,20 @@ function CreateTestWindow( props ) {
     if ( testQuestionArray !== undefined ) {
       return testQuestionArray.map( ( questionObject, index ) => (
         <NewQuestion
+          changed={ props.onChangeQuestionText }
           questionText={ questionObject.questionText }
           key={ questionObject.questionId }
           questionId={ questionObject.questionId }
-          changed={ props.onChangeQuestionText }
           questionIndex={ index }
-          deleted={props.onDeleteQestion}
+          deleted={ props.onDeleteQestion }
+          radioAnswers={ questionObject.questionRadioAnswers }
+          newRadioAnswer={ props.onAddNewRadioAnswer }
+          changeRadioAnswerText={ props.onChangeRadioAnswerText }
+          deleteRadioAnswer={ props.onDeleteRadioAnswer }
+          testScales={ props.newTestData.testScales }
+          addDependency={ props.onAddDependency }
+          changeAnswerValue={ props.onChangeAnswerValue }
+          deleteDependency={ props.onDeleteDependency }
         />
       ) )
     }
@@ -66,20 +83,19 @@ function CreateTestWindow( props ) {
         inputlabel={ "Назва тесту" }
         onChange={ ( event ) => props.onAddTestName( event.target.value ) }
       />
-      <div className={ classes.ScalesField }>
-        <AddIttemButton
+      <div className={ classes.ScalesBox }>
+        <AddItemButton
           buttonText="Додати шкалу"
           clicked={ props.onCreateScale }
         />
         { scaleCreator( props.newTestData.testScales ) }
       </div>
-      <div className={ classes.QuestionsField }>
-        <AddIttemButton
+      <div className={ classes.QuestionsBox }>
+        <AddItemButton
           buttonText="Додати запитання"
           clicked={ props.onCreateNewQuestion }
         />
         { qeustionCreator( props.newTestData.testQuestions ) }
-        {/* const question = <NewQuestion questionText={ "Запитання?" } />; */ }
       </div>
     </form>
   );
@@ -99,7 +115,13 @@ function mapDispatchToProps( dispatch ) {
     onDeleteScale: ( scaleId ) => dispatch( deleteScale( scaleId ) ),
     onCreateNewQuestion: () => dispatch( createNewQuestion() ),
     onChangeQuestionText: ( newQuestionText, targetQuestionId ) => dispatch( changeQuestionText( newQuestionText, targetQuestionId ) ),
-    onDeleteQestion: ( targetQuestionId ) => dispatch( deleteQestion(targetQuestionId) )
+    onDeleteQestion: ( targetQuestionId ) => dispatch( deleteQestion( targetQuestionId ) ),
+    onAddNewRadioAnswer: ( targetQuestionIndex ) => dispatch( addNewRadioAnswer( targetQuestionIndex ) ),
+    onChangeRadioAnswerText: ( newAnswerText, targetQuestionId, answerIndex ) => dispatch( changeRadioAnswerText( newAnswerText, targetQuestionId, answerIndex ) ),
+    onDeleteRadioAnswer: ( targetQuestionId, answerIndex ) => dispatch( deleteRadioAnswer( targetQuestionId, answerIndex ) ),
+    onAddDependency: ( targetQuestionId, answerIndex ) => dispatch( addDependency( targetQuestionId, answerIndex ) ),
+    onChangeAnswerValue: ( targetQuestionId, answerIndex, depIndex, operationType, newValue ) => dispatch( changeAnswerValue( targetQuestionId, answerIndex, depIndex, operationType, newValue ) ),
+    onDeleteDependency: ( targetQuestionId, answerIndex, depIndex ) => dispatch( deleteDependency( targetQuestionId, answerIndex, depIndex ) )
   }
 }
 

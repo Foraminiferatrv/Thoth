@@ -4,8 +4,30 @@ import classes from './NewQuestion.module.css';
 
 import EditableInput from '../UI/EditableInput/EditableInput';
 import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
+import AddItemButton from '../UI/AddItemButton/AddItemButton';
+
 
 function NewQuestion( props ) {
+  let radioAnswersContent = null;
+
+  if ( props.radioAnswers !== undefined ) {
+    radioAnswersContent = props.radioAnswers.map( ( radioAnswerObject, answerIndex ) => (
+      <NewRadioAnswer
+        key={ props.questionId.concat( answerIndex ) }
+        questionId={ props.questionId }
+        changeRadioAnswerText={ props.changeRadioAnswerText }
+        answerIndex={ answerIndex }
+        answerText={ radioAnswerObject.answerText }
+        deleteRadioAnswer={ props.deleteRadioAnswer }
+        changeAnswerValue={ props.changeAnswerValue }
+        scaleDependencies={ radioAnswerObject.scaleDependencies }
+        testScales={ props.testScales }
+        addDependency={ props.addDependency }
+        deleteDependency={ props.deleteDependency }
+      />
+    ) );
+  }
+
   return (
     <div className={ classes.NewQuestion }>
       <div className={ classes.QuestionBlock }>
@@ -19,7 +41,11 @@ function NewQuestion( props ) {
       </div>
 
       <div className={ classes.AnswerBlock }>
-        <NewRadioAnswer answerText="How can octopus be so bald? " />
+        <AddItemButton
+          clicked={ () => props.newRadioAnswer( props.questionIndex ) }
+          buttonText="Додати відповідь"
+        />
+        { radioAnswersContent }
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
 .NewQuestion {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   margin-bottom: 12px;
   padding: 5px 15px;
 }
 
 .QuestionBlock {
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .AnswerBlock {
-  width: 80%;
+  width: 90%;
 }

@@ -1,13 +1,13 @@
 import { React } from "react";
 
-import classes from './AddIttemButton.module.css';
+import classes from './AddItemButton.module.css';
 
 
 function addIttemButton( props ) {
   return (
     <button
       type='button'
-      className={ classes.AddIttemButton }
+      className={ classes.AddItemButton }
       onClick={ props.clicked }
     >
       <span>{ props.buttonText }</span>

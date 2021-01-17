@@ -2,49 +2,64 @@ import React, { useState } from 'react';
 
 import classes from './NewRadioAnswer.module.css';
 
-import { PlusButton } from '../UI/PlusButton/PlusButton';
-import { MinusButton } from '../UI/MinusButton/MinusButton';
+import AddItemButton from '../UI/AddItemButton/AddItemButton';
+import EditableInput from '../UI/EditableInput/EditableInput';
+import ScalesList from '../../components/ScalesList/ScalesList';
+import XButton from '../UI/XButton/XButton';
+import NumInput from '../NumInput/NumInput';
 
 
 function NewRadioAnswer( props ) {
-  const [answerValue, setAnswerValue] = useState( 0 );
-  const [answerText, setAnswerText] = useState( '' );
 
-  function typingAnswerValueHandler( event ) {
-    if ( isNaN( event.target.value ) !== true )
-      setAnswerValue( parseInt( event.target.value ) );
-  }
+  let scaleDependenciesContent = null;
 
-  function increaseAnswerValueHandler() {
-    setAnswerValue( answerValue + 1 );
-  }
-
-  function decreaseAnswerValueHandler() {
-    setAnswerValue( answerValue - 1 );
-  }
-
-  function answerInputHandler( event ) {
-    setAnswerText( event.target.value );
-  }
-
+  if ( props.scaleDependencies !== undefined ) {
+    scaleDependenciesContent = props.scaleDependencies.map( ( scaleData, index ) =>
+      <div
+        key={ 'scaleDependencies' + index }
+        className={ classes.AnswerValue }
+      >
+        <ScalesList
+          testScales={ props.testScales }
+          selectedScale={ scaleData.scaleId }
+        />
+        <div className={ classes.AnswerValueBlock }>
+          <NumInput
+            questionId={ props.questionId }
+            answerIndex={ props.answerIndex }
+            depIndex={ index }
+            answerValue={ scaleData.answerValue }
+            changeAnswerValue={ props.changeAnswerValue }
+          />
+        </div>
+        <XButton
+          clicked={ () => props.deleteDependency( props.questionId, props.answerIndex, index ) }
+        />
+      </div>
+    )
+  };
 
   return (
     <div className={ classes.NewRadioAnswer }>
-      <span>{ answerText }</span>
-      <input
-        type="text"
-        className={ classes.AnswerText }
-        value={answerText}
-        onChange={ ( event ) => answerInputHandler( event ) }
-      />
-
-      <div className={ classes.AnswerValueBlock }>
-        <MinusButton clicked={ decreaseAnswerValueHandler } />
-        <input className={ classes.AnswerValueField }
-          value={ answerValue }
-          onChange={ ( event ) => { typingAnswerValueHandler( event ) } }
-          type="number" />
-        <PlusButton clicked={ increaseAnswerValueHandler } />
+      <div className={ classes.InputField }>
+        <EditableInput
+          letterIndex
+          changed={ props.changeRadioAnswerText }
+          inputId={ props.questionId }
+          inputIndex={ props.answerIndex }
+          answerIndex={ props.answerIndex }
+          inputValue={ props.answerText }
+          deleted={ props.deleteRadioAnswer }
+        />
+      </div>
+      <div className={ classes.AnswerValuesBlock }>
+        { scaleDependenciesContent }
+        <div className={ classes.AddScaleButton }>
+          <AddItemButton
+            clicked={ () => props.addDependency( props.questionId, props.answerIndex ) }
+            buttonText="Додати залежну  шкалу"
+          />
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,12 @@ export {
   deleteScale,
   createNewQuestion,
   changeQuestionText,
-  deleteQestion
+  deleteQestion,
+  addNewRadioAnswer,
+  changeRadioAnswerText,
+  deleteRadioAnswer,
+  addDependency,
+  changeAnswerValue,
+  deleteDependency
 }
 from './testCreator';
