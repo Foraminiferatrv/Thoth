@@ -93,7 +93,7 @@ export const changeAnswerValue = ( targetQuestionId, answerIndex, depIndex, oper
     targetQuestionId: targetQuestionId,
     answerIndex: answerIndex,
     depIndex: depIndex,
-    operationType:operationType,
+    operationType: operationType,
     newValue: newValue
   }
 }
@@ -104,5 +104,26 @@ export const deleteDependency = ( targetQuestionId, answerIndex, depIndex ) => {
     targetQuestionId: targetQuestionId,
     answerIndex: answerIndex,
     depIndex: depIndex
+  }
+}
+
+export const addInterpret = () => {
+  return {
+    type: actionTypes.ADD_INTERPRET
+  }
+}
+
+export const deleteInterpret = ( targetInterpretId ) => {
+  return {
+    type: actionTypes.DELETE_INTERPRET,
+    targetInterpretId: targetInterpretId
+  }
+}
+
+export const changeInterpretText = ( targetInterpretId, newInterpretText ) => {
+  return {
+    type: actionTypes.CHANGE_INTERPRET_TEXT,
+    targetInterpretId: targetInterpretId,
+    newInterpretText: newInterpretText
   }
 }

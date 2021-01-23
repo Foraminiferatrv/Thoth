@@ -1,0 +1,9 @@
+.TrashButton {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+  background-image: url(../../../assets/icons/trash.svg);
+  background-size: cover;
+}

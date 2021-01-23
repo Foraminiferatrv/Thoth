@@ -1,0 +1,15 @@
+.NumRange {
+  display: flex;
+  min-width: 400px;
+  justify-content: space-between;
+}
+
+.NumBlock {
+  display: flex;
+  align-items: center;
+}
+
+.NumBlock span {
+  margin-right: 10px;
+  font-weight: bold;
+}

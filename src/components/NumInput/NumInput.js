@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classes from './NumInput.module.css';
 
@@ -6,29 +6,46 @@ import { PlusButton } from '../UI/PlusButton/PlusButton';
 import { MinusButton } from '../UI/MinusButton/MinusButton';
 
 
-function NumInput( props ) {
+function NumInput( { numInputValue, getInputValue } ) {
+  const [inputValue, setInputValue] = useState( numInputValue );
 
-  function changeValueHandler( event ) {
-    if ( isNaN( event.target.value ) !== true ) {
-      props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'set', event.target.value );
+  function setValueHandler( value ) {
+    if ( isNaN( value ) !== true && value !== '' ) {
+      setInputValue( value );
+    }
+    if ( value === '' ) {
+      setInputValue( 0 );
     }
   }
-  function increaseAnswerValueHandler() {
-    props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'increase' );
+
+  function increaseInputValueHandler( oldValue ) {
+    setInputValue( parseFloat( oldValue ) + 1 );
+    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'set', parseFloat( inputValue ) );
+    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'increase' );
   }
 
-  function decreaseAnswerValueHandler() {
-    props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'decrease' );
+  function decreaseInputValueHandler( oldValue ) {
+    setInputValue( parseFloat( oldValue ) - 1 );
+    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'decrease' );
   }
+
+  useEffect( () => {
+    // if ( props.changeAnswerValue !== undefined ) {
+    //   props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'set', parseFloat( inputValue ) );
+    // }
+    if ( getInputValue !== undefined ) {
+      getInputValue( inputValue );
+    }
+  }, [inputValue] );
 
   return (
     <div className={ classes.NumInput }>
-      <PlusButton clicked={ increaseAnswerValueHandler } />
+      <PlusButton clicked={ () => increaseInputValueHandler( inputValue ) } />
       <input className={ classes.ValueField }
-        value={ props.answerValue }
-        onChange={ ( event ) => { changeValueHandler( event ) } }
-        type="number" />
-      <MinusButton clicked={ decreaseAnswerValueHandler } />
+        value={ inputValue }
+        onChange={ ( event ) => { setValueHandler( event.target.value ) } }
+        type="input" />
+      <MinusButton clicked={ () => decreaseInputValueHandler( inputValue ) } />
     </div>
   )
 }

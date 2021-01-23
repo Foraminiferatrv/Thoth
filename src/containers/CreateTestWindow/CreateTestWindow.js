@@ -17,13 +17,18 @@ import {
   deleteRadioAnswer,
   addDependency,
   changeAnswerValue,
-  deleteDependency
+  deleteDependency,
+  addInterpret,
+  deleteInterpret,
+  changeInterpretText
 } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
 import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
+import NewInterpret from '../../components/NewInterpret/NewInterpret';
+
 
 
 function CreateTestWindow( props ) {
@@ -75,12 +80,14 @@ function CreateTestWindow( props ) {
 
 
   // FIXME:input allways updates element - needs fixing
+  // TODO: create individual component for each test area
   return (
     <form className={ classes.CreateTestWindow }>
       <Input
+        placeholder='Назва методики...'
         inputtype={ 'input' }
         type={ 'text' }
-        inputlabel={ "Назва тесту" }
+        inputlabel={ "Назва методики" }
         onChange={ ( event ) => props.onAddTestName( event.target.value ) }
       />
       <div className={ classes.ScalesBox }>
@@ -97,6 +104,13 @@ function CreateTestWindow( props ) {
         />
         { qeustionCreator( props.newTestData.testQuestions ) }
       </div>
+      <NewInterpret
+        interprets={ props.newTestData.testInterpretations }
+        testScales={ props.newTestData.testScales }
+        addInterpret={ props.onAddInterpret }
+        deleteInterpret={ props.onDeleteInterpret }
+        changeInterpretText={ props.onChangeInterpretText }
+      />
     </form>
   );
 }
@@ -121,7 +135,10 @@ function mapDispatchToProps( dispatch ) {
     onDeleteRadioAnswer: ( targetQuestionId, answerIndex ) => dispatch( deleteRadioAnswer( targetQuestionId, answerIndex ) ),
     onAddDependency: ( targetQuestionId, answerIndex ) => dispatch( addDependency( targetQuestionId, answerIndex ) ),
     onChangeAnswerValue: ( targetQuestionId, answerIndex, depIndex, operationType, newValue ) => dispatch( changeAnswerValue( targetQuestionId, answerIndex, depIndex, operationType, newValue ) ),
-    onDeleteDependency: ( targetQuestionId, answerIndex, depIndex ) => dispatch( deleteDependency( targetQuestionId, answerIndex, depIndex ) )
+    onDeleteDependency: ( targetQuestionId, answerIndex, depIndex ) => dispatch( deleteDependency( targetQuestionId, answerIndex, depIndex ) ),
+    onAddInterpret: () => dispatch( addInterpret() ),
+    onDeleteInterpret: ( targetInterpretId ) => dispatch( deleteInterpret( targetInterpretId ) ),
+    onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) )
   }
 }
 

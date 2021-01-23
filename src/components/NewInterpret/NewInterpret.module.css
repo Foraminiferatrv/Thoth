@@ -1,0 +1,20 @@
+.NewInterpret {
+  width: 100%;
+  background-color: thistle;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.InterpretBlock {
+  margin-bottom: 10px;
+}
+
+.ScalesBlock {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.InterpretText {
+display: flex;
+}

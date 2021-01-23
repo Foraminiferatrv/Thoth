@@ -5,11 +5,14 @@
   min-height: 100%;
   width: 100%;
   padding: 13px;
+  box-sizing: border-box;
 }
 
 .ScalesBox {
   background-color: green;
   width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .ScaleField {
@@ -20,4 +23,6 @@
 .QuestionsBox {
   background-color: orange;
   width: 100%;
+  padding: 13px;
+  box-sizing: border-box;
 }

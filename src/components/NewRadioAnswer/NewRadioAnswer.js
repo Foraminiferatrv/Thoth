@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './NewRadioAnswer.module.css';
 
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 import EditableInput from '../UI/EditableInput/EditableInput';
 import ScalesList from '../../components/ScalesList/ScalesList';
-import XButton from '../UI/XButton/XButton';
+import TrashButton from '../UI/TrashButton/TrashButton';
 import NumInput from '../NumInput/NumInput';
 
 
 function NewRadioAnswer( props ) {
+  function getNumValue( numValue ) {
+    console.log( 'FromAneswer' + numValue );
+    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, parseFloat( numValue ) );
+    return numValue;
+  }
 
   let scaleDependenciesContent = null;
 
@@ -28,11 +33,11 @@ function NewRadioAnswer( props ) {
             questionId={ props.questionId }
             answerIndex={ props.answerIndex }
             depIndex={ index }
-            answerValue={ scaleData.answerValue }
-            changeAnswerValue={ props.changeAnswerValue }
+            numInputValue={ scaleData.answerValue }
+            getInputValue={ getNumValue }
           />
         </div>
-        <XButton
+        <TrashButton
           clicked={ () => props.deleteDependency( props.questionId, props.answerIndex, index ) }
         />
       </div>

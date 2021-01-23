@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './Input.module.css';
 
 
-function Input( { inputtype, noLabel, inputlabel, selectOptions, defaultSelectValue, ...rest } ) {
+function Input( { inputtype, noLabel, inputlabel, selectOptions, selectDefaultValue, selectPlaceholder, ...rest } ) {
 
   let inputElement = null;
 
@@ -16,10 +16,12 @@ function Input( { inputtype, noLabel, inputlabel, selectOptions, defaultSelectVa
 
     case 'select':
       inputElement = <select
-        defaultValue={ defaultSelectValue }
+        defaultValue={ selectDefaultValue }
         { ...rest }
         className={ classes.SelectElement }
       >
+        {/* Checking if placeholder is required and adding placeholder */ }
+        { selectPlaceholder ? <option className={ classes.SelectPlaceholder } value="" hidden >{ selectPlaceholder }</option> : null }
         { selectOptions !== undefined ? selectOptions.map( ( optionObject, index ) =>
           <option
             key={ 'questionDropdownOption' + index }
@@ -29,6 +31,14 @@ function Input( { inputtype, noLabel, inputlabel, selectOptions, defaultSelectVa
           : null }
       </select>
       break;
+
+    case 'textarea':
+      inputElement = <textarea
+        className={ classes.TextArea }
+        { ...rest }
+      ></textarea>
+      break;
+
 
     default:
       inputElement = <input { ...rest } />

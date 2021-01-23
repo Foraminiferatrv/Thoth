@@ -16,7 +16,30 @@ function createNewTest( state ) {
     testName: "",
     testId: uuidv4(),
     testScales: [],
-    testQuestions: []
+    testQuestions: [],
+    testInterpretations: [ {
+        requiredScales: {
+          requiredScaleId: '',
+          requiredValueLimits: {
+            from: 0,
+            to: 0
+          }
+        },
+        interpretText: "Якийсь текст для шкали про восьминогів і кальмарів...",
+        interpretId: uuidv4()
+      },
+      {
+        requiredScales: {
+          requiredScaleId: '',
+          requiredValueLimits: {
+            from: 0,
+            to: 0
+          }
+        },
+        interpretText: "",
+        interpretId: uuidv4()
+      }
+    ]
   };
 
   return updateObject( state, newTestObject );
@@ -164,21 +187,22 @@ function addDependency( state, targetQuestionId, answerIndex ) {
 function changeAnswerValue( state, targetQuestionId, answerIndex, depIndex, operationType, newValue ) {
   const questionsCopy = [ ...state.testQuestions ];
   const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+  //FIXME: create seperated function for <NumInput/>
+  // switch ( operationType ) {
+  //   case 'set':
+  //     questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue = newValue;
+  //     break;
+  //   case 'increase':
+  //     questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue++;
+  //     break;
+  //   case 'decrease':
+  //     questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue--;
+  //     break;
 
-  switch ( operationType ) {
-    case 'set':
-      questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue = newValue;
-      break;
-    case 'increase':
-      questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue++;
-      break;
-    case 'decrease':
-      questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue--;
-      break;
-
-    default:
-      break;
-  }
+  //   default:
+  //     break;
+  // }
+  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue = newValue;
 
   return ( updateObject( state, {
     testQuestions: [ ...questionsCopy ]
@@ -196,6 +220,52 @@ function deleteDependency( state, targetQuestionId, answerIndex, depIndex ) {
   } ) )
 }
 //end answer functions
+
+
+//interpret functions
+function addInterpret( state ) {
+  const interpretCopy = [ ...state.testInterpretations ];
+
+  interpretCopy.push( {
+    requiredScales: {
+      requiredScaleId: '',
+      requiredValueLimits: {
+        from: 0,
+        to: 0
+      }
+    },
+    interpretText: "",
+    interpretId: uuidv4()
+  } )
+
+  return ( updateObject( state, {
+    testInterpretations: [ ...interpretCopy ]
+  } ) )
+}
+
+function changeInterpretText( state, targetInterpretId, newInterpretText ) {
+  const interpretCopy = [ ...state.testInterpretations ];
+  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+
+  interpretCopy[ targetInterpretIndex ].interpretText = newInterpretText;
+
+  return ( updateObject( state, {
+    testInterpretations: [ ...interpretCopy ]
+  } ) )
+}
+
+function deleteInterpret( state, targetInterpretId ) {
+  const interpretCopy = [ ...state.testInterpretations ];
+  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+
+  interpretCopy.splice( targetInterpretIndex, 1 );
+
+  return ( updateObject( state, {
+    testInterpretations: [ ...interpretCopy ]
+  } ) )
+}
+//end interpret functions
+
 
 // TODO: Create function for element searching
 function testCreator( state = initialState, action ) {
@@ -241,6 +311,14 @@ function testCreator( state = initialState, action ) {
 
     case actionTypes.DELETE_DEPENDENCY:
       return deleteDependency( state, action.targetQuestionId, action.answerIndex, action.depIndex );
+
+    case actionTypes.ADD_INTERPRET:
+      return addInterpret( state );
+
+    case actionTypes.DELETE_INTERPRET:
+      return deleteInterpret( state, action.targetInterpretId );
+    case actionTypes.CHANGE_INTERPRET_TEXT:
+      return changeInterpretText( state, action.targetInterpretId, action.newInterpretText );
 
 
     default:
