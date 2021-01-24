@@ -23,6 +23,7 @@ function NewQuestion( props ) {
         scaleDependencies={ radioAnswerObject.scaleDependencies }
         testScales={ props.testScales }
         addDependency={ props.addDependency }
+        changeScaleDependency={ props.changeScaleDependency }
         deleteDependency={ props.deleteDependency }
       />
     ) );

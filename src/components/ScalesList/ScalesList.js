@@ -5,14 +5,13 @@ import classes from './ScalesList.module.css';
 
 import { Input } from '../UI/Input/Input';
 
-
+//TODO: create separate file for the .map funtion
 function ScalesList( props ) {
   let selectOptions = [];
 
   if ( props.testScales !== undefined ) {
     selectOptions = props.testScales.map( scaleObject => (
       {
-        ...selectOptions,
         optionName: scaleObject.scaleName,
         optionValue: scaleObject.scaleId
       }
@@ -25,7 +24,9 @@ function ScalesList( props ) {
       <Input
         inputtype='select'
         selectPlaceholder='Оберіть шкалу...'
+        selectDefaultValue={ props.selectedScale }
         selectOptions={ selectOptions }
+        onChange={ ( event ) => props.getInputValue( event.target.value ) }
       />
     </div>
   );

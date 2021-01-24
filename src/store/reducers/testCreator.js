@@ -15,27 +15,30 @@ function createNewTest( state ) {
   const newTestObject = {
     testName: "",
     testId: uuidv4(),
-    testScales: [],
+    testScales: [ {
+      scaleId: "TESTID1",
+      scaleName: "Test SCALE!"
+    } ],
     testQuestions: [],
     testInterpretations: [ {
-        requiredScales: {
-          requiredScaleId: '',
+        requiredScales: [ {
+          requiredScaleId: "TESTID1",
           requiredValueLimits: {
-            from: 0,
-            to: 0
+            from: -20,
+            to: 60
           }
-        },
-        interpretText: "Якийсь текст для шкали про восьминогів і кальмарів...",
+        } ],
+        interpretText: "Кальмари мають обтічне торпедоподібне тіло, що дозволяє їм рухатися з великою швидкістю «хвостом» вперед, основний спосіб руху — реактивний. Уздовж тіла кальмара проходить хрящова «стрілка», що підтримує тіло. Вона називається гладіус і є рудиментом раковини...",
         interpretId: uuidv4()
       },
       {
-        requiredScales: {
+        requiredScales: [ {
           requiredScaleId: '',
           requiredValueLimits: {
             from: 0,
             to: 0
           }
-        },
+        } ],
         interpretText: "",
         interpretId: uuidv4()
       }
@@ -184,25 +187,22 @@ function addDependency( state, targetQuestionId, answerIndex ) {
   } ) )
 }
 
-function changeAnswerValue( state, targetQuestionId, answerIndex, depIndex, operationType, newValue ) {
+function changeAnswerValue( state, targetQuestionId, answerIndex, depIndex, newValue ) {
   const questionsCopy = [ ...state.testQuestions ];
   const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
-  //FIXME: create seperated function for <NumInput/>
-  // switch ( operationType ) {
-  //   case 'set':
-  //     questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue = newValue;
-  //     break;
-  //   case 'increase':
-  //     questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue++;
-  //     break;
-  //   case 'decrease':
-  //     questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue--;
-  //     break;
 
-  //   default:
-  //     break;
-  // }
   questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue = newValue;
+
+  return ( updateObject( state, {
+    testQuestions: [ ...questionsCopy ]
+  } ) );
+}
+
+function changeScaleDependency( state, targetQuestionId, answerIndex, depIndex, newValue ) {
+  const questionsCopy = [ ...state.testQuestions ];
+  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+
+  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].scaleId = newValue;
 
   return ( updateObject( state, {
     testQuestions: [ ...questionsCopy ]
@@ -227,13 +227,13 @@ function addInterpret( state ) {
   const interpretCopy = [ ...state.testInterpretations ];
 
   interpretCopy.push( {
-    requiredScales: {
+    requiredScales: [ {
       requiredScaleId: '',
       requiredValueLimits: {
         from: 0,
         to: 0
       }
-    },
+    } ],
     interpretText: "",
     interpretId: uuidv4()
   } )
@@ -254,11 +254,35 @@ function changeInterpretText( state, targetInterpretId, newInterpretText ) {
   } ) )
 }
 
+function changeInterpretValueLimits( state, targetInterpretId, scaleIndex, fromLimit, toLimit ) {
+  const interpretCopy = [ ...state.testInterpretations ];
+  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+
+  interpretCopy[ targetInterpretIndex ].requiredScales[ scaleIndex ].requiredValueLimits = {
+    from: fromLimit,
+    to: toLimit
+  };
+
+  return ( updateObject( state, {
+    testInterpretations: [ ...interpretCopy ]
+  } ) )
+}
+
+
 function deleteInterpret( state, targetInterpretId ) {
   const interpretCopy = [ ...state.testInterpretations ];
   const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
 
   interpretCopy.splice( targetInterpretIndex, 1 );
+
+  return ( updateObject( state, {
+    testInterpretations: [ ...interpretCopy ]
+  } ) )
+}
+
+function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, newScaleId ) {
+  const interpretCopy = [ ...state.testInterpretations ];
+  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
 
   return ( updateObject( state, {
     testInterpretations: [ ...interpretCopy ]
@@ -307,7 +331,10 @@ function testCreator( state = initialState, action ) {
       return addDependency( state, action.targetQuestionId, action.answerIndex );
 
     case actionTypes.CHANGE_ANSWER_VALUE:
-      return changeAnswerValue( state, action.targetQuestionId, action.answerIndex, action.depIndex, action.operationType, action.newValue );
+      return changeAnswerValue( state, action.targetQuestionId, action.answerIndex, action.depIndex, action.newValue );
+
+    case actionTypes.CHANGE_SCALE_DEPENDENCY:
+      return changeScaleDependency( state, action.targetQuestionId, action.answerIndex, action.depIndex, action.newValue );
 
     case actionTypes.DELETE_DEPENDENCY:
       return deleteDependency( state, action.targetQuestionId, action.answerIndex, action.depIndex );
@@ -317,8 +344,15 @@ function testCreator( state = initialState, action ) {
 
     case actionTypes.DELETE_INTERPRET:
       return deleteInterpret( state, action.targetInterpretId );
+
     case actionTypes.CHANGE_INTERPRET_TEXT:
       return changeInterpretText( state, action.targetInterpretId, action.newInterpretText );
+
+    case actionTypes.CHANGE_INTERPRET_VALUE_LIMITS:
+      return changeInterpretValueLimits( state, action.targetInterpretId, action.scaleIndex, action.fromLimit, action.toLimit )
+
+    case actionTypes.CHANGE_INTERPRET_REQUIRED_SCALE:
+      return changeInterpretRequiredScale( state, action.targetInterpretId, action.scaleIndex, action.newScaleId );
 
 
     default:

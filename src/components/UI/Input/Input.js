@@ -16,9 +16,9 @@ function Input( { inputtype, noLabel, inputlabel, selectOptions, selectDefaultVa
 
     case 'select':
       inputElement = <select
+        className={ classes.SelectElement }
         defaultValue={ selectDefaultValue }
         { ...rest }
-        className={ classes.SelectElement }
       >
         {/* Checking if placeholder is required and adding placeholder */ }
         { selectPlaceholder ? <option className={ classes.SelectPlaceholder } value="" hidden >{ selectPlaceholder }</option> : null }

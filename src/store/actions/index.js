@@ -12,9 +12,12 @@ export {
   deleteRadioAnswer,
   addDependency,
   changeAnswerValue,
+  changeScaleDependency,
   deleteDependency,
   addInterpret,
   deleteInterpret,
-  changeInterpretText
+  changeInterpretText,
+  changeInterpretValueLimits,
+  changeInterpretRequiredScale
 }
 from './testCreator';

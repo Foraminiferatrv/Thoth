@@ -87,13 +87,22 @@ export const addDependency = ( targetQuestionId, answerIndex ) => {
   }
 }
 
-export const changeAnswerValue = ( targetQuestionId, answerIndex, depIndex, operationType, newValue ) => {
+export const changeAnswerValue = ( targetQuestionId, answerIndex, depIndex, newValue ) => {
   return {
     type: actionTypes.CHANGE_ANSWER_VALUE,
     targetQuestionId: targetQuestionId,
     answerIndex: answerIndex,
     depIndex: depIndex,
-    operationType: operationType,
+    newValue: newValue
+  }
+}
+
+export const changeScaleDependency = ( targetQuestionId, answerIndex, depIndex, newValue ) => {
+  return {
+    type: actionTypes.CHANGE_SCALE_DEPENDENCY,
+    targetQuestionId: targetQuestionId,
+    answerIndex: answerIndex,
+    depIndex: depIndex,
     newValue: newValue
   }
 }
@@ -125,5 +134,24 @@ export const changeInterpretText = ( targetInterpretId, newInterpretText ) => {
     type: actionTypes.CHANGE_INTERPRET_TEXT,
     targetInterpretId: targetInterpretId,
     newInterpretText: newInterpretText
+  }
+}
+
+export const changeInterpretValueLimits = ( targetInterpretId, scaleIndex, fromLimit, toLimit ) => {
+  return {
+    type: actionTypes.CHANGE_INTERPRET_VALUE_LIMITS,
+    targetInterpretId,
+    scaleIndex,
+    fromLimit,
+    toLimit
+  }
+}
+
+export const changeInterpretRequiredScale = ( targetInterpretId, scaleIndex, newScaleId ) => {
+  return {
+    type: actionTypes.CHANGE_INTERPRET_REQUIRED_SCALE,
+    targetInterpretId,
+    scaleIndex,
+    newScaleId
   }
 }

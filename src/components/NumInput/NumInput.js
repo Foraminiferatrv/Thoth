@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import classes from './NumInput.module.css';
 
@@ -6,46 +6,37 @@ import { PlusButton } from '../UI/PlusButton/PlusButton';
 import { MinusButton } from '../UI/MinusButton/MinusButton';
 
 
+//FIXME: component makes extra update after typing
+//TODO: create individual functions in separated file for handlers
 function NumInput( { numInputValue, getInputValue } ) {
-  const [inputValue, setInputValue] = useState( numInputValue );
-
   function setValueHandler( value ) {
     if ( isNaN( value ) !== true && value !== '' ) {
-      setInputValue( value );
+      getInputValue( value );
     }
     if ( value === '' ) {
-      setInputValue( 0 );
+      getInputValue( parseFloat( 0 ) );
+    }
+    if ( value === '-' ) {
+      getInputValue( '-' );
     }
   }
 
   function increaseInputValueHandler( oldValue ) {
-    setInputValue( parseFloat( oldValue ) + 1 );
-    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'set', parseFloat( inputValue ) );
-    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'increase' );
+    getInputValue( parseFloat( oldValue ) + 1 );
   }
 
   function decreaseInputValueHandler( oldValue ) {
-    setInputValue( parseFloat( oldValue ) - 1 );
-    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'decrease' );
+    getInputValue( parseFloat( oldValue ) - 1 );
   }
-
-  useEffect( () => {
-    // if ( props.changeAnswerValue !== undefined ) {
-    //   props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, 'set', parseFloat( inputValue ) );
-    // }
-    if ( getInputValue !== undefined ) {
-      getInputValue( inputValue );
-    }
-  }, [inputValue] );
 
   return (
     <div className={ classes.NumInput }>
-      <PlusButton clicked={ () => increaseInputValueHandler( inputValue ) } />
+      <PlusButton clicked={ () => increaseInputValueHandler( numInputValue ) } />
       <input className={ classes.ValueField }
-        value={ inputValue }
+        value={ numInputValue }
         onChange={ ( event ) => { setValueHandler( event.target.value ) } }
         type="input" />
-      <MinusButton clicked={ () => decreaseInputValueHandler( inputValue ) } />
+      <MinusButton clicked={ () => decreaseInputValueHandler( numInputValue ) } />
     </div>
   )
 }

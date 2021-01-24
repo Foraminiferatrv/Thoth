@@ -17,20 +17,23 @@ import {
   deleteRadioAnswer,
   addDependency,
   changeAnswerValue,
+  changeScaleDependency,
   deleteDependency,
   addInterpret,
   deleteInterpret,
-  changeInterpretText
+  changeInterpretText,
+  changeInterpretValueLimits,
+  changeInterpretRequiredScale
 } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
 import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
-import NewInterpret from '../../components/NewInterpret/NewInterpret';
+import InterpretsContainer from '../InterpretsContainer/InterpretsContainer';
 
 
-
+//TODO: destructure all props
 function CreateTestWindow( props ) {
 
   function scaleCreator( testScalesArray ) {
@@ -71,6 +74,7 @@ function CreateTestWindow( props ) {
           testScales={ props.newTestData.testScales }
           addDependency={ props.onAddDependency }
           changeAnswerValue={ props.onChangeAnswerValue }
+          changeScaleDependency={ props.onChangeScaleDependency }
           deleteDependency={ props.onDeleteDependency }
         />
       ) )
@@ -104,12 +108,14 @@ function CreateTestWindow( props ) {
         />
         { qeustionCreator( props.newTestData.testQuestions ) }
       </div>
-      <NewInterpret
+      <InterpretsContainer
         interprets={ props.newTestData.testInterpretations }
         testScales={ props.newTestData.testScales }
         addInterpret={ props.onAddInterpret }
         deleteInterpret={ props.onDeleteInterpret }
         changeInterpretText={ props.onChangeInterpretText }
+        changeInterpretValueLimits={ props.onChangeInterpretValueLimits }
+        onChangeInterpretRequiredScale={ props.changeInterpretRequiredScale}
       />
     </form>
   );
@@ -134,11 +140,14 @@ function mapDispatchToProps( dispatch ) {
     onChangeRadioAnswerText: ( newAnswerText, targetQuestionId, answerIndex ) => dispatch( changeRadioAnswerText( newAnswerText, targetQuestionId, answerIndex ) ),
     onDeleteRadioAnswer: ( targetQuestionId, answerIndex ) => dispatch( deleteRadioAnswer( targetQuestionId, answerIndex ) ),
     onAddDependency: ( targetQuestionId, answerIndex ) => dispatch( addDependency( targetQuestionId, answerIndex ) ),
-    onChangeAnswerValue: ( targetQuestionId, answerIndex, depIndex, operationType, newValue ) => dispatch( changeAnswerValue( targetQuestionId, answerIndex, depIndex, operationType, newValue ) ),
+    onChangeAnswerValue: ( targetQuestionId, answerIndex, depIndex, newValue ) => dispatch( changeAnswerValue( targetQuestionId, answerIndex, depIndex, newValue ) ),
+    onChangeScaleDependency: ( ( targetQuestionId, answerIndex, depIndex, operationType, newValue ) => dispatch( changeScaleDependency( targetQuestionId, answerIndex, depIndex, operationType, newValue ) ) ),
     onDeleteDependency: ( targetQuestionId, answerIndex, depIndex ) => dispatch( deleteDependency( targetQuestionId, answerIndex, depIndex ) ),
     onAddInterpret: () => dispatch( addInterpret() ),
     onDeleteInterpret: ( targetInterpretId ) => dispatch( deleteInterpret( targetInterpretId ) ),
-    onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) )
+    onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) ),
+    onChangeInterpretValueLimits: ( targetInterpretId, scaleIndex, fromLimit, toLimit ) => dispatch( changeInterpretValueLimits( targetInterpretId, scaleIndex, fromLimit, toLimit ) ),
+    onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) )
   }
 }
 

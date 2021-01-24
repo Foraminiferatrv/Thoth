@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import classes from './NewRadioAnswer.module.css';
 
@@ -9,13 +9,8 @@ import TrashButton from '../UI/TrashButton/TrashButton';
 import NumInput from '../NumInput/NumInput';
 
 
+//TODO: Create individual component for scaleDependencies
 function NewRadioAnswer( props ) {
-  function getNumValue( numValue ) {
-    console.log( 'FromAneswer' + numValue );
-    // props.changeAnswerValue( props.questionId, props.answerIndex, props.depIndex, parseFloat( numValue ) );
-    return numValue;
-  }
-
   let scaleDependenciesContent = null;
 
   if ( props.scaleDependencies !== undefined ) {
@@ -27,14 +22,15 @@ function NewRadioAnswer( props ) {
         <ScalesList
           testScales={ props.testScales }
           selectedScale={ scaleData.scaleId }
+          getInputValue={ ( value ) => props.changeScaleDependency( props.questionId, props.answerIndex, index, value ) }
+          inputIndex={ index }
         />
         <div className={ classes.AnswerValueBlock }>
           <NumInput
             questionId={ props.questionId }
-            answerIndex={ props.answerIndex }
-            depIndex={ index }
+            inputIndex={ index }
             numInputValue={ scaleData.answerValue }
-            getInputValue={ getNumValue }
+            getInputValue={ ( value ) => props.changeAnswerValue( props.questionId, props.answerIndex, index, value ) }
           />
         </div>
         <TrashButton
