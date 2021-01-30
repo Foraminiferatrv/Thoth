@@ -6,15 +6,13 @@ import {
 
 
 const initialState = {
-  testsData: []
+  testsData: {}
 };
 
 
 function setTestsData( state, testsData ) {
-  const testsDataCopy = state.testData;
-
-  testsData.map( data => testsDataCopy.push( data ) );
-
+  let testsDataCopy = state.testData;
+  testsDataCopy = testsData;
   return updateObject( state, {
     testsData: testsDataCopy
   } );
@@ -24,8 +22,7 @@ function setTestsData( state, testsData ) {
 function app( state = initialState, action ) {
   switch ( action.type ) {
     case actionTypes.SET_TESTS_DATA:
-      setTestsData( state, action.testsData );
-      break;
+      return setTestsData( state, action.testsData );
 
 
     default:

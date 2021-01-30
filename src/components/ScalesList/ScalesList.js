@@ -6,6 +6,7 @@ import classes from './ScalesList.module.css';
 import { Input } from '../UI/Input/Input';
 
 //TODO: create separate file for the .map funtion
+//FIXME: two identical scales can't be chosen
 function ScalesList( props ) {
   let selectOptions = [];
 

@@ -2,25 +2,28 @@ import { useEffect } from 'react';
 
 import classes from './App.module.css';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Sidebar from './containers/Sidebar/Sidebar';
 import CreateTestWindow from './containers/CreateTestWindow/CreateTestWindow';
+import TestWindow from './containers/TestWindow/TestWindow';
 
 import { initTests } from './store/actions/app';
 
 
-function App( props ) {
-  console.log( props.appState )
+function App( { appState, onInitTests, match, ...rest } ) {
+  console.log( match );
 
   useEffect( () => {
-    props.onInitTests();
-  } );
+    onInitTests();
+  }, [onInitTests] );
 
   return (
     <div className={ classes.App }>
-      <Sidebar />
+      <Sidebar
+        testsData={ appState.testsData }
+      />
 
       <Switch>
         <Route
@@ -28,8 +31,13 @@ function App( props ) {
           path="/createNewTest"
           component={ () => <CreateTestWindow /> }
         />
-      </Switch>
 
+        <Route
+          path={ '/test/:testId' }
+          component={ () => <TestWindow testsData={ appState.testsData } /> }
+        />
+        <Redirect  from="/" to="/" />
+      </Switch>
     </div>
   );
 }

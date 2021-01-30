@@ -10,10 +10,9 @@ export const setTestsData = ( testsData ) => {
 }
 
 export const initTests = () => {
-  const proxy = "https://cors-anywhere.herokuapp.com/";
   return dispatch => {
-    axiosInstance.get( '/testsData' )
+    axiosInstance.get( '/testsData.json' )
       .then( response => dispatch( setTestsData( response.data ) ) )
-      .catch( error => console.log( 'SERVER ERROR ' + error ) )
+      .catch( error => console.log( error ) )
   }
 }

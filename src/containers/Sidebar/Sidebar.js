@@ -11,12 +11,18 @@ import NewTestTag from '../../components/NewTestTag/NewTestTag';
 
 // import { Link } from 'react-router-dom';
 
-function Sidebar( props ) {
+function Sidebar( { onCreateNewTest, testsData } ) {
+  Object.entries( testsData ).map( el => console.log( el ) );
   return (
     <div className={ classes.Sidebar }>
-
-      <NewTestTag addNewTest={ props.onCreateNewTest } />
-      <TestTag testName='Test 1' />
+      <NewTestTag addNewTest={ onCreateNewTest } />
+      {
+        Object.entries( testsData ).map( ( testData, index ) => <TestTag
+          key={ 'testTag' + index }
+          testName={ testData[1].testName }
+          testAdress={ testData[0] }
+        /> )
+      }
     </div>
   );
 }
