@@ -1,4 +1,3 @@
-import React from 'react';
 
 import classes from './CreateTestWindow.module.css';
 
@@ -23,7 +22,8 @@ import {
   deleteInterpret,
   changeInterpretText,
   changeInterpretValueLimits,
-  changeInterpretRequiredScale
+  changeInterpretRequiredScale,
+  sendTestData
 } from '../../store/actions/index';
 
 import { Input } from '../../components/UI/Input/Input';
@@ -115,7 +115,12 @@ function CreateTestWindow( props ) {
         deleteInterpret={ props.onDeleteInterpret }
         changeInterpretText={ props.onChangeInterpretText }
         changeInterpretValueLimits={ props.onChangeInterpretValueLimits }
-        onChangeInterpretRequiredScale={ props.changeInterpretRequiredScale}
+        changeInterpretRequiredScale={ props.onChangeInterpretRequiredScale }
+      />
+      {/* TODO: Replace the submit button */ }
+      <AddItemButton
+        buttonText={ 'temp submit' }
+        clicked={ () => props.onSendTestData( props.newTestData ) }
       />
     </form>
   );
@@ -147,7 +152,8 @@ function mapDispatchToProps( dispatch ) {
     onDeleteInterpret: ( targetInterpretId ) => dispatch( deleteInterpret( targetInterpretId ) ),
     onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) ),
     onChangeInterpretValueLimits: ( targetInterpretId, scaleIndex, fromLimit, toLimit ) => dispatch( changeInterpretValueLimits( targetInterpretId, scaleIndex, fromLimit, toLimit ) ),
-    onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) )
+    onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) ),
+    onSendTestData: ( testData ) => dispatch( sendTestData( testData ) )
   }
 }
 

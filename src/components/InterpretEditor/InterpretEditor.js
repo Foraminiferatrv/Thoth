@@ -22,7 +22,7 @@ function InterpretEditor( props ) {
         inputIndex={ index }
         selectPlaceholder={ "Оберіть шкалу..." }
         selectedScale={ scale.requiredScaleId }
-        getInputValue={ props.changeInterpretRequiredScale }
+        getInputValue={ scaleId => props.changeInterpretRequiredScale( props.interpretId, index, scaleId ) }
       />
       <NumRange
         valueLimits={ scale.requiredValueLimits }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './NumRange.module.css';
 import NumInput from '../../NumInput/NumInput';

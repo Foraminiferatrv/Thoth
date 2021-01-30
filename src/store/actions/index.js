@@ -18,6 +18,10 @@ export {
   deleteInterpret,
   changeInterpretText,
   changeInterpretValueLimits,
-  changeInterpretRequiredScale
+  changeInterpretRequiredScale,
+  sendTestData
 }
 from './testCreator';
+
+export {}
+from './app';

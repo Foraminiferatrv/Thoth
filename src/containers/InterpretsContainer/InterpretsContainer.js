@@ -7,7 +7,7 @@ import InterpretEditor from '../../components/InterpretEditor/InterpretEditor';
 
 
 function InterpretsContainer( props ) {
-  let interpretContent = null;
+  let interpretContent;
 
   if ( props.interprets !== undefined ) {
     interpretContent = props.interprets.map(
@@ -20,7 +20,6 @@ function InterpretsContainer( props ) {
           interpretText={ interpret.interpretText }
           changeInterpretText={ props.changeInterpretText }
           deleteInterpret={ props.deleteInterpret }
-          changeInterpretValueLimits={ props.changeInterpretValueLimits }
           valueLimits={ interpret.requiredScales.requiredValueLimits }
           changeInterpretValueLimits={ props.changeInterpretValueLimits }
           changeInterpretRequiredScale={ props.changeInterpretRequiredScale }

@@ -284,6 +284,8 @@ function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, new
   const interpretCopy = [ ...state.testInterpretations ];
   const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
 
+  interpretCopy[ targetInterpretIndex ].requiredScales[ scaleIndex ].requiredScaleId = newScaleId;
+
   return ( updateObject( state, {
     testInterpretations: [ ...interpretCopy ]
   } ) )

@@ -1,5 +1,7 @@
 import * as actionTypes from './actionTypes';
 
+import axios from '../../axios';
+
 export const createNewTest = () => {
   return {
     type: actionTypes.CREATE_NEW_TEST
@@ -153,5 +155,15 @@ export const changeInterpretRequiredScale = ( targetInterpretId, scaleIndex, new
     targetInterpretId,
     scaleIndex,
     newScaleId
+  }
+}
+//TODO: create separate file for async actions
+
+
+export const sendTestData = ( testData ) => {
+  return dispatch => {
+    axios.post( `/testsData.json`, testData )
+      .then( response => console.log( response.data ) )
+      .catch( error => console.log( 'SERVER ERROR ' + error ) );
   }
 }
