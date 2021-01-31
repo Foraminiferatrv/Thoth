@@ -11,10 +11,10 @@ function ScalesList( props ) {
   let selectOptions = [];
 
   if ( props.testScales !== undefined ) {
-    selectOptions = props.testScales.map( scaleObject => (
+    selectOptions = Object.entries( props.testScales ).map( ( [scaleId, values] ) => (
       {
-        optionName: scaleObject.scaleName,
-        optionValue: scaleObject.scaleId
+        optionName: values.scaleName,
+        optionValue: scaleId
       }
     )
     )

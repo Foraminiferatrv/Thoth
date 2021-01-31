@@ -12,8 +12,7 @@ import TestWindow from './containers/TestWindow/TestWindow';
 import { initTests } from './store/actions/app';
 
 
-function App( { appState, onInitTests, match, ...rest } ) {
-  console.log( match );
+function App( { appState, onInitTests} ) {
 
   useEffect( () => {
     onInitTests();

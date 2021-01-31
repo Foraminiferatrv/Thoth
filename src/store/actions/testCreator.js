@@ -57,64 +57,64 @@ export const deleteQestion = ( targetQuestionId ) => {
   }
 }
 
-export const addNewRadioAnswer = ( targetQuestionIndex ) => {
+export const addNewRadioAnswer = ( targetQuestionId ) => {
   return {
     type: actionTypes.CREATE_NEW_RADIO_ANSWER,
-    targetQuestionIndex: targetQuestionIndex
+    targetQuestionId
   }
 }
 
-export const changeRadioAnswerText = ( newAnswerText, targetQuestionId, answerIndex ) => {
+export const changeRadioAnswerText = ( newAnswerText, targetQuestionId, answerId ) => {
   return {
     type: actionTypes.CHANGE_RADIO_ANSWER_TEXT,
     newAnswerText: newAnswerText,
     targetQuestionId: targetQuestionId,
-    answerIndex: answerIndex
+    answerId
   }
 }
 
-export const deleteRadioAnswer = ( targetQuestionId, answerIndex ) => {
+export const deleteRadioAnswer = ( targetQuestionId, answerId ) => {
   return {
     type: actionTypes.DELETE_RADIO_ANSWER,
     targetQuestionId: targetQuestionId,
-    answerIndex: answerIndex
+    answerId
   }
 }
 
-export const addDependency = ( targetQuestionId, answerIndex ) => {
+export const addDependency = ( targetQuestionId, answerId ) => {
   return {
     type: actionTypes.ADD_DEPENDENCY,
     targetQuestionId: targetQuestionId,
-    answerIndex: answerIndex
+    answerId
   }
 }
 
-export const changeAnswerValue = ( targetQuestionId, answerIndex, depIndex, newValue ) => {
-  return {
-    type: actionTypes.CHANGE_ANSWER_VALUE,
-    targetQuestionId: targetQuestionId,
-    answerIndex: answerIndex,
-    depIndex: depIndex,
-    newValue: newValue
-  }
-}
-
-export const changeScaleDependency = ( targetQuestionId, answerIndex, depIndex, newValue ) => {
+export const changeScaleDependency = ( targetQuestionId, answerId, depIndex, newValue ) => {
   return {
     type: actionTypes.CHANGE_SCALE_DEPENDENCY,
     targetQuestionId: targetQuestionId,
-    answerIndex: answerIndex,
-    depIndex: depIndex,
-    newValue: newValue
+    answerId,
+    depIndex,
+    newValue
   }
 }
 
-export const deleteDependency = ( targetQuestionId, answerIndex, depIndex ) => {
+export const deleteDependency = ( targetQuestionId, answerId, depIndex ) => {
   return {
     type: actionTypes.DELETE_DEPENDENCY,
     targetQuestionId: targetQuestionId,
-    answerIndex: answerIndex,
+    answerId,
     depIndex: depIndex
+  }
+}
+
+export const changeAnswerValue = ( targetQuestionId, answerId, depIndex, newValue ) => {
+  return {
+    type: actionTypes.CHANGE_ANSWER_VALUE,
+    targetQuestionId: targetQuestionId,
+    answerId,
+    depIndex: depIndex,
+    newValue: newValue
   }
 }
 

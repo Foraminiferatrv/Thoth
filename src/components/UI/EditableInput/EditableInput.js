@@ -7,7 +7,6 @@ import XButton from '../XButton/XButton';
 import EditButton from '../EditButton/EditButton';
 import CheckButton from '../CheckButton/CheckButton';
 
-
 function EditableInput( props ) {
   const alphabet = 'abcdefghijklmnopqrstuvwxyza';
   const [editStatus, changeEditStatus] = useState( true );
@@ -20,7 +19,7 @@ function EditableInput( props ) {
     inputlabel={ props.letterIndex ? alphabet[props.inputIndex] : props.inputIndex + 1 }
     inputtype='input'
     defaultValue={ props.inputValue }
-    onChange={ event => props.changed( event.target.value, props.inputId, props.answerIndex ) } //TODO: answerText might need to be replaced due to better reusability
+    onChange={ event => props.changed( event ) } //TODO: answerText might need to be replaced due to better reusability
     //* FIXME:on change function is not flexible enough. */ 
     onBlur={ toggleEditStatus }
     autoFocus
@@ -43,7 +42,7 @@ function EditableInput( props ) {
       <div className={ classes.ButtonBlock }>
         { !editStatus ? <EditButton clicked={ () => toggleEditStatus( editStatus ) } /> :
           <CheckButton clicked={ () => toggleEditStatus( editStatus ) } /> }  {/* toggling edit button*/ }
-        <XButton clicked={ () => props.deleted( props.inputId, props.answerIndex ) } />
+        <XButton clicked={ () => props.deleted() } />
       </div>
     </div>
   );

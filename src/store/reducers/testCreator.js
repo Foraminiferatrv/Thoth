@@ -15,12 +15,14 @@ function createNewTest( state ) {
   const newTestObject = {
     testName: "",
     testId: uuidv4(),
-    testScales: [ {
-      scaleId: "TESTID1",
-      scaleName: "Test SCALE!"
-    } ],
-    testQuestions: [],
-    testInterpretations: [ {
+    testScales: {
+      "TESTID1": {
+        scaleName: "Test SCALE!"
+      }
+    },
+    testQuestions: {},
+    testInterpretations: {
+      [ uuidv4() ]: {
         requiredScales: [ {
           requiredScaleId: "TESTID1",
           requiredValueLimits: {
@@ -28,10 +30,9 @@ function createNewTest( state ) {
             to: 60
           }
         } ],
-        interpretText: "Кальмари мають обтічне торпедоподібне тіло, що дозволяє їм рухатися з великою швидкістю «хвостом» вперед, основний спосіб руху — реактивний. Уздовж тіла кальмара проходить хрящова «стрілка», що підтримує тіло. Вона називається гладіус і є рудиментом раковини...",
-        interpretId: uuidv4()
+        interpretText: "Кальмари мають обтічне торпедоподібне тіло, що дозволяє їм рухатися з великою швидкістю «хвостом» вперед, основний спосіб руху — реактивний. Уздовж тіла кальмара проходить хрящова «стрілка», що підтримує тіло. Вона називається гладіус і є рудиментом раковини..."
       },
-      {
+      [ uuidv4() ]: {
         requiredScales: [ {
           requiredScaleId: '',
           requiredValueLimits: {
@@ -39,10 +40,9 @@ function createNewTest( state ) {
             to: 0
           }
         } ],
-        interpretText: "",
-        interpretId: uuidv4()
+        interpretText: ""
       }
-    ]
+    }
   };
 
   return updateObject( state, newTestObject );
@@ -57,11 +57,15 @@ function addTestName( state, testName ) {
 
 // scale functions
 function createNewScale( state ) {
-  const updatedScales = [ ...state.testScales ];
-  updatedScales.push( {
-    scaleId: uuidv4(),
-    scaleName: ""
-  } );
+  let updatedScales = {
+    ...state.testScales
+  };
+  updatedScales = {
+    ...updatedScales,
+    [ uuidv4() ]: {
+      scaleName: ""
+    }
+  };
 
   return updateObject( state, {
     testScales: updatedScales
@@ -69,11 +73,12 @@ function createNewScale( state ) {
 }
 
 function changeScaleName( state, scaleName, targetScaleId ) {
-  let scalesCopy = [ ...state.testScales ];
-  const targetScaleIndex = scalesCopy.indexOf( state.testScales.filter( ( element ) => element.scaleId === targetScaleId )[ 0 ] );
+  let scalesCopy = {
+    ...state.testScales
+  };
 
-  scalesCopy[ targetScaleIndex ] = {
-    ...scalesCopy[ targetScaleIndex ],
+  scalesCopy[ targetScaleId ] = {
+    ...scalesCopy[ targetScaleId ],
     scaleName: scaleName
   }
   return ( updateObject( state, {
@@ -83,10 +88,11 @@ function changeScaleName( state, scaleName, targetScaleId ) {
 }
 
 function deleteScale( state, targetScaleId ) {
-  const scalesCopy = [ ...state.testScales ];
-  const targetScaleIndex = scalesCopy.indexOf( state.testScales.filter( ( element ) => element.scaleId === targetScaleId )[ 0 ] );
+  const scalesCopy = {
+    ...state.testScales
+  };
 
-  scalesCopy.splice( targetScaleIndex, 1 );
+  delete scalesCopy[ targetScaleId ];
 
   return ( updateObject( state, {
     testScales: scalesCopy
@@ -97,24 +103,28 @@ function deleteScale( state, targetScaleId ) {
 
 // questions functions
 function createNewQuestion( state ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  questionsCopy.push( {
-    questionNumber: null,
-    questionText: "",
-    questionId: uuidv4(),
-    questionRadioAnswers: []
-  } );
+  let questionsCopy = {
+    ...state.testQuestions
+  };
+  questionsCopy = {
+    ...questionsCopy,
+    [ uuidv4() ]: {
+      questionText: "",
+      questionRadioAnswers: {}
+    }
+  };
   return updateObject( state, {
     testQuestions: questionsCopy
   } );
 }
 
 function changeQuestionText( state, newQuestionText, targetQuestionId ) {
-  let questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+  let questionsCopy = {
+    ...state.testQuestions
+  };
 
-  questionsCopy[ targetQuestionIndex ] = {
-    ...questionsCopy[ targetQuestionIndex ],
+  questionsCopy[ targetQuestionId ] = {
+    ...questionsCopy[ targetQuestionId ],
     questionText: newQuestionText
   }
 
@@ -124,10 +134,10 @@ function changeQuestionText( state, newQuestionText, targetQuestionId ) {
 }
 
 function deleteQestion( state, targetQuestionId ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
-
-  questionsCopy.splice( targetQuestionIndex, 1 );
+  const questionsCopy = {
+    ...state.testQuestions
+  };
+  delete questionsCopy[ targetQuestionId ];
 
   return updateObject( state, {
     testQuestions: questionsCopy
@@ -137,163 +147,194 @@ function deleteQestion( state, targetQuestionId ) {
 
 
 //answer functions
-function addNewRadioAnswer( state, targetQuestionIndex ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers.push( {
-    answerText: "",
-    answerId: uuidv4(),
-    scaleDependencies: [ {
-      scaleId: "",
-      answerValue: 0
-    } ]
-  } );
+function addNewRadioAnswer( state, targetQuestionId ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
+  questionsCopy[ targetQuestionId ].questionRadioAnswers = {
+    ...questionsCopy[ targetQuestionId ].questionRadioAnswers,
+    [ uuidv4() ]: {
+      answerText: "",
+      scaleDependencies: [ {
+        scaleId: "",
+        answerValue: 0
+      } ]
+    }
+  };
 
   return updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
+    testQuestions: questionsCopy
   } );
 }
 
-function changeRadioAnswerText( state, newAnswerText, targetQuestionId, answerIndex ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].answerText = newAnswerText;
+function changeRadioAnswerText( state, newAnswerText, targetQuestionId, answerId ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
+
+  questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ] = {
+    ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
+    answerText: newAnswerText
+  }
 
   return ( updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
+    testQuestions: questionsCopy
   } ) );
 }
 
-function deleteRadioAnswer( state, targetQuestionId, answerIndex ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers.splice( answerIndex, 1 );
+function deleteRadioAnswer( state, targetQuestionId, answerId ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
+  delete questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ];
 
   return ( updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
+    testQuestions: questionsCopy
   } ) );
 }
 
-function addDependency( state, targetQuestionId, answerIndex ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+function addDependency( state, targetQuestionId, answerId ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
 
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies.push( {
+
+  questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.push( {
     scaleId: "",
     answerValue: 0
   } )
 
   return ( updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
+    testQuestions: questionsCopy
   } ) )
 }
 
-function changeAnswerValue( state, targetQuestionId, answerIndex, depIndex, newValue ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
 
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].answerValue = newValue;
+function changeScaleDependency( state, targetQuestionId, answerId, depIndex, newValue ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
+
+  questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies[ depIndex ].scaleId = newValue;
 
   return ( updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
+    testQuestions: questionsCopy
   } ) );
 }
 
-function changeScaleDependency( state, targetQuestionId, answerIndex, depIndex, newValue ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+function deleteDependency( state, targetQuestionId, answerId, depIndex ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
 
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies[ depIndex ].scaleId = newValue;
-
-  return ( updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
-  } ) );
-}
-
-function deleteDependency( state, targetQuestionId, answerIndex, depIndex ) {
-  const questionsCopy = [ ...state.testQuestions ];
-  const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
-
-  questionsCopy[ targetQuestionIndex ].questionRadioAnswers[ answerIndex ].scaleDependencies.splice( depIndex, 1 );
+  questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.splice( depIndex, 1 );
 
   return ( updateObject( state, {
-    testQuestions: [ ...questionsCopy ]
+    testQuestions: questionsCopy
   } ) )
+}
+
+function changeAnswerValue( state, targetQuestionId, answerId, depIndex, newValue ) {
+  const questionsCopy = {
+    ...state.testQuestions
+  };
+  // const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+
+  questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies[ depIndex ].answerValue = newValue;
+
+  return ( updateObject( state, {
+    testQuestions: questionsCopy
+  } ) );
 }
 //end answer functions
 
 
 //interpret functions
 function addInterpret( state ) {
-  const interpretCopy = [ ...state.testInterpretations ];
+  let interpretCopy = {
+    ...state.testInterpretations
+  };
 
-  interpretCopy.push( {
-    requiredScales: [ {
-      requiredScaleId: '',
-      requiredValueLimits: {
-        from: 0,
-        to: 0
-      }
-    } ],
-    interpretText: "",
-    interpretId: uuidv4()
-  } )
+  interpretCopy = {
+    ...interpretCopy,
+    [ uuidv4() ]: {
+      requiredScales: [ {
+        requiredScaleId: '',
+        requiredValueLimits: {
+          from: 0,
+          to: 0
+        }
+      } ],
+      interpretText: ""
+    }
+  }
 
   return ( updateObject( state, {
-    testInterpretations: [ ...interpretCopy ]
+    testInterpretations: interpretCopy
   } ) )
 }
 
 function changeInterpretText( state, targetInterpretId, newInterpretText ) {
-  const interpretCopy = [ ...state.testInterpretations ];
-  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+  const interpretCopy = {
+    ...state.testInterpretations
+  };
 
-  interpretCopy[ targetInterpretIndex ].interpretText = newInterpretText;
+
+  interpretCopy[ targetInterpretId ] = {
+    ...interpretCopy[ targetInterpretId ],
+    interpretText: newInterpretText
+  };
 
   return ( updateObject( state, {
-    testInterpretations: [ ...interpretCopy ]
-  } ) )
+    testInterpretations: interpretCopy
+  } ) );
 }
 
 function changeInterpretValueLimits( state, targetInterpretId, scaleIndex, fromLimit, toLimit ) {
-  const interpretCopy = [ ...state.testInterpretations ];
-  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+  const interpretCopy = {
+    ...state.testInterpretations
+  };
 
-  interpretCopy[ targetInterpretIndex ].requiredScales[ scaleIndex ].requiredValueLimits = {
+
+  interpretCopy[ targetInterpretId ].requiredScales[ scaleIndex ].requiredValueLimits = {
     from: fromLimit,
     to: toLimit
   };
 
   return ( updateObject( state, {
-    testInterpretations: [ ...interpretCopy ]
-  } ) )
+    testInterpretations: interpretCopy
+  } ) );
 }
 
 
 function deleteInterpret( state, targetInterpretId ) {
-  const interpretCopy = [ ...state.testInterpretations ];
-  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+  const interpretCopy = {
+    ...state.testInterpretations
+  };
 
-  interpretCopy.splice( targetInterpretIndex, 1 );
+  delete interpretCopy[ targetInterpretId ];
 
   return ( updateObject( state, {
-    testInterpretations: [ ...interpretCopy ]
-  } ) )
+    testInterpretations: interpretCopy
+  } ) );
 }
 
 function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, newScaleId ) {
-  const interpretCopy = [ ...state.testInterpretations ];
-  const targetInterpretIndex = interpretCopy.indexOf( interpretCopy.filter( ( element ) => element.interpretId === targetInterpretId )[ 0 ] );
+  const interpretCopy = {
+    ...state.testInterpretations
+  };
 
-  interpretCopy[ targetInterpretIndex ].requiredScales[ scaleIndex ].requiredScaleId = newScaleId;
+  interpretCopy[ targetInterpretId ].requiredScales[ scaleIndex ].requiredScaleId = newScaleId;
 
   return ( updateObject( state, {
-    testInterpretations: [ ...interpretCopy ]
-  } ) )
+    testInterpretations: interpretCopy
+  } ) );
 }
 //end interpret functions
 
 
 // TODO: Create function for element searching
+//TODO: Apply deep cloning for objects
 function testCreator( state = initialState, action ) {
   switch ( action.type ) {
     case actionTypes.CREATE_NEW_TEST:
@@ -321,25 +362,25 @@ function testCreator( state = initialState, action ) {
       return deleteQestion( state, action.targetQuestionId );
 
     case actionTypes.CREATE_NEW_RADIO_ANSWER:
-      return addNewRadioAnswer( state, action.targetQuestionIndex );
+      return addNewRadioAnswer( state, action.targetQuestionId );
 
     case actionTypes.CHANGE_RADIO_ANSWER_TEXT:
-      return changeRadioAnswerText( state, action.newAnswerText, action.targetQuestionId, action.answerIndex );
+      return changeRadioAnswerText( state, action.newAnswerText, action.targetQuestionId, action.answerId );
 
     case actionTypes.DELETE_RADIO_ANSWER:
-      return deleteRadioAnswer( state, action.targetQuestionId, action.answerIndex );
+      return deleteRadioAnswer( state, action.targetQuestionId, action.answerId );
 
     case actionTypes.ADD_DEPENDENCY:
-      return addDependency( state, action.targetQuestionId, action.answerIndex );
-
-    case actionTypes.CHANGE_ANSWER_VALUE:
-      return changeAnswerValue( state, action.targetQuestionId, action.answerIndex, action.depIndex, action.newValue );
+      return addDependency( state, action.targetQuestionId, action.answerId );
 
     case actionTypes.CHANGE_SCALE_DEPENDENCY:
-      return changeScaleDependency( state, action.targetQuestionId, action.answerIndex, action.depIndex, action.newValue );
+      return changeScaleDependency( state, action.targetQuestionId, action.answerId, action.depIndex, action.newValue );
 
     case actionTypes.DELETE_DEPENDENCY:
-      return deleteDependency( state, action.targetQuestionId, action.answerIndex, action.depIndex );
+      return deleteDependency( state, action.targetQuestionId, action.answerId, action.depIndex );
+
+    case actionTypes.CHANGE_ANSWER_VALUE:
+      return changeAnswerValue( state, action.targetQuestionId, action.answerId, action.depIndex, action.newValue );
 
     case actionTypes.ADD_INTERPRET:
       return addInterpret( state );

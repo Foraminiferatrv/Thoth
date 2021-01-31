@@ -22,7 +22,7 @@ function NewRadioAnswer( props ) {
         <ScalesList
           testScales={ props.testScales }
           selectedScale={ scaleData.scaleId }
-          getInputValue={ ( value ) => props.changeScaleDependency( props.questionId, props.answerIndex, index, value ) }
+          getInputValue={ ( value ) => props.changeScaleDependency( props.questionId, props.answerId, index, value ) }
           inputIndex={ index }
         />
         <div className={ classes.AnswerValueBlock }>
@@ -30,11 +30,11 @@ function NewRadioAnswer( props ) {
             questionId={ props.questionId }
             inputIndex={ index }
             numInputValue={ scaleData.answerValue }
-            getInputValue={ ( value ) => props.changeAnswerValue( props.questionId, props.answerIndex, index, value ) }
+            getInputValue={ ( value ) => props.changeAnswerValue( props.questionId, props.answerId, index, value ) }
           />
         </div>
         <TrashButton
-          clicked={ () => props.deleteDependency( props.questionId, props.answerIndex, index ) }
+          clicked={ () => props.deleteDependency( props.questionId, props.answerId, index ) }
         />
       </div>
     )
@@ -45,19 +45,19 @@ function NewRadioAnswer( props ) {
       <div className={ classes.InputField }>
         <EditableInput
           letterIndex
-          changed={ props.changeRadioAnswerText }
+          changed={ ( event ) => props.changeRadioAnswerText( event.target.value, props.questionId, props.answerId ) }
           inputId={ props.questionId }
           inputIndex={ props.answerIndex }
           answerIndex={ props.answerIndex }
           inputValue={ props.answerText }
-          deleted={ props.deleteRadioAnswer }
+          deleted={ () => props.deleteRadioAnswer( props.questionId, props.answerId ) }
         />
       </div>
       <div className={ classes.AnswerValuesBlock }>
         { scaleDependenciesContent }
         <div className={ classes.AddScaleButton }>
           <AddItemButton
-            clicked={ () => props.addDependency( props.questionId, props.answerIndex ) }
+            clicked={ () => props.addDependency( props.questionId, props.answerId ) }
             buttonText="Додати залежну  шкалу"
           />
         </div>
