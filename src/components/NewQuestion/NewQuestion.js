@@ -39,15 +39,15 @@ function NewQuestion( props ) {
           inputIndex={ props.questionIndex }
           changed={ event => props.changeQuestionText( event.target.value, props.questionId ) }
           deleted={ () => props.deleteQuestion( props.questionId ) }
-        />
+          />
       </div>
 
       <div className={ classes.AnswerBlock }>
+          { radioAnswersContent }
         <AddItemButton
           clicked={ () => props.newRadioAnswer( props.questionId ) }
           buttonText="Додати відповідь"
-        />
-        { radioAnswersContent }
+          />
       </div>
     </div>
   );

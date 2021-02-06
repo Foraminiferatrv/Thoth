@@ -31,11 +31,11 @@ function InterpretsContainer( props ) {
 
   return (
     <div className={ classes.InterpretsContainer }>
+      {interpretContent }
       <AddItemButton
         buttonText="Додати інтерпретацію"
         clicked={ props.addInterpret }
       />
-      {interpretContent }
     </div>
   );
 }

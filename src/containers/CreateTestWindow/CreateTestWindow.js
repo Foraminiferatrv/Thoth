@@ -95,18 +95,18 @@ function CreateTestWindow( props ) {
         onChange={ ( event ) => props.onAddTestName( event.target.value ) }
       />
       <div className={ classes.ScalesBox }>
+        { scaleCreator( props.newTestData.testScales ) }
         <AddItemButton
           buttonText="Додати шкалу"
           clicked={ props.onCreateScale }
         />
-        { scaleCreator( props.newTestData.testScales ) }
       </div>
       <div className={ classes.QuestionsBox }>
+        { qeustionCreator( props.newTestData.testQuestions ) }
         <AddItemButton
           buttonText="Додати запитання"
           clicked={ props.onCreateNewQuestion }
         />
-        { qeustionCreator( props.newTestData.testQuestions ) }
       </div>
       <InterpretsContainer
         interprets={ props.newTestData.testInterpretations }
