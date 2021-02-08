@@ -6,6 +6,9 @@ import { withRouter } from 'react-router-dom';
 
 import QuestionPage from '../../components/QuestionPage/QuestionPage';
 import { FormControl } from '@material-ui/core';
+import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
+
+import interpretator from './interpretator';
 
 
 function TestWindow( { testsData, match } ) {
@@ -16,8 +19,8 @@ function TestWindow( { testsData, match } ) {
       ...testResults,
       [questionId]: answerId
     } );
-    console.log( testResults );
   }
+
 
   return (
     <div className={ classes.TestWindow }>
@@ -31,6 +34,10 @@ function TestWindow( { testsData, match } ) {
           setResult={ setResult }
         /> ) }
       </FormControl>
+      <AddItemButton
+        buttonText={ 'interpretate!' }
+        clicked={ () => console.log( interpretator( testResults, testsData[match.params.testId].testQuestions, testsData[match.params.testId].testScales, testsData[match.params.testId].testInterpretations ) ) }
+      />
     </div>
   );
 }

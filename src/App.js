@@ -8,11 +8,12 @@ import { connect } from 'react-redux';
 import Sidebar from './containers/Sidebar/Sidebar';
 import CreateTestWindow from './containers/CreateTestWindow/CreateTestWindow';
 import TestWindow from './containers/TestWindow/TestWindow';
+import TestSelector from './containers/TestSelector/TestSelector';
 
 import { initTests } from './store/actions/app';
 
 
-function App( { appState, onInitTests} ) {
+function App( { appState, onInitTests } ) {
 
   useEffect( () => {
     onInitTests();
@@ -20,22 +21,22 @@ function App( { appState, onInitTests} ) {
 
   return (
     <div className={ classes.App }>
-      <Sidebar
-        testsData={ appState.testsData }
-      />
-
       <Switch>
+        <Route
+          exact
+          path="/"
+          component={ () => <TestSelector testsData={ appState.testsData } /> }
+        />
         <Route
           exact
           path="/createNewTest"
           component={ () => <CreateTestWindow /> }
         />
-
         <Route
           path={ '/test/:testId' }
           component={ () => <TestWindow testsData={ appState.testsData } /> }
         />
-        <Redirect  from="/" to="/" />
+        <Redirect from="/" to="/" />
       </Switch>
     </div>
   );

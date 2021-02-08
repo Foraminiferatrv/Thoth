@@ -1,0 +1,12 @@
+.TestSelector {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 240px);
+  grid-auto-rows: 120px;
+  row-gap: 25px;
+  column-gap: 25px;
+  justify-content: center;
+  background-color: lightgrey;
+}

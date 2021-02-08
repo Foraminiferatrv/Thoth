@@ -1,0 +1,10 @@
+.TestCard {
+  display: flex;
+  align-items: center;
+  background-color: pink;
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  padding: 14px;
+   font-family: Roboto-Bold;
+}
