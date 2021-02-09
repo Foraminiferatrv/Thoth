@@ -1,10 +1,11 @@
 .TestCard {
   display: flex;
   align-items: center;
-  background-color: pink;
+  background-color: lightgrey;
   border-radius: 10px;
   text-decoration: none;
   text-align: center;
   padding: 14px;
-   font-family: Roboto-Bold;
+  font-family: Roboto-Bold;
+  justify-content: center;
 }

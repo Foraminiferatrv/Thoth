@@ -1,10 +1,15 @@
 import classes from './EditTag.module.css';
 
-function EditTag( props ) {
+import { Link } from 'react-router-dom';
+
+
+function EditTag( { clicked } ) {
   return (
-    <div className={ classes.EditTag }>
-      
-    </div>
+    <Link
+      className={ classes.EditTag }
+      to="/selectTestsEdit"
+    >
+    </Link>
   );
 }
 
