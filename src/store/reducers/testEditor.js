@@ -335,7 +335,7 @@ function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, new
 
 // TODO: Create function for element searching
 //TODO: Apply deep cloning for objects
-function testCreator( state = initialState, action ) {
+function testEditor( state = initialState, action ) {
   switch ( action.type ) {
     case actionTypes.CREATE_NEW_TEST:
       return createNewTest( state );
@@ -404,5 +404,5 @@ function testCreator( state = initialState, action ) {
 }
 
 export {
-  testCreator
+  testEditor
 };

@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 
-import axios from '../../axios';
+import firebase from '../../firebase/firebase';
+
 
 export const createNewTest = () => {
   return {
@@ -160,10 +161,10 @@ export const changeInterpretRequiredScale = ( targetInterpretId, scaleIndex, new
 //TODO: create separate file for async actions
 
 
-export const sendTestData = ( testData ) => {
+export const sendTestData = ( testData, testId ) => {
   return dispatch => {
-    axios.post( `/testsData.json`, testData )
-      .then( response => console.log( response.data ) )
+    firebase.database()
+      .ref( `testsData/${testId}` ).set( testData )
       .catch( error => console.log( 'SERVER ERROR ' + error ) );
   }
 }

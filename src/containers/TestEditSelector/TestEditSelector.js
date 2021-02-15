@@ -1,15 +1,16 @@
 import classes from './TestEditSelector.module.css';
 
 import { connect } from 'react-redux';
-import { createNewTest } from '../../store/actions/index';
+import { createNewTest } from '../../store/actions/testEditor';
 
 import TestCard from '../../components/TestCard/TestCard';
+import NewTestCard from '../../components/NewTestCard/NewTestCard';
 
 
 function TestEditSelector( { testsData, onCreateNewTest } ) {
   return (
     <div className={ classes.TestEditSelector }>
-      <TestCard testName='+Додати нову методику+'
+      < NewTestCard
         clicked={ onCreateNewTest }
       />
       {

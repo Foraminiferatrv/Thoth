@@ -5,12 +5,13 @@ import classes from './App.module.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import CreateTestWindow from './containers/CreateTestWindow/CreateTestWindow';
+import EditTestWindow from './containers/EditTestWindow/EditTestWindow';
 import TestWindow from './containers/TestWindow/TestWindow';
 import TestSelector from './containers/TestSelector/TestSelector';
 import TestEditSelector from './containers/TestEditSelector/TestEditSelector';
 
 import { initTests } from './store/actions/app';
+
 
 
 function App( { appState, onInitTests } ) {
@@ -32,11 +33,15 @@ function App( { appState, onInitTests } ) {
           path="/selectTestsEdit"
           component={ () => <TestEditSelector testsData={ appState.testsData } /> }
         />
-
         <Route
           exact
-          path="/testEdit"
-          component={ () => <CreateTestWindow /> }
+          path="/testEdit/newTest"
+          component={ () => <EditTestWindow /> }
+        />
+        <Route
+          exact
+          path="/testEdit/:editTestId"
+          component={ () => <EditTestWindow  /> }
         />
         <Route
           path={ '/test/:testId' }

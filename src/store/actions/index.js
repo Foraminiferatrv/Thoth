@@ -21,7 +21,7 @@ export {
   changeInterpretRequiredScale,
   sendTestData
 }
-from './testCreator';
+from './testEditor';
 
 export {}
 from './app';

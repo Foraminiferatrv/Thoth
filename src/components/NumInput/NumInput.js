@@ -31,12 +31,12 @@ function NumInput( { numInputValue, getInputValue } ) {
 
   return (
     <div className={ classes.NumInput }>
-      <PlusButton clicked={ () => increaseInputValueHandler( numInputValue ) } />
+      <MinusButton clicked={ () => decreaseInputValueHandler( numInputValue ) } />
       <input className={ classes.ValueField }
         value={ numInputValue }
         onChange={ ( event ) => { setValueHandler( event.target.value ) } }
         type="input" />
-      <MinusButton clicked={ () => decreaseInputValueHandler( numInputValue ) } />
+      <PlusButton clicked={ () => increaseInputValueHandler( numInputValue ) } />
     </div>
   )
 }

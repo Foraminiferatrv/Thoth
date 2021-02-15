@@ -7,7 +7,6 @@ import EditTag from '../../components/UI/EditTag/EditTag';
 function TestSelector( { testsData } ) {
   return (
     <div className={ classes.TestSelector }>
-      {/* <NewTestTag addNewTest={ onCreateNewTest } /> */ }
       {
         Object.entries( testsData ).map( ( [testId, testData], index ) => <TestCard
           key={ 'testTag' + index }
@@ -15,7 +14,7 @@ function TestSelector( { testsData } ) {
           testAdress={ testId }
         /> )
       }
-      <EditTag/>
+      <EditTag />
     </div>
   );
 }

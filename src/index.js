@@ -11,18 +11,23 @@ import thunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
-import { testCreator } from './store/reducers/testCreator';
+import { testEditor } from './store/reducers/testEditor';
 import { app } from './store/reducers/app';
 
 
 const rootReducer = combineReducers( {
-  newTestData: testCreator,
+  testEditorState: testEditor,
   appState: app
 } );
 
 const composeEnhancers = ( typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ) || compose;
 
-const store = createStore( rootReducer, composeEnhancers( applyMiddleware( thunk ) ) );
+const store = createStore( rootReducer,
+  composeEnhancers(
+    applyMiddleware( thunk )
+  )
+);
+
 
 ReactDOM.render(
   <React.StrictMode>

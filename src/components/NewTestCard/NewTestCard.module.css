@@ -1,0 +1,18 @@
+.NewTestCard {
+  display: flex;
+  align-items: center;
+  background-color: rgb(247, 245, 245);
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  padding: 14px;
+  font-family: Roboto-Bold;
+  justify-content: center;
+}
+
+.PlusButton {
+  background-image: url(../../assets//icons/plus.png);
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}

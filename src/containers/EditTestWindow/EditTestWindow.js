@@ -1,5 +1,5 @@
 
-import classes from './CreateTestWindow.module.css';
+import classes from './EditTestWindow.module.css';
 
 import { connect } from 'react-redux';
 
@@ -35,7 +35,6 @@ import InterpretsContainer from '../InterpretsContainer/InterpretsContainer';
 
 //TODO: destructure all props
 function CreateTestWindow( props ) {
-
   function scaleCreator( testScalesArray ) {
     if ( testScalesArray !== undefined ) {
       return Object.entries( testScalesArray ).map( ( [scaleId, values], index ) => (
@@ -71,7 +70,7 @@ function CreateTestWindow( props ) {
           newRadioAnswer={ props.onAddNewRadioAnswer }
           changeRadioAnswerText={ props.onChangeRadioAnswerText }
           deleteRadioAnswer={ props.onDeleteRadioAnswer }
-          testScales={ props.newTestData.testScales }
+          testScales={ props.testEditorState.testScales }
           addDependency={ props.onAddDependency }
           changeAnswerValue={ props.onChangeAnswerValue }
           changeScaleDependency={ props.onChangeScaleDependency }
@@ -95,22 +94,22 @@ function CreateTestWindow( props ) {
         onChange={ ( event ) => props.onAddTestName( event.target.value ) }
       />
       <div className={ classes.ScalesBox }>
-        { scaleCreator( props.newTestData.testScales ) }
+        { scaleCreator( props.testEditorState.testScales ) }
         <AddItemButton
           buttonText="Додати шкалу"
           clicked={ props.onCreateScale }
         />
       </div>
       <div className={ classes.QuestionsBox }>
-        { qeustionCreator( props.newTestData.testQuestions ) }
+        { qeustionCreator( props.testEditorState.testQuestions ) }
         <AddItemButton
           buttonText="Додати запитання"
           clicked={ props.onCreateNewQuestion }
         />
       </div>
       <InterpretsContainer
-        interprets={ props.newTestData.testInterpretations }
-        testScales={ props.newTestData.testScales }
+        interprets={ props.testEditorState.testInterpretations }
+        testScales={ props.testEditorState.testScales }
         addInterpret={ props.onAddInterpret }
         deleteInterpret={ props.onDeleteInterpret }
         changeInterpretText={ props.onChangeInterpretText }
@@ -120,7 +119,7 @@ function CreateTestWindow( props ) {
       {/* TODO: Replace the submit button */ }
       <AddItemButton
         buttonText={ 'temp submit' }
-        clicked={ () => props.onSendTestData( props.newTestData ) }
+        clicked={ () => props.onSendTestData( props.testEditorState, props.testEditorState.testId ) }
       />
     </form>
   );
@@ -128,7 +127,7 @@ function CreateTestWindow( props ) {
 
 function mapStateToProps( state ) {
   return {
-    newTestData: state.newTestData
+    testEditorState: state.testEditorState
   }
 }
 
@@ -153,7 +152,7 @@ function mapDispatchToProps( dispatch ) {
     onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) ),
     onChangeInterpretValueLimits: ( targetInterpretId, scaleIndex, fromLimit, toLimit ) => dispatch( changeInterpretValueLimits( targetInterpretId, scaleIndex, fromLimit, toLimit ) ),
     onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) ),
-    onSendTestData: ( testData ) => dispatch( sendTestData( testData ) )
+    onSendTestData: ( testData, testId ) => dispatch( sendTestData( testData, testId ) )
   }
 }
 

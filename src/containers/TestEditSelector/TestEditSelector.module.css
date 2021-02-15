@@ -1,6 +1,7 @@
 .TestEditSelector {
   box-sizing: border-box;
   width: 100%;
+  height: 100%;
   padding: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 240px);
@@ -8,5 +9,5 @@
   row-gap: 25px;
   column-gap: 25px;
   justify-content: center;
-  background-color: pink;
+  background-color: rgb(148, 139, 114);
 }
