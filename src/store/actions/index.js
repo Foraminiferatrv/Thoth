@@ -1,5 +1,6 @@
 export {
   createNewTest,
+  setTestEditorData,
   addTestName,
   createNewScale,
   changeScaleName,

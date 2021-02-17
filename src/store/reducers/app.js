@@ -11,10 +11,8 @@ const initialState = {
 
 
 function setTestsData( state, testsData ) {
-  let testsDataCopy = state.testData;
-  testsDataCopy = testsData;
   return updateObject( state, {
-    testsData: testsDataCopy
+    testsData: testsData
   } );
 }
 

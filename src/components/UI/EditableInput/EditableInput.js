@@ -9,7 +9,7 @@ import CheckButton from '../CheckButton/CheckButton';
 
 function EditableInput( props ) {
   const alphabet = 'abcdefghijklmnopqrstuvwxyza';
-  const [editStatus, changeEditStatus] = useState( true );
+  const [editStatus, changeEditStatus] = useState( false );
 
   function toggleEditStatus( currentEdditStatus ) {
     changeEditStatus( !currentEdditStatus );

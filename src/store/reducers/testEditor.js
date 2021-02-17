@@ -5,7 +5,7 @@ import {
 import * as actionTypes from '../actions/actionTypes';
 
 import {
-  v4 as uuidv4
+  v1 as uuidv1
 } from 'uuid';
 
 const initialState = {};
@@ -14,7 +14,6 @@ const initialState = {};
 function createNewTest( state ) {
   const newTestObject = {
     testName: "",
-    testId: uuidv4(),
     testScales: {
       "TESTID1": {
         scaleName: "Test SCALE!"
@@ -22,7 +21,7 @@ function createNewTest( state ) {
     },
     testQuestions: {},
     testInterpretations: {
-      [ uuidv4() ]: {
+      [ uuidv1() ]: {
         requiredScales: [ {
           requiredScaleId: "TESTID1",
           requiredValueLimits: {
@@ -32,7 +31,7 @@ function createNewTest( state ) {
         } ],
         interpretText: "Кальмари мають обтічне торпедоподібне тіло, що дозволяє їм рухатися з великою швидкістю «хвостом» вперед, основний спосіб руху — реактивний. Уздовж тіла кальмара проходить хрящова «стрілка», що підтримує тіло. Вона називається гладіус і є рудиментом раковини..."
       },
-      [ uuidv4() ]: {
+      [ uuidv1() ]: {
         requiredScales: [ {
           requiredScaleId: '',
           requiredValueLimits: {
@@ -48,6 +47,10 @@ function createNewTest( state ) {
   return updateObject( state, newTestObject );
 }
 
+const setTestEditorData = ( state, testData ) => {
+  console.log(testData);
+  return updateObject( state, testData );
+}
 
 function addTestName( state, testName ) {
   return updateObject( state, {
@@ -62,7 +65,7 @@ function createNewScale( state ) {
   };
   updatedScales = {
     ...updatedScales,
-    [ uuidv4() ]: {
+    [ uuidv1() ]: {
       scaleName: ""
     }
   };
@@ -108,7 +111,7 @@ function createNewQuestion( state ) {
   };
   questionsCopy = {
     ...questionsCopy,
-    [ uuidv4() ]: {
+    [ uuidv1() ]: {
       questionText: "",
       questionRadioAnswers: {}
     }
@@ -153,7 +156,7 @@ function addNewRadioAnswer( state, targetQuestionId ) {
   };
   questionsCopy[ targetQuestionId ].questionRadioAnswers = {
     ...questionsCopy[ targetQuestionId ].questionRadioAnswers,
-    [ uuidv4() ]: {
+    [ uuidv1() ]: {
       answerText: "",
       scaleDependencies: [ {
         scaleId: "",
@@ -257,7 +260,7 @@ function addInterpret( state ) {
 
   interpretCopy = {
     ...interpretCopy,
-    [ uuidv4() ]: {
+    [ uuidv1() ]: {
       requiredScales: [ {
         requiredScaleId: '',
         requiredValueLimits: {
@@ -339,6 +342,9 @@ function testEditor( state = initialState, action ) {
   switch ( action.type ) {
     case actionTypes.CREATE_NEW_TEST:
       return createNewTest( state );
+
+    case actionTypes.SET_TEST_EDITOR_DATA:
+      return setTestEditorData( state, action.testData );
 
     case actionTypes.ADD_TEST_NAME:
       return addTestName( state, action.testName );

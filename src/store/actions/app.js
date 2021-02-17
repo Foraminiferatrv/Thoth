@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 
-import axiosInstance from '../../axios';
 import firebase from '../../firebase/firebase';
 
 
@@ -12,13 +11,9 @@ export const setTestsData = ( testsData ) => {
 }
 
 export const initTests = () => {
-  return ( dispatch, getState, getFirebase ) => {
+  return ( dispatch ) => {
     firebase.database()
-      .ref( 'testsData/' )
+      .ref( 'testsData' )
       .on( 'value', snapshot => dispatch( setTestsData( snapshot.val() ) ) );
-
-    // axiosInstance.get( '/testsData.json' )
-    //   .then( response => dispatch( setTestsData( response.data ) ) )
-    //   .catch( error => console.log( error ) )
   }
 }

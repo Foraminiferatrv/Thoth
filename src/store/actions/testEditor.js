@@ -9,6 +9,13 @@ export const createNewTest = () => {
   }
 }
 
+export const setTestEditorData = ( testData ) => {
+  return {
+    type: actionTypes.SET_TEST_EDITOR_DATA,
+    testData
+  }
+};
+
 export const addTestName = ( testName ) => {
   return {
     type: actionTypes.ADD_TEST_NAME,
@@ -163,6 +170,7 @@ export const changeInterpretRequiredScale = ( targetInterpretId, scaleIndex, new
 
 export const sendTestData = ( testData, testId ) => {
   return dispatch => {
+
     firebase.database()
       .ref( `testsData/${testId}` ).set( testData )
       .catch( error => console.log( 'SERVER ERROR ' + error ) );

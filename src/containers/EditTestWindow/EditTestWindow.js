@@ -1,7 +1,12 @@
+import React, { useState } from 'react';
 
 import classes from './EditTestWindow.module.css';
 
+import { v1 as uuidv1 } from 'uuid';
+
 import { connect } from 'react-redux';
+
+import { withRouter } from 'react-router';
 
 import {
   addTestName,
@@ -33,12 +38,17 @@ import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
 import InterpretsContainer from '../InterpretsContainer/InterpretsContainer';
 
 
+//FIXME:input allways updates element - needs fixing
+//FIXME: component rerenders on every keystroke
+//TODO: create individual component for each test area
 //TODO: destructure all props
-function CreateTestWindow( props ) {
+function EditTestWindow( props ) {
+  const [testId] = useState( props.match.params.editTestId === undefined || props.match.params.editTestId === null ? uuidv1() : props.match.params.editTestId );
+
   function scaleCreator( testScalesArray ) {
     if ( testScalesArray !== undefined ) {
       return Object.entries( testScalesArray ).map( ( [scaleId, values], index ) => (
-        < div
+        <div
           key={ scaleId }
           className={ classes.ScaleField }
         >
@@ -82,8 +92,7 @@ function CreateTestWindow( props ) {
   }
 
 
-  // FIXME:input allways updates element - needs fixing
-  // TODO: create individual component for each test area
+
   return (
     <form className={ classes.CreateTestWindow }>
       <Input
@@ -92,6 +101,7 @@ function CreateTestWindow( props ) {
         type={ 'text' }
         inputlabel={ "Назва методики" }
         onChange={ ( event ) => props.onAddTestName( event.target.value ) }
+        value={ props.testEditorState.testName }
       />
       <div className={ classes.ScalesBox }>
         { scaleCreator( props.testEditorState.testScales ) }
@@ -117,10 +127,7 @@ function CreateTestWindow( props ) {
         changeInterpretRequiredScale={ props.onChangeInterpretRequiredScale }
       />
       {/* TODO: Replace the submit button */ }
-      <AddItemButton
-        buttonText={ 'temp submit' }
-        clicked={ () => props.onSendTestData( props.testEditorState, props.testEditorState.testId ) }
-      />
+      <button onClick={ () => props.onSendTestData( props.testEditorState, testId ) } type="button">temp submit'</button>
     </form>
   );
 }
@@ -156,4 +163,4 @@ function mapDispatchToProps( dispatch ) {
   }
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( CreateTestWindow );
+export default connect( mapStateToProps, mapDispatchToProps )( withRouter( EditTestWindow ) );

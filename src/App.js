@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 
 import classes from './App.module.css';
 
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 
 import EditTestWindow from './containers/EditTestWindow/EditTestWindow';
@@ -11,7 +12,6 @@ import TestSelector from './containers/TestSelector/TestSelector';
 import TestEditSelector from './containers/TestEditSelector/TestEditSelector';
 
 import { initTests } from './store/actions/app';
-
 
 
 function App( { appState, onInitTests } ) {
@@ -40,14 +40,15 @@ function App( { appState, onInitTests } ) {
         />
         <Route
           exact
-          path="/testEdit/:editTestId"
-          component={ () => <EditTestWindow  /> }
+          path='/testEdit/:editTestId'
+          component={ () => <EditTestWindow/> }
         />
         <Route
-          path={ '/test/:testId' }
+          exact
+          path="/test/:testId"
           component={ () => <TestWindow testsData={ appState.testsData } /> }
         />
-        <Redirect from="/" to="/" />
+        {/* <Redirect from="/" to="/" /> */ }
       </Switch>
     </div>
   );
@@ -66,4 +67,4 @@ function mapDispatchToProps( dispatch ) {
 }
 
 
-export default connect( mapStateToProps, mapDispatchToProps )( App );
+export default connect( mapStateToProps, mapDispatchToProps )( App  );
