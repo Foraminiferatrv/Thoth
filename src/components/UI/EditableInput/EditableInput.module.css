@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   padding: 0 15px;
+  
 }
 
 .InputValueContainer {
@@ -13,11 +14,12 @@
 }
 
 .InputIndex {
-  margin-right: 8px;
+  margin-right: 12px;
+  font-weight: bold;
 }
 
 .InputValue {
-  border: 1px solid #000;
+  border: 1px solid rgb(77, 77, 77);
   border-radius: 4px;
   padding: 6px 11px;
   display: block;

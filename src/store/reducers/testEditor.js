@@ -14,41 +14,16 @@ const initialState = {};
 function createNewTest( state ) {
   const newTestObject = {
     testName: "",
-    testScales: {
-      "TESTID1": {
-        scaleName: "Test SCALE!"
-      }
-    },
+    testScales: {},
     testQuestions: {},
-    testInterpretations: {
-      [ uuidv1() ]: {
-        requiredScales: [ {
-          requiredScaleId: "TESTID1",
-          requiredValueLimits: {
-            from: -20,
-            to: 60
-          }
-        } ],
-        interpretText: "Кальмари мають обтічне торпедоподібне тіло, що дозволяє їм рухатися з великою швидкістю «хвостом» вперед, основний спосіб руху — реактивний. Уздовж тіла кальмара проходить хрящова «стрілка», що підтримує тіло. Вона називається гладіус і є рудиментом раковини..."
-      },
-      [ uuidv1() ]: {
-        requiredScales: [ {
-          requiredScaleId: '',
-          requiredValueLimits: {
-            from: 0,
-            to: 0
-          }
-        } ],
-        interpretText: ""
-      }
-    }
+    testInterpretations: {}
   };
 
   return updateObject( state, newTestObject );
 }
 
 const setTestEditorData = ( state, testData ) => {
-  console.log(testData);
+  console.log( testData );
   return updateObject( state, testData );
 }
 

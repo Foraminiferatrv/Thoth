@@ -1,7 +1,7 @@
-.InterpretsContainer {
-  width: 100%;
-  background-color: #e36bae;
+.QuestionsEditContainer {
   margin-top: 35px;
+  background-color: #6ddccf;
+  width: 100%;
   box-sizing: border-box;
   border-radius: 8px;
   box-shadow: 1px 3px 6px #aaaaaa;
@@ -9,10 +9,10 @@
 
 .ContainerHeader {
   color: #ebf5fc;
-  background-color: #9e4476;
+  background-color: #55b6ab;
   border-radius: 8px 8px 0 0;
   padding: 7px 0;
-  box-shadow: 0px 2px 1px #681d47;
+  box-shadow: 0px 2px 1px #2a6e66;
 }
 
 .ContainerHeader span {

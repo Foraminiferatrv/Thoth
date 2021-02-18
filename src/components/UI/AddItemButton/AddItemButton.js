@@ -3,16 +3,17 @@ import { React } from "react";
 import classes from './AddItemButton.module.css';
 
 
-function addIttemButton( props ) {
+function AddIttemButton( { clicked, buttonText, externalClasses } ) {
+  const combinedClasses = [classes.AddItemButton, externalClasses];
   return (
     <button
       type='button'
-      className={ classes.AddItemButton }
-      onClick={ props.clicked }
+      className={ combinedClasses.join(' ') }
+      onClick={ clicked }
     >
-      <span>{ props.buttonText }</span>
+      <span>{ buttonText }</span>
     </button  >
   );
 }
 
-export default addIttemButton;
+export default AddIttemButton;

@@ -1,4 +1,4 @@
-.CreateTestWindow {
+.EditTestWindow {
   display: flex;
   align-items: flex-end;
   flex-direction: column;
@@ -6,23 +6,6 @@
   width: 100%;
   padding: 13px;
   box-sizing: border-box;
+  background-color: #f4f9f9;
 }
 
-.ScalesBox {
-  background-color: green;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.ScaleField {
-  width: 100%;
-  margin-bottom: 12px;
-}
-
-.QuestionsBox {
-  background-color: orange;
-  width: 100%;
-  padding: 13px;
-  box-sizing: border-box;
-}

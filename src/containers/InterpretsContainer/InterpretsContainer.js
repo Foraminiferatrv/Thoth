@@ -2,28 +2,37 @@ import React from 'react';
 
 import classes from './InterpretsContainer.module.css';
 
+import { connect } from 'react-redux';
+import {
+  addInterpret,
+  deleteInterpret,
+  changeInterpretText,
+  changeInterpretValueLimits,
+  changeInterpretRequiredScale
+} from '../../store/actions/index';
+
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
 import InterpretEditor from '../../components/InterpretEditor/InterpretEditor';
 
 
-function InterpretsContainer( props ) {
 
+function InterpretsContainer( { interprets, testScales, onAddInterpret, onDeleteInterpret, onChangeInterpretText, onChangeInterpretValueLimits, onChangeInterpretRequiredScale } ) {
   let interpretContent;
 
-  if ( props.interprets !== undefined ) {
-    interpretContent = Object.entries( props.interprets ).map(
+  if ( interprets !== undefined ) {
+    interpretContent = Object.entries( interprets ).map(
       ( [interpretId, interpretValues] ) => (
         <InterpretEditor
           key={ interpretId }
-          testScales={ props.testScales }
+          testScales={ testScales }
           requiredScales={ interpretValues.requiredScales }
           interpretId={ interpretId }
           interpretText={ interpretValues.interpretText }
-          changeInterpretText={ props.changeInterpretText }
-          deleteInterpret={ props.deleteInterpret }
+          changeInterpretText={ onChangeInterpretText }
+          deleteInterpret={ onDeleteInterpret }
           valueLimits={ interpretValues.requiredScales.requiredValueLimits }
-          changeInterpretValueLimits={ props.changeInterpretValueLimits }
-          changeInterpretRequiredScale={ props.changeInterpretRequiredScale }
+          changeInterpretValueLimits={ onChangeInterpretValueLimits }
+          changeInterpretRequiredScale={ onChangeInterpretRequiredScale }
         />
       )
     );
@@ -31,14 +40,29 @@ function InterpretsContainer( props ) {
 
   return (
     <div className={ classes.InterpretsContainer }>
-      {interpretContent }
-      <AddItemButton
-        buttonText="Додати інтерпретацію"
-        clicked={ props.addInterpret }
-      />
+      <div className={ classes.ContainerHeader }>
+        <span>Інтерпретації</span>
+      </div>
+      <div className={ classes.ContainerBody }>
+
+        { interpretContent }
+        <AddItemButton
+          buttonText="Додати інтерпретацію"
+          clicked={ onAddInterpret }
+        />
+      </div>
     </div>
   );
 }
 
+function mapDispatchToProps( dispatch ) {
+  return {
+    onAddInterpret: () => dispatch( addInterpret() ),
+    onDeleteInterpret: ( targetInterpretId ) => dispatch( deleteInterpret( targetInterpretId ) ),
+    onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) ),
+    onChangeInterpretValueLimits: ( targetInterpretId, scaleIndex, fromLimit, toLimit ) => dispatch( changeInterpretValueLimits( targetInterpretId, scaleIndex, fromLimit, toLimit ) ),
+    onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) )
+  };
+}
 
-export default InterpretsContainer;
+export default connect( null, mapDispatchToProps )( InterpretsContainer );

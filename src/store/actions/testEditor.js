@@ -170,7 +170,6 @@ export const changeInterpretRequiredScale = ( targetInterpretId, scaleIndex, new
 
 export const sendTestData = ( testData, testId ) => {
   return dispatch => {
-
     firebase.database()
       .ref( `testsData/${testId}` ).set( testData )
       .catch( error => console.log( 'SERVER ERROR ' + error ) );
