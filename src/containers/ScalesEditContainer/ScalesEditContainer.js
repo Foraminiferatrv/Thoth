@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './ScalesEditContainer.module.css';
+import classes from './ScalesEditContainer.module.scss';
 
 import {
   changeScaleName,

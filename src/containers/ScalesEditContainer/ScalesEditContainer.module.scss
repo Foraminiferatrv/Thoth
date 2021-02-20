@@ -1,7 +1,8 @@
+@import '../../variables/variables.scss';
+
 .ScalesEditContainer {
-  color: rgb(4, 13, 19);
   margin-top: 15px;
-  background-color: #7ab6da;
+  background-color: analog-palette(500);
   width: 100%;
   border-radius: 8px;
   box-shadow: 1px 3px 6px #aaaaaa;
@@ -11,24 +12,27 @@
   width: 100%;
   margin-top: 12px;
   padding: 15px 0;
-  background-color: #a3d5f5;
+  background-color: analog-palette(400) ;
   border-radius: 6px;
   box-sizing: border-box;
-  box-shadow: 0 1px 3px #416a83;
+  box-shadow: 0 1px 3px analog-palette(800) ;
 }
 
 .ContainerHeader {
   color: #ebf5fc;
-  background-color: #5ea0c9;
+  background-color: analog-palette(700);
   border-radius: 8px 8px 0 0;
   padding: 7px 0;
-  box-shadow: 0px 2px 1px #456d86;
+  box-shadow: 0px 2px 1px analog-palette(800);
+
+  span {
+    font: {
+      weight: bold;
+      size: 20px;
+    }
+  }
 }
 
-.ContainerHeader span {
-  font-weight: bold;
-  font-size: 20px;
-}
 
 .ContainerBody {
   padding: 20px;

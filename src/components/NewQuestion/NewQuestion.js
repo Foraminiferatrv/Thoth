@@ -1,10 +1,12 @@
 import React from 'react';
 
-import classes from './NewQuestion.module.css';
+import classes from './NewQuestion.module.scss';
 
 import EditableInput from '../UI/EditableInput/EditableInput';
 import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
+
+import TextField from '@material-ui/core/TextField';
 
 
 function NewQuestion( props ) {
@@ -33,21 +35,24 @@ function NewQuestion( props ) {
   return (
     <div className={ classes.NewQuestion }>
       <div className={ classes.QuestionBlock }>
+        <TextField
+          variant='outlined'
+        />
         <EditableInput
           inputValue={ props.questionText }
           inputId={ props.questionId }
           inputIndex={ props.questionIndex }
           changed={ event => props.changeQuestionText( event.target.value, props.questionId ) }
           deleted={ () => props.deleteQuestion( props.questionId ) }
-          />
+        />
       </div>
 
       <div className={ classes.AnswerBlock }>
-          { radioAnswersContent }
+        { radioAnswersContent }
         <AddItemButton
           clicked={ () => props.newRadioAnswer( props.questionId ) }
           buttonText="Додати відповідь"
-          />
+        />
       </div>
     </div>
   );

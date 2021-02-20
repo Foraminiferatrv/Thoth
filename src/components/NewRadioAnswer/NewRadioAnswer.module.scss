@@ -1,11 +1,14 @@
+@import '../../variables/variables.scss';
+
 .NewRadioAnswer {
+  background-color:  main-palette(200);
   display: flex;
   align-items: center;
-  border: 1px solid #000;
   border-radius: 5px;
   justify-content: space-between;
-  padding: 5px 20px;
+  padding: 15px 20px;
   margin-bottom: 12px;
+  box-shadow: 0 2px 3px main-palette(800);
 }
 
 .InputField {
@@ -33,12 +36,11 @@
 .AddScaleButton {
   width: 200px;
   align-self: flex-end;
-}
 
-.AddScaleButton button {
-  height: 30px;
-  font-weight: normal;
-  font-size: 7pt;
-  margin: 0;
+  button {
+    height: 30px;
+    font-weight: normal;
+    font-size: 7pt;
+    margin: 0;
+  }
 }
-

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './NewRadioAnswer.module.css';
+import classes from './NewRadioAnswer.module.scss';
 
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 import EditableInput from '../UI/EditableInput/EditableInput';

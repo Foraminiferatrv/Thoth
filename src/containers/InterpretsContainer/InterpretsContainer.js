@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './InterpretsContainer.module.css';
+import classes from './InterpretsContainer.module.scss';
 
 import { connect } from 'react-redux';
 import {

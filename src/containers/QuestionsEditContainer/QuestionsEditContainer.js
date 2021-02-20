@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './QuestionsEditContainer.module.css';
+import classes from './QuestionsEditContainer.module.scss';
 
 import {
   createNewQuestion,

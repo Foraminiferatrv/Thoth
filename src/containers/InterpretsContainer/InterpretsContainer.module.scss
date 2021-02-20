@@ -1,6 +1,8 @@
+@import '../../variables/variables.scss';
+
 .InterpretsContainer {
   width: 100%;
-  background-color: #e36bae;
+  background-color: contrast-palette(500);
   margin-top: 35px;
   box-sizing: border-box;
   border-radius: 8px;
@@ -13,11 +15,11 @@
   border-radius: 8px 8px 0 0;
   padding: 7px 0;
   box-shadow: 0px 2px 1px #681d47;
-}
 
-.ContainerHeader span {
-  font-weight: bold;
-  font-size: 20px;
+  span {
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 
 .ContainerBody {

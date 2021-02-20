@@ -1,0 +1,48 @@
+//Main palette
+$palette:(100:#f5feff,
+  200:#d6eff7,
+  300:#a3d5f5,
+  400:#7ab6da,
+  500:#5ea0c9,
+  600:#3a6d8d,
+  700:#2f4f63,
+  800:#192425,
+  s100:#EEE);
+
+@function main-palette($key: $palette) {
+  @return map-get($palette, $key);
+}
+
+//Analog palette
+$analog-palette:(100:#e8f5e1,
+  200:#d6f1c7,
+  300:#c8fca9,
+  400:#a5e77e,
+  500:#8bc669,
+  600:#72B34D,
+  700:#75a211,
+  800:#36490c,
+  900:#131a04,
+  1000:#253308,
+  s100:#EEE);
+
+@function analog-palette($key: $analog-palette) {
+  @return map-get($analog-palette, $key);
+}
+
+
+//Contrast palette
+$contrast-palette:(100:#fceff6,
+  200:#fad6ea,
+  300:#f7b7da,
+  400:#f086c0,
+  500:#e36bae,
+  600:#9e4476,
+  700:#8f2a63,
+  800:#681d47,
+  900:#4b1634,
+  1000:#2e0d20);
+
+@function contrast-palette($key: $contrast-palette) {
+  @return map-get($contrast-palette, $key);
+}
