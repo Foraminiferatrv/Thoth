@@ -1,18 +1,18 @@
-import { React } from "react";
+import React from "react";
 
-import classes from './AddItemButton.module.css';
+import classes from './AddItemButton.module.scss';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 
 function AddIttemButton( { clicked, buttonText, externalClasses } ) {
   const combinedClasses = [classes.AddItemButton, externalClasses];
   return (
-    <button
-      type='button'
-      className={ combinedClasses.join(' ') }
+    <div
+      className={ combinedClasses.join( ' ' ) }
       onClick={ clicked }
     >
-      <span>{ buttonText }</span>
-    </button  >
+      <AddCircleIcon />
+    </div  >
   );
 }
 

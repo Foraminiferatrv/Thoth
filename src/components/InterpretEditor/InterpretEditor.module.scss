@@ -1,0 +1,31 @@
+@import '../../variables/variables.scss';
+
+.InterpretEditor {
+  background-color: purple-palette(200);
+
+  box-sizing: border-box;
+  border-radius: 7px;
+  margin-top: 16px;
+  box-shadow: 0 2px 3px gray-palette(800);
+  display: flex;
+
+  .LeftSide {
+    padding: 10px;
+    width: 100%;
+    margin-right: 30px;
+  }
+
+  .InterpretBlock {
+    margin-bottom: 10px;
+  }
+
+  .ScalesBlock {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .InterpretText {
+    display: flex;
+  }
+}

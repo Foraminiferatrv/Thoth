@@ -6,7 +6,7 @@ import EditableInput from '../UI/EditableInput/EditableInput';
 import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 
-import TextField from '@material-ui/core/TextField';
+
 
 
 function NewQuestion( props ) {
@@ -35,9 +35,7 @@ function NewQuestion( props ) {
   return (
     <div className={ classes.NewQuestion }>
       <div className={ classes.QuestionBlock }>
-        <TextField
-          variant='outlined'
-        />
+
         <EditableInput
           inputValue={ props.questionText }
           inputId={ props.questionId }

@@ -2,7 +2,7 @@
 
 .QuestionsEditContainer {
   margin-top: 35px;
-  background-color: main-palette(400);
+  background-color: blue-palette(100);
   width: 100%;
   box-sizing: border-box;
   border-radius: 8px;
@@ -11,10 +11,10 @@
 
 .ContainerHeader {
   color: #ebf5fc;
-  background-color: main-palette(500);
+  background-color: blue-palette(600);
   border-radius: 8px 8px 0 0;
   padding: 7px 0;
-  box-shadow: 0px 2px 1px #456d86;
+  box-shadow: 0 2px 2px gray-palette(700);
 
   span {
     font-weight: bold;

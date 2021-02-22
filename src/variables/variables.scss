@@ -1,48 +1,80 @@
 //Main palette
-$palette:(100:#f5feff,
-  200:#d6eff7,
-  300:#a3d5f5,
-  400:#7ab6da,
-  500:#5ea0c9,
-  600:#3a6d8d,
-  700:#2f4f63,
-  800:#192425,
-  s100:#EEE);
+$blue-palette:(50:#e3f2fd,
+  100:#bbdefb,
+  200:#90caf9,
+  300:#64b5f6,
+  400:#42a5f5,
+  500:#2196f3,
+  600:#1e88e5,
+  700:#1976d2,
+  800:#1565c0,
+  900:#0d47a1,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff);
 
-@function main-palette($key: $palette) {
-  @return map-get($palette, $key);
+@function blue-palette($key: $blue-palette) {
+  @return map-get($blue-palette, $key);
 }
 
 //Analog palette
-$analog-palette:(100:#e8f5e1,
-  200:#d6f1c7,
-  300:#c8fca9,
-  400:#a5e77e,
-  500:#8bc669,
-  600:#72B34D,
-  700:#75a211,
-  800:#36490c,
-  900:#131a04,
-  1000:#253308,
-  s100:#EEE);
+$light-green-palette:(50: #f1f8e9,
+  100: #dcedc8,
+  200: #c5e1a5,
+  300: #aed581,
+  400: #9ccc65,
+  500: #8bc34a,
+  600: #7cb342,
+  700: #689f38,
+  800: #558b2f,
+  900: #33691e,
+  A100: #ccff90,
+  A200: #b2ff59,
+  A400: #76ff03,
+  A700: #64dd17);
 
-@function analog-palette($key: $analog-palette) {
-  @return map-get($analog-palette, $key);
+@function light-green-palette($key: $light-green-palette) {
+  @return map-get($light-green-palette, $key);
 }
 
 
 //Contrast palette
-$contrast-palette:(100:#fceff6,
-  200:#fad6ea,
-  300:#f7b7da,
-  400:#f086c0,
-  500:#e36bae,
-  600:#9e4476,
-  700:#8f2a63,
-  800:#681d47,
-  900:#4b1634,
-  1000:#2e0d20);
+$purple-palette:(50: #f3e5f5,
+  100: #e1bee7,
+  200: #ce93d8,
+  300: #ba68c8,
+  400: #ab47bc,
+  500: #9c27b0,
+  600: #8e24aa,
+  700: #7b1fa2,
+  800: #6a1b9a,
+  900: #4a148c,
+  A100: #ea80fc,
+  A200: #e040fb,
+  A400: #d500f9,
+  A700: #aa00ff);
 
-@function contrast-palette($key: $contrast-palette) {
-  @return map-get($contrast-palette, $key);
+@function purple-palette($key: $purple-palette) {
+  @return map-get($purple-palette, $key);
 }
+
+//Gray palette
+$gray-palette:(50: #FAFAFA,
+  100: #F5F5F5,
+  200: #EEEEEE,
+  300: #E0E0E0,
+  400: #BDBDBD,
+  500: #9E9E9E,
+  600: #757575,
+  700: #616161,
+  800: #424242,
+  900: #212121);
+
+@function gray-palette($key: $gray-palette) {
+  @return map-get($gray-palette, $key);
+}
+
+$error-color:#e53935;
+
+$general-border-radius: 7px;

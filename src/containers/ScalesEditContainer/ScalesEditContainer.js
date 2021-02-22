@@ -10,25 +10,22 @@ import {
 
 import { connect } from 'react-redux';
 
-import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
+import ScaleEditor from '../../components/ScaleEditor/ScaleEditor';
+
 
 function ScalesEditContainer( { testScales, onCreateScale, onChangeScaleName, onDeleteScale } ) {
   function scaleCreator( testScalesArray ) {
     if ( testScalesArray !== undefined ) {
       return Object.entries( testScalesArray ).map( ( [scaleId, values], index ) => (
-        <div
+        <ScaleEditor
           key={ scaleId }
-          className={ classes.ScaleField }
-        >
-          <EditableInput
-            inputId={ scaleId }
-            inputValue={ values.scaleName }
-            changed={ ( event ) => onChangeScaleName( event.target.value, scaleId ) }
-            deleted={ () => onDeleteScale( scaleId ) }
-            inputIndex={ index }
-          />
-        </div >
+          scaleName={ values.scaleName }
+          changeScaleName={ onChangeScaleName }
+          scaleIndex={ index }
+          scaleId={ scaleId }
+          deleteScale={ onDeleteScale }
+        />
       )
       );
     }
