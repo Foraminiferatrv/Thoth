@@ -1,0 +1,11 @@
+.EditTestWindow {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  padding: 13px;
+  box-sizing: border-box;
+  background-color: #f4f9f9;
+}
+

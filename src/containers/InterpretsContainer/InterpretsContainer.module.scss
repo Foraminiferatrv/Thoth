@@ -1,0 +1,31 @@
+@import '../../variables/variables.scss';
+
+.InterpretsContainer {
+  width: 100%;
+  background-color: purple-palette(100);
+  margin-top: 35px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 1px 3px 6px #aaaaaa;
+
+
+
+  .ContainerHeader {
+    color: #ebf5fc;
+    background-color: purple-palette(500);
+    border-radius: 8px 8px 0 0;
+    padding: 7px 0;
+    box-shadow: 0px 2px 1px #681d47;
+
+    span {
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+
+  .ContainerBody {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+}

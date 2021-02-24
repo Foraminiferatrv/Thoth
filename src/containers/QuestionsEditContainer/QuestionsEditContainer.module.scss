@@ -1,0 +1,28 @@
+@import '../../variables/variables.scss';
+
+.QuestionsEditContainer {
+  margin-top: 35px;
+  background-color: blue-palette(100);
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 1px 3px 6px #aaaaaa;
+}
+
+.ContainerHeader {
+  color: #ebf5fc;
+  background-color: blue-palette(600);
+  border-radius: 8px 8px 0 0;
+  padding: 7px 0;
+  box-shadow: 0 2px 2px gray-palette(700);
+
+  span {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
+.ContainerBody {
+  padding:0 20px 20px 20px;
+  box-sizing: border-box;
+}

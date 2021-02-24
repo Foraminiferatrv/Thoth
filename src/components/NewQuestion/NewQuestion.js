@@ -1,26 +1,29 @@
 import React from 'react';
 
-import classes from './NewQuestion.module.css';
+import classes from './NewQuestion.module.scss';
 
 import EditableInput from '../UI/EditableInput/EditableInput';
 import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 
 
+
+
 function NewQuestion( props ) {
   let radioAnswersContent = null;
 
   if ( props.radioAnswers !== undefined ) {
-    radioAnswersContent = props.radioAnswers.map( ( radioAnswerObject, answerIndex ) => (
+    radioAnswersContent = Object.entries( props.radioAnswers ).map( ( [answerId, answerValues], index ) => (
       <NewRadioAnswer
-        key={ props.questionId.concat( answerIndex ) }
+        key={ props.questionId.concat( index ) }
         questionId={ props.questionId }
+        answerIndex={ index }
+        answerId={ answerId }
+        answerText={ answerValues.answerText }
         changeRadioAnswerText={ props.changeRadioAnswerText }
-        answerIndex={ answerIndex }
-        answerText={ radioAnswerObject.answerText }
-        deleteRadioAnswer={ props.deleteRadioAnswer }
         changeAnswerValue={ props.changeAnswerValue }
-        scaleDependencies={ radioAnswerObject.scaleDependencies }
+        deleteRadioAnswer={ props.deleteRadioAnswer }
+        scaleDependencies={ answerValues.scaleDependencies }
         testScales={ props.testScales }
         addDependency={ props.addDependency }
         changeScaleDependency={ props.changeScaleDependency }
@@ -32,21 +35,22 @@ function NewQuestion( props ) {
   return (
     <div className={ classes.NewQuestion }>
       <div className={ classes.QuestionBlock }>
+
         <EditableInput
           inputValue={ props.questionText }
           inputId={ props.questionId }
           inputIndex={ props.questionIndex }
-          changed={ props.changed }
-          deleted={ props.deleted }
+          changed={ event => props.changeQuestionText( event.target.value, props.questionId ) }
+          deleted={ () => props.deleteQuestion( props.questionId ) }
         />
       </div>
 
       <div className={ classes.AnswerBlock }>
+        { radioAnswersContent }
         <AddItemButton
-          clicked={ () => props.newRadioAnswer( props.questionIndex ) }
+          clicked={ () => props.newRadioAnswer( props.questionId ) }
           buttonText="Додати відповідь"
         />
-        { radioAnswersContent }
       </div>
     </div>
   );

@@ -4,13 +4,13 @@ import classes from './TestTag.module.css';
 
 import { Link } from 'react-router-dom';
 
-function TestTag( props ) {
+function TestTag( { testName, testAdress } ) {
   return (
     <Link
-    to="/"
-    className={ classes.TestTag } 
+      to={ '/test/' + testAdress }
+      className={ classes.TestTag }
     >
-      { props.testName }
+      { testName }
     </Link>
   );
 }

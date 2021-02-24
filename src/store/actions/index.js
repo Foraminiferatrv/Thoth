@@ -1,5 +1,6 @@
 export {
   createNewTest,
+  setTestEditorData,
   addTestName,
   createNewScale,
   changeScaleName,
@@ -21,7 +22,7 @@ export {
   changeInterpretRequiredScale,
   sendTestData
 }
-from './testCreator';
+from './testEditor';
 
 export {}
 from './app';

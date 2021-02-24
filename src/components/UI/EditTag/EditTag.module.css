@@ -1,0 +1,14 @@
+.EditTag {
+  background-image: url(../../../assets/icons/edit.png);
+  background-color: red;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 80px;
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+  border-radius: 20px 20px 0 0;
+  cursor: pointer;
+  background-size: 55%;
+  background-position: center;
+}

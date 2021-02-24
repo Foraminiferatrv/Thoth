@@ -1,0 +1,26 @@
+@import '../../variables/variables.scss';
+
+.NewQuestion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 22px;
+  background-color: blue-palette(300);
+  border-radius: 7px;
+  box-shadow: 0 2px 4px blue-palette(800);
+}
+
+.QuestionBlock {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 23px 10px 23px 10px;
+  background-color: blue-palette(50);
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0 2px 2px gray-palette(700);
+}
+
+.AnswerBlock {
+  margin-top: 15px;
+  width: 90%;
+  padding: 17px;
+}

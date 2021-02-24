@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 
-import axiosInstance from '../../axios';
+import firebase from '../../firebase/firebase';
+
 
 export const setTestsData = ( testsData ) => {
   return {
@@ -10,10 +11,9 @@ export const setTestsData = ( testsData ) => {
 }
 
 export const initTests = () => {
-  const proxy = "https://cors-anywhere.herokuapp.com/";
-  return dispatch => {
-    axiosInstance.get( '/testsData' )
-      .then( response => dispatch( setTestsData( response.data ) ) )
-      .catch( error => console.log( 'SERVER ERROR ' + error ) )
+  return ( dispatch ) => {
+    firebase.database()
+      .ref( 'testsData' )
+      .on( 'value', snapshot => dispatch( setTestsData( snapshot.val() ) ) );
   }
 }

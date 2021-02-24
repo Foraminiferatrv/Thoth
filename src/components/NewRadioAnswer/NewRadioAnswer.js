@@ -1,12 +1,13 @@
 import React from 'react';
 
-import classes from './NewRadioAnswer.module.css';
+import classes from './NewRadioAnswer.module.scss';
 
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 import EditableInput from '../UI/EditableInput/EditableInput';
 import ScalesList from '../../components/ScalesList/ScalesList';
 import TrashButton from '../UI/TrashButton/TrashButton';
 import NumInput from '../NumInput/NumInput';
+import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 
 //TODO: Create individual component for scaleDependencies
@@ -19,22 +20,24 @@ function NewRadioAnswer( props ) {
         key={ 'scaleDependencies' + index }
         className={ classes.AnswerValue }
       >
-        <ScalesList
-          testScales={ props.testScales }
-          selectedScale={ scaleData.scaleId }
-          getInputValue={ ( value ) => props.changeScaleDependency( props.questionId, props.answerIndex, index, value ) }
-          inputIndex={ index }
-        />
-        <div className={ classes.AnswerValueBlock }>
-          <NumInput
-            questionId={ props.questionId }
+        <div className={ classes.LeftSide }>
+          <ScalesList
+            testScales={ props.testScales }
+            selectedScale={ scaleData.scaleId }
+            getInputValue={ ( value ) => props.changeScaleDependency( props.questionId, props.answerId, index, value ) }
             inputIndex={ index }
-            numInputValue={ scaleData.answerValue }
-            getInputValue={ ( value ) => props.changeAnswerValue( props.questionId, props.answerIndex, index, value ) }
           />
+          <div className={ classes.AnswerValueBlock }>
+            <NumInput
+              questionId={ props.questionId }
+              inputIndex={ index }
+              numInputValue={ scaleData.answerValue }
+              getInputValue={ ( value ) => props.changeAnswerValue( props.questionId, props.answerId, index, value ) }
+            />
+          </div>
         </div>
-        <TrashButton
-          clicked={ () => props.deleteDependency( props.questionId, props.answerIndex, index ) }
+        <DeleteSideButton
+          clicked={ () => props.deleteDependency( props.questionId, props.answerId, index ) }
         />
       </div>
     )
@@ -45,19 +48,19 @@ function NewRadioAnswer( props ) {
       <div className={ classes.InputField }>
         <EditableInput
           letterIndex
-          changed={ props.changeRadioAnswerText }
+          changed={ ( event ) => props.changeRadioAnswerText( event.target.value, props.questionId, props.answerId ) }
           inputId={ props.questionId }
           inputIndex={ props.answerIndex }
           answerIndex={ props.answerIndex }
           inputValue={ props.answerText }
-          deleted={ props.deleteRadioAnswer }
+          deleted={ () => props.deleteRadioAnswer( props.questionId, props.answerId ) }
         />
       </div>
       <div className={ classes.AnswerValuesBlock }>
         { scaleDependenciesContent }
         <div className={ classes.AddScaleButton }>
           <AddItemButton
-            clicked={ () => props.addDependency( props.questionId, props.answerIndex ) }
+            clicked={ () => props.addDependency( props.questionId, props.answerId ) }
             buttonText="Додати залежну  шкалу"
           />
         </div>

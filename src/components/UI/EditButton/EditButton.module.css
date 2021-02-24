@@ -1,8 +1,8 @@
 .EditButton {
-  width: 30px;
-  height: 30px;
-  border-radius: 4px;
+  /* width: 30px !important;
+  height: 30px !important; */
+  /* border-radius: 4px;
   background-image: url(../../../assets/icons/edit.png  );
   background-size: cover;
-  cursor: pointer;
+  cursor: pointer; */
 }

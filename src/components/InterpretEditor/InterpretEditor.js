@@ -1,11 +1,11 @@
 import React from 'react';
 
-import classes from './InterpretEditor.module.css';
+import classes from './InterpretEditor.module.scss';
 
 import { Input } from '../UI/Input/Input';
 import NumRange from '../UI/NumRange/NumRange';
 import ScalesList from '../ScalesList/ScalesList';
-import XButton from '../UI/XButton/XButton';
+import DeleteSideButton from '../UI/DeleteSideButton//DeleteSidebutton';
 
 
 function InterpretEditor( props ) {
@@ -35,18 +35,20 @@ function InterpretEditor( props ) {
 
   return (
     <div className={ classes.InterpretEditor }>
-      {scalesContent }
-      <div className={ classes.InterpretText }>
-        <Input
-          inputtype='textarea'
-          placeholder="Введіть текст інтерпретації..."
-          defaultValue={ props.interpretText }
-          onBlur={ ( event ) => props.changeInterpretText( props.interpretId, event.target.value ) }
-        />
-        <XButton
-          clicked={ () => props.deleteInterpret( props.interpretId ) }
-        />
+      <div className={ classes.LeftSide }>
+        { scalesContent }
+        <div className={ classes.InterpretText }>
+          <Input
+            inputtype='textarea'
+            placeholder="Введіть текст інтерпретації..."
+            defaultValue={ props.interpretText }
+            onBlur={ ( event ) => props.changeInterpretText( props.interpretId, event.target.value ) }
+          />
+        </div>
       </div>
+      <DeleteSideButton
+        clicked={ () => props.deleteInterpret( props.interpretId ) }
+      />
     </div>
   );
 }

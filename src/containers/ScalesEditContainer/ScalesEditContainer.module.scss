@@ -1,0 +1,48 @@
+@import '../../variables/variables.scss';
+
+.ScalesEditContainer {
+  margin-top: 15px;
+  background-color: light-green-palette(400);
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 1px 3px 6px #aaaaaa;
+
+  .ContainerHeader {
+    color: #ebf5fc;
+    background-color: light-green-palette(700);
+    border-radius: 8px 8px 0 0;
+    padding: 7px 0;
+    box-shadow: 0px 2px 1px light-green-palette(800);
+
+    span {
+      font: {
+        weight: bold;
+        size: 20px;
+      }
+    }
+  }
+
+  .ContainerBody {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .AddButton {
+    height: 70px;
+    margin-top: 20px;
+    background-color: light-green-palette(700);
+    color: light-green-palette(300);
+
+    &:hover {
+      background-color: light-green-palette(600);
+    }
+
+    &:active{
+      background-color: light-green-palette(100);
+    }
+
+    svg {
+      font-size: 3.6rem;
+    }
+  }
+}
