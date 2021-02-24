@@ -44,9 +44,9 @@ function InterpretsContainer( { interprets, testScales, onAddInterpret, onDelete
         <span>Інтерпретації</span>
       </div>
       <div className={ classes.ContainerBody }>
-
         { interpretContent }
         <AddItemButton
+          externalClasses={ classes.AddButton }
           buttonText="Додати інтерпретацію"
           clicked={ onAddInterpret }
         />

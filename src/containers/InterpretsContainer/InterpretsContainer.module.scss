@@ -26,6 +26,25 @@
   .ContainerBody {
     padding: 20px;
     box-sizing: border-box;
+
+    .AddButton {
+      height: 70px;
+      margin-top: 20px;
+      background-color: purple-palette(700);
+      color: purple-palette(300);
+
+      &:hover {
+        background-color: purple-palette(600);
+      }
+
+      &:active {
+        background-color: purple-palette(100);
+      }
+
+      svg {
+        font-size: 3.6rem;
+      }
+    }
   }
 
 }

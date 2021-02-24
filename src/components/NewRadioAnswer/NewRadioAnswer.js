@@ -5,7 +5,6 @@ import classes from './NewRadioAnswer.module.scss';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 import EditableInput from '../UI/EditableInput/EditableInput';
 import ScalesList from '../../components/ScalesList/ScalesList';
-import TrashButton from '../UI/TrashButton/TrashButton';
 import NumInput from '../NumInput/NumInput';
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
@@ -45,26 +44,28 @@ function NewRadioAnswer( props ) {
 
   return (
     <div className={ classes.NewRadioAnswer }>
-      <div className={ classes.InputField }>
-        <EditableInput
-          letterIndex
-          changed={ ( event ) => props.changeRadioAnswerText( event.target.value, props.questionId, props.answerId ) }
-          inputId={ props.questionId }
-          inputIndex={ props.answerIndex }
-          answerIndex={ props.answerIndex }
-          inputValue={ props.answerText }
-          deleted={ () => props.deleteRadioAnswer( props.questionId, props.answerId ) }
-        />
-      </div>
-      <div className={ classes.AnswerValuesBlock }>
-        { scaleDependenciesContent }
-        <div className={ classes.AddScaleButton }>
+      <div className={ classes.LeftSide }>
+        <div className={ classes.InputField }>
+          <EditableInput
+            letterIndex
+            changed={ ( event ) => props.changeRadioAnswerText( event.target.value, props.questionId, props.answerId ) }
+            inputId={ props.questionId }
+            inputIndex={ props.answerIndex }
+            answerIndex={ props.answerIndex }
+            inputValue={ props.answerText }
+            deleted={ () => props.deleteRadioAnswer( props.questionId, props.answerId ) }
+          />
+        </div>
+        <div className={ classes.AnswerValuesBlock }>
+          { scaleDependenciesContent }
           <AddItemButton
+            externalClasses={ classes.AddButton }
             clicked={ () => props.addDependency( props.questionId, props.answerId ) }
             buttonText="Додати залежну  шкалу"
           />
         </div>
       </div>
+      <DeleteSideButton />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import classes from './NewQuestion.module.scss';
 import EditableInput from '../UI/EditableInput/EditableInput';
 import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
-
+import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 
 
@@ -35,24 +35,29 @@ function NewQuestion( props ) {
   return (
     <div className={ classes.NewQuestion }>
       <div className={ classes.QuestionBlock }>
-
-        <EditableInput
-          inputValue={ props.questionText }
-          inputId={ props.questionId }
-          inputIndex={ props.questionIndex }
-          changed={ event => props.changeQuestionText( event.target.value, props.questionId ) }
-          deleted={ () => props.deleteQuestion( props.questionId ) }
+        <div className={ classes.LeftSide }>
+          <EditableInput
+            inputValue={ props.questionText }
+            inputId={ props.questionId }
+            inputIndex={ props.questionIndex }
+            changed={ event => props.changeQuestionText( event.target.value, props.questionId ) }
+          />
+        </div>
+        <DeleteSideButton
+          externalClasses={ classes.DeleteButton }
+          clicked={ () => props.deleteQuestion( props.questionId ) }
         />
       </div>
 
       <div className={ classes.AnswerBlock }>
         { radioAnswersContent }
         <AddItemButton
+          externalClasses={ classes.AddButton }
           clicked={ () => props.newRadioAnswer( props.questionId ) }
           buttonText="Додати відповідь"
         />
       </div>
-    </div>
+    </div >
   );
 }
 
