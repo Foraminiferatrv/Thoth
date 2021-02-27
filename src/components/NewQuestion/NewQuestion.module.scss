@@ -8,19 +8,47 @@
   background-color: blue-palette(300);
   border-radius: 7px;
   box-shadow: 0 2px 4px blue-palette(800);
-}
 
-.QuestionBlock {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 23px 10px 23px 10px;
-  background-color: blue-palette(50);
-  border-radius: 7px 7px 0 0;
-  box-shadow: 0 2px 2px gray-palette(700);
-}
+  .QuestionBlock {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    border-radius: 7px 7px 0 0;
+    background-color: blue-palette(50);
+    box-shadow: 0 2px 2px gray-palette(700);
 
-.AnswerBlock {
-  margin-top: 15px;
-  width: 90%;
-  padding: 17px;
+    .LeftSide {
+      padding: 23px 10px 23px 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .DeleteButton{
+      border-radius: 0 7px 0 0;
+    }
+  }
+
+  .AnswerBlock {
+    margin-top: 15px;
+    width: 90%;
+    padding: 17px;
+
+    .AddButton {
+      height: 70px;
+      margin-top: 20px;
+      background-color: blue-palette(600);
+      color: blue-palette(300);
+
+      &:hover {
+        background-color: blue-palette(600);
+      }
+
+      &:active {
+        background-color: blue-palette(100);
+      }
+
+      svg {
+        font-size: 3.6rem;
+      }
+    }
+  }
 }

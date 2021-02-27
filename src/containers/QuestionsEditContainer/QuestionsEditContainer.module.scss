@@ -7,22 +7,41 @@
   box-sizing: border-box;
   border-radius: 8px;
   box-shadow: 1px 3px 6px #aaaaaa;
-}
 
-.ContainerHeader {
-  color: #ebf5fc;
-  background-color: blue-palette(600);
-  border-radius: 8px 8px 0 0;
-  padding: 7px 0;
-  box-shadow: 0 2px 2px gray-palette(700);
+  .ContainerHeader {
+    color: #ebf5fc;
+    background-color: blue-palette(600);
+    border-radius: 8px 8px 0 0;
+    padding: 7px 0;
+    box-shadow: 0 2px 2px gray-palette(700);
 
-  span {
-    font-weight: bold;
-    font-size: 20px;
+    span {
+      font-weight: bold;
+      font-size: 20px;
+    }
   }
-}
 
-.ContainerBody {
-  padding:0 20px 20px 20px;
-  box-sizing: border-box;
+  .ContainerBody {
+    padding: 0 20px 20px 20px;
+    box-sizing: border-box;
+
+    .AddButton {
+      height: 70px;
+      margin-top: 20px;
+      background-color: blue-palette(700);
+      color: blue-palette(300);
+
+      &:hover {
+        background-color: blue-palette(600);
+      }
+
+      &:active {
+        background-color: blue-palette(100);
+      }
+
+      svg {
+        font-size: 3.6rem;
+      }
+    }
+  }
 }

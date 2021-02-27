@@ -54,6 +54,7 @@ function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestio
       <div className={ classes.ContainerBody }>
         { qeustionCreator( testQuestions ) }
         <AddItemButton
+          externalClasses={ classes.AddButton }
           buttonText="Додати запитання"
           clicked={ onCreateNewQuestion }
         />

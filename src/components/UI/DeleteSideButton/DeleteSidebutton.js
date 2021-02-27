@@ -4,10 +4,12 @@ import classes from './DeleteSideButton.module.scss';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
-function DeleteSideButton( { clicked } ) {
+function DeleteSideButton( { clicked, externalClasses } ) {
+  const combinedClasses = [classes.DeleteSideButton, externalClasses];
+
   return (
     <div
-      className={ classes.DeleteSideButton }
+      className={ combinedClasses.join( ' ' ) }
       onClick={ clicked }
     >
       <DeleteForeverIcon
