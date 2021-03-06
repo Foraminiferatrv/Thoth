@@ -1,10 +1,11 @@
-@import '../../variables/variables.scss';
+// @use '../../scss/index.scss'as vars;
+@use '../../scss/index.scss';
 
 .NewRadioAnswer {
-  background-color: blue-palette(100);
+  background-color: index.blue-palette(100);
   border-radius: 7px;
   margin-bottom: 12px;
-  box-shadow: 0 2px 3px gray-palette(800);
+  box-shadow: 0 2px 3px index.gray-palette(800);
   box-sizing: border-box;
   display: flex;
 
@@ -15,31 +16,31 @@
     justify-content: space-between;
     padding: 15px 20px;
     width: 100%;
-    
+
     .InputField {
       width: 100%;
       height: 100%;
     }
 
     .AnswerValuesBlock {
-      min-width: 500px;
+      min-width: 480px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      padding: 10px;
+      padding: 15px;
       align-items: center;
-      background-color: blue-palette(300);
+      background-color: index.blue-palette(300);
       border-radius: 6px;
-      box-shadow: inset 1px 1px 3px gray-palette(700);
+      box-shadow: inset 1px 1px 3px index.gray-palette(700);
 
       .AnswerValue {
         box-sizing: border-box;
-        background-color: blue-palette(100);
+        background-color: index.blue-palette(100);
         border-radius: 7px;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         width: 100%;
         display: flex;
-        box-shadow: 1px 1px 3px gray-palette(700);
+        box-shadow: 1px 1px 3px index.gray-palette(700);
 
 
         .LeftSide {
@@ -58,19 +59,24 @@
 
       .AddButton {
         height: 30px;
-        background-color: blue-palette(500);
-        color: blue-palette(300);
+        margin-top: 10px;
+        background-color: index.blue-palette(600);
+        color: index.blue-palette(50);
 
         &:hover {
-          background-color: blue-palette(600);
+          background-color: index.blue-palette(600);
         }
 
         &:active {
-          background-color: blue-palette(100);
+          background-color: index.blue-palette(100);
         }
 
         svg {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
+        }
+
+        span {
+          font-size: 1em;
         }
       }
 

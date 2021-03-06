@@ -1,4 +1,6 @@
-@import '../../variables/variables.scss';
+// @import '../../variables/variables.scss';
+
+@use '../../scss/index.scss';
 
 .NewQuestion {
   display: flex;
@@ -22,7 +24,8 @@
       width: 100%;
       box-sizing: border-box;
     }
-    .DeleteButton{
+
+    .DeleteButton {
       border-radius: 0 7px 0 0;
     }
   }
@@ -36,7 +39,7 @@
       height: 70px;
       margin-top: 20px;
       background-color: blue-palette(600);
-      color: blue-palette(300);
+      color: blue-palette(100);
 
       &:hover {
         background-color: blue-palette(600);
@@ -47,7 +50,11 @@
       }
 
       svg {
-        font-size: 3.6rem;
+        font-size: 3rem;
+      }
+
+      span {
+        font-size: 1.3em;
       }
     }
   }

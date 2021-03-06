@@ -1,0 +1,27 @@
+@use '../../../scss/index.scss';
+
+.PlusButton {
+  background-color: index.blue-palette(400);
+  border: none;
+  min-height: 40px;
+  min-width: 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+
+  &:hover {
+    background-color: blue-palette(700);
+  }
+
+  &:active {
+    background-color: blue-palette(200);
+  }
+}

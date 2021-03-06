@@ -1,0 +1,12 @@
+// @use '../../../variables/variables.scss';
+
+.CheckButton {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  fill: #fff;
+  // background-color: variables.light-green-palette(100);
+  // background-image: url(../../../assets/icons/check.svg  );
+  background-size: cover;
+  cursor: pointer;
+}

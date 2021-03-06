@@ -1,4 +1,5 @@
-@import '../../variables/variables.scss';
+// @import '../../variables/variables.scss';
+@use '../../scss/index.scss';
 
 .InterpretEditor {
   background-color: purple-palette(200);

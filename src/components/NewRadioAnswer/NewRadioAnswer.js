@@ -65,7 +65,11 @@ function NewRadioAnswer( props ) {
           />
         </div>
       </div>
-      <DeleteSideButton />
+      <DeleteSideButton
+        clicked={ () => props.deleteRadioAnswer( props.questionId, props.answerId ) }
+
+
+      />
     </div>
   );
 }

@@ -12,6 +12,7 @@ function AddIttemButton( { clicked, buttonText, externalClasses } ) {
       onClick={ clicked }
     >
       <AddCircleIcon />
+      <span className={ classes.ButtonText }>{ buttonText }</span>
     </div  >
   );
 }

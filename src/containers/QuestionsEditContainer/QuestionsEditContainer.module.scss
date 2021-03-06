@@ -1,4 +1,6 @@
-@import '../../variables/variables.scss';
+// @import '../../variables/variables.scss';
+
+@use '../../scss/index.scss';
 
 .QuestionsEditContainer {
   margin-top: 35px;
@@ -27,9 +29,9 @@
 
     .AddButton {
       height: 70px;
-      margin-top: 20px;
+      margin-top: 40px;
       background-color: blue-palette(700);
-      color: blue-palette(300);
+      color: blue-palette(100);
 
       &:hover {
         background-color: blue-palette(600);
@@ -40,7 +42,11 @@
       }
 
       svg {
-        font-size: 3.6rem;
+        font-size: 3rem;
+      }
+
+      span {
+        font-size: 1.3em;
       }
     }
   }

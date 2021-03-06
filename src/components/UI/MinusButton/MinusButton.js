@@ -1,12 +1,12 @@
 import React from 'react';
 
-import classes from './MinusButton.module.css';
+import classes from './MinusButton.module.scss';
 
 const MinusButton = ( props ) => (
 
-    <button type={'button'} className={ classes.MinusButton } onClick={ props.clicked }>
-      -
-    </button>
+  <button type={ 'button' } className={ classes.MinusButton } onClick={ props.clicked }>
+    -
+  </button>
 
 );
 

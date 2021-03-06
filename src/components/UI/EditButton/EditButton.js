@@ -5,11 +5,10 @@ import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
 
 
-function EditButton( props ) {
+function EditButton( { clicked } ) {
   return (
-    // <div className={ classes.EditButton } onClick={ props.clicked }> </div>
     <Fab
-      onClick={ props.clicked }
+      onClick={ clicked }
       size='small'
       className={ classes.EditButton }
     >

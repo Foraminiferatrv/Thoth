@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './PlusButton.module.css';
+import classes from './PlusButton.module.scss';
 
 const PlusButton = ( props ) => (
 

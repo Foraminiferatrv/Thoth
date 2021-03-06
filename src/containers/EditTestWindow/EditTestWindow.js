@@ -24,7 +24,7 @@ import QuestionsEditContainer from '../QuestionsEditContainer/QuestionsEditConta
 //TODO: destructure all props
 function EditTestWindow( props ) {
   const [testId] = useState( props.match.params.editTestId === undefined || props.match.params.editTestId === null ? uuidv1() : props.match.params.editTestId );
-
+  console.log( testId );
   return (
     <form className={ classes.EditTestWindow }>
       <Input

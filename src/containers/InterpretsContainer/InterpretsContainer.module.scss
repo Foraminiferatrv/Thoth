@@ -1,4 +1,6 @@
-@import '../../variables/variables.scss';
+// @import '../../variables/variables.scss';
+
+@use '../../scss/index.scss';
 
 .InterpretsContainer {
   width: 100%;
@@ -29,9 +31,9 @@
 
     .AddButton {
       height: 70px;
-      margin-top: 20px;
+      margin-top: 40px;
       background-color: purple-palette(700);
-      color: purple-palette(300);
+      color: purple-palette(100);
 
       &:hover {
         background-color: purple-palette(600);
@@ -42,7 +44,11 @@
       }
 
       svg {
-        font-size: 3.6rem;
+        font-size: 3rem;
+      }
+
+      span {
+        font-size: 1.3em;
       }
     }
   }

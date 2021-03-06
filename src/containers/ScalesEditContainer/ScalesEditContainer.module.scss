@@ -1,4 +1,6 @@
-@import '../../variables/variables.scss';
+// @import '../../variables/variables.scss';
+
+@use '../../scss/index.scss';
 
 .ScalesEditContainer {
   margin-top: 15px;
@@ -31,18 +33,22 @@
     height: 70px;
     margin-top: 20px;
     background-color: light-green-palette(700);
-    color: light-green-palette(300);
+    color: light-green-palette(100);
 
     &:hover {
       background-color: light-green-palette(600);
     }
 
-    &:active{
+    &:active {
       background-color: light-green-palette(100);
     }
 
     svg {
-      font-size: 3.6rem;
+      font-size: 3rem;
+    }
+
+    span {
+      font-size: 1.3em;
     }
   }
 }
