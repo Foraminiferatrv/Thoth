@@ -16,10 +16,12 @@ export {
   changeScaleDependency,
   deleteDependency,
   addInterpret,
-  deleteInterpret,
   changeInterpretText,
   changeInterpretValueLimits,
   changeInterpretRequiredScale,
+  addInterpretRequiredScale,
+  deleteInterpret,
+  deleteInterpretRequiredScale,
   sendTestData
 }
 from './testEditor';

@@ -3,40 +3,43 @@ import React from 'react';
 import classes from './InterpretEditor.module.scss';
 
 import { Input } from '../UI/Input/Input';
-import NumRange from '../UI/NumRange/NumRange';
-import ScalesList from '../ScalesList/ScalesList';
 import DeleteSideButton from '../UI/DeleteSideButton//DeleteSidebutton';
+import InterpretScale from '../InterpretScale/InterpretScale';
+import AddItemButton from '../UI/AddItemButton/AddItemButton';
+import LinkIcon from '@material-ui/icons/Link';
 
 
 function InterpretEditor( props ) {
   let scalesContent;
 
   scalesContent = props.requiredScales.map( ( scale, index ) => (
-    <div
-      key={ 'reqScale' + index }
-      className={ classes.ScalesBlock }
-    >
-      <ScalesList
+    <React.Fragment key={ 'reqScale' + index }>
+      <InterpretScale
         testScales={ props.testScales }
-        inputtype='select'
-        inputIndex={ index }
-        selectPlaceholder={ "Оберіть шкалу..." }
-        selectedScale={ scale.requiredScaleId }
-        getInputValue={ scaleId => props.changeInterpretRequiredScale( props.interpretId, index, scaleId ) }
-      />
-      <NumRange
-        valueLimits={ scale.requiredValueLimits }
-        changeInterpretValueLimits={ props.changeInterpretValueLimits }
         interpretId={ props.interpretId }
         scaleIndex={ index }
+        requiredValueLimits={ scale.requiredValueLimits }
+        requiredScaleId={ scale.requiredScaleId }
+        changeInterpretValueLimits={ props.changeInterpretValueLimits }
+        changeInterpretRequiredScale={ props.changeInterpretRequiredScale }
+        deleteInterpretRequiredScale={ props.deleteInterpretRequiredScale }
       />
-    </div> )
+      { ( props.requiredScales.length - 1 ) !== index && <div className={ classes.LinkChain }><LinkIcon fontSize='large' /></div> }
+    </React.Fragment>
+  )
   );
 
   return (
     <div className={ classes.InterpretEditor }>
       <div className={ classes.LeftSide }>
-        { scalesContent }
+        <div className={ classes.ScalesBlock }  >
+          { scalesContent }
+          <AddItemButton
+            externalClasses={ classes.AddButton }
+            buttonText={ scalesContent.length !== 0 ? "Зв'язати шкалу" : "Додати шкалу" }
+            clicked={ () => props.addInterpretRequiredScale( props.interpretId ) }
+          />
+        </div>
         <div className={ classes.InterpretText }>
           <Input
             inputtype='textarea'

@@ -132,12 +132,6 @@ export const addInterpret = () => {
   }
 }
 
-export const deleteInterpret = ( targetInterpretId ) => {
-  return {
-    type: actionTypes.DELETE_INTERPRET,
-    targetInterpretId: targetInterpretId
-  }
-}
 
 export const changeInterpretText = ( targetInterpretId, newInterpretText ) => {
   return {
@@ -165,9 +159,31 @@ export const changeInterpretRequiredScale = ( targetInterpretId, scaleIndex, new
     newScaleId
   }
 }
+
+export const addInterpretRequiredScale = ( targetInterpretId ) => {
+  return {
+    type: actionTypes.ADD_INTERPRET_REQUIRED_SCALE,
+    targetInterpretId
+  }
+}
+
+export const deleteInterpretRequiredScale = ( targetInterpretId, scaleIndex ) => {
+  return {
+    type: actionTypes.DELETE_INTERPRET_REQUIRED_SCALE,
+    targetInterpretId,
+    scaleIndex
+  }
+}
+
+export const deleteInterpret = ( targetInterpretId ) => {
+  return {
+    type: actionTypes.DELETE_INTERPRET,
+    targetInterpretId
+  }
+}
+
+
 //TODO: create separate file for async actions
-
-
 export const sendTestData = ( testData, testId ) => {
   return dispatch => {
     firebase.database()

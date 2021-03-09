@@ -1,10 +1,8 @@
-// @import '../../variables/variables.scss';
-
 @use '../../scss/index.scss';
 
 .QuestionsEditContainer {
   margin-top: 35px;
-  background-color: blue-palette(100);
+  background-color: index.blue-palette(100);
   width: 100%;
   box-sizing: border-box;
   border-radius: 8px;
@@ -12,10 +10,10 @@
 
   .ContainerHeader {
     color: #ebf5fc;
-    background-color: blue-palette(600);
+    background-color: index.blue-palette(600);
     border-radius: 8px 8px 0 0;
     padding: 7px 0;
-    box-shadow: 0 2px 2px gray-palette(700);
+    box-shadow: 0 2px 2px index.gray-palette(700);
 
     span {
       font-weight: bold;
@@ -30,15 +28,15 @@
     .AddButton {
       height: 70px;
       margin-top: 40px;
-      background-color: blue-palette(700);
-      color: blue-palette(100);
+      background-color: index.blue-palette(700);
+      color: index.blue-palette(100);
 
       &:hover {
-        background-color: blue-palette(600);
+        background-color: index.blue-palette(600);
       }
 
       &:active {
-        background-color: blue-palette(100);
+        background-color: index.blue-palette(100);
       }
 
       svg {

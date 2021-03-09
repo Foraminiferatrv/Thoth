@@ -1,0 +1,38 @@
+@use '../../scss/index.scss';
+
+.EditTestWindow {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  padding: 13px;
+  box-sizing: border-box;
+  background-color: #f4f9f9;
+}
+
+.TestName {
+  background-color: index.gray-palette(300);
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: index.$general-border-radius;
+  box-shadow: 1px 3px 6px #aaaaaa;
+
+  .ContainerHeader {
+    background-color: index.gray-palette(600);
+    color: #ebf5fc;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 2px index.gray-palette(700);
+    padding: 7px 0;
+
+    span {
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+
+  .ContainerBody {
+    padding: 10px;
+    margin-top: 10px;
+  }
+}

@@ -18,7 +18,7 @@ $blue-palette:(50:#e3f2fd,
   @return map-get($blue-palette, $key);
 }
 
-//Analog palette
+//light-green palette
 $light-green-palette:(50: #f1f8e9,
   100: #dcedc8,
   200: #c5e1a5,
@@ -39,7 +39,7 @@ $light-green-palette:(50: #f1f8e9,
 }
 
 
-//Contrast palette
+//Purple palette
 $purple-palette:(50: #f3e5f5,
   100: #e1bee7,
   200: #ce93d8,
@@ -58,6 +58,27 @@ $purple-palette:(50: #f3e5f5,
 @function purple-palette($key: $purple-palette) {
   @return map-get($purple-palette, $key);
 }
+
+//Analog palette
+$amber-palette:(50: #fff8e1,
+  100: #ffecb3,
+  200: #ffe082,
+  300: #ffd54f,
+  400: #ffca28,
+  500: #ffc107,
+  600: #ffb300,
+  700: #ffa000,
+  800: #ff8f00,
+  900: #ff6f00,
+  A100: #ffe57f,
+  A200: #ffd740,
+  A400: #ffc400,
+  A700: #ffab00);
+
+@function amber-palette($key: $amber-palette) {
+  @return map-get($amber-palette, $key);
+}
+
 
 //Gray palette
 $gray-palette:(50: #FAFAFA,

@@ -1,0 +1,19 @@
+@use "../../scss/index.scss";
+
+.InterpretScale {
+  width: 100%;
+  background-color: index.purple-palette(200);
+  border-radius: 7px;
+  box-shadow: 1px 1px 3px index.gray-palette(700);
+  display: flex;
+
+  .LeftSide {
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 15px;
+    display: flex;
+    padding: 13px;
+    width: 100%;
+    margin-right: 30px;
+  }
+}

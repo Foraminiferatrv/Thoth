@@ -1,5 +1,3 @@
-// @import '../../variables/variables.scss';
-
 @use '../../scss/index.scss';
 
 .NewQuestion {
@@ -7,16 +5,16 @@
   flex-direction: column;
   align-items: flex-end;
   margin-top: 22px;
-  background-color: blue-palette(300);
+  background-color: index.blue-palette(300);
   border-radius: 7px;
-  box-shadow: 0 2px 4px blue-palette(800);
+  box-shadow: 0 2px 4px index.blue-palette(800);
 
   .QuestionBlock {
     box-sizing: border-box;
     width: 100%;
     display: flex;
     border-radius: 7px 7px 0 0;
-    background-color: blue-palette(50);
+    background-color: index.blue-palette(50);
     box-shadow: 0 2px 2px gray-palette(700);
 
     .LeftSide {
@@ -38,15 +36,15 @@
     .AddButton {
       height: 70px;
       margin-top: 20px;
-      background-color: blue-palette(600);
-      color: blue-palette(100);
+      background-color: index.blue-palette(50);
+      color: index.blue-palette(600);
 
       &:hover {
-        background-color: blue-palette(600);
+        background-color: index.blue-palette(100);
       }
 
       &:active {
-        background-color: blue-palette(100);
+        background-color: index.blue-palette(100);
       }
 
       svg {
@@ -54,7 +52,7 @@
       }
 
       span {
-        font-size: 1.3em;
+        font-size: 1.2em;
       }
     }
   }

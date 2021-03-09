@@ -284,13 +284,18 @@ function changeInterpretValueLimits( state, targetInterpretId, scaleIndex, fromL
   } ) );
 }
 
-
-function deleteInterpret( state, targetInterpretId ) {
+function addInterpretRequiredScale( state, targetInterpretId ) {
   const interpretCopy = {
     ...state.testInterpretations
   };
 
-  delete interpretCopy[ targetInterpretId ];
+  interpretCopy[ targetInterpretId ].requiredScales.push( {
+    requiredScaleId: '',
+    requiredValueLimits: {
+      from: 0,
+      to: 0
+    }
+  } );
 
   return ( updateObject( state, {
     testInterpretations: interpretCopy
@@ -308,6 +313,34 @@ function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, new
     testInterpretations: interpretCopy
   } ) );
 }
+
+function deleteInterpretRequiredScale( state, targetInterpretId, scaleIndex ) {
+  const interpretCopy = {
+    ...state.testInterpretations
+  };
+  console.log( interpretCopy[ targetInterpretId ].requiredScales[ scaleIndex ] );
+  // interpretCopy[ targetInterpretId ].requiredScales = interpretCopy[ targetInterpretId ].requiredScales.slice( scaleIndex, scaleIndex );
+  interpretCopy[ targetInterpretId ].requiredScales.splice( scaleIndex, 1 )
+
+  return ( updateObject( state, {
+    testInterpretations: interpretCopy
+  } ) );
+}
+
+function deleteInterpret( state, targetInterpretId ) {
+  const interpretCopy = {
+    ...state.testInterpretations
+  };
+
+  delete interpretCopy[ targetInterpretId ];
+
+  return ( updateObject( state, {
+    testInterpretations: interpretCopy
+  } ) );
+}
+
+
+
 //end interpret functions
 
 
@@ -324,6 +357,7 @@ function testEditor( state = initialState, action ) {
     case actionTypes.ADD_TEST_NAME:
       return addTestName( state, action.testName );
 
+      //scales reducers
     case actionTypes.CREATE_NEW_SCALE:
       return createNewScale( state );
 
@@ -366,9 +400,7 @@ function testEditor( state = initialState, action ) {
     case actionTypes.ADD_INTERPRET:
       return addInterpret( state );
 
-    case actionTypes.DELETE_INTERPRET:
-      return deleteInterpret( state, action.targetInterpretId );
-
+      //interprets reducers
     case actionTypes.CHANGE_INTERPRET_TEXT:
       return changeInterpretText( state, action.targetInterpretId, action.newInterpretText );
 
@@ -377,6 +409,15 @@ function testEditor( state = initialState, action ) {
 
     case actionTypes.CHANGE_INTERPRET_REQUIRED_SCALE:
       return changeInterpretRequiredScale( state, action.targetInterpretId, action.scaleIndex, action.newScaleId );
+
+    case actionTypes.ADD_INTERPRET_REQUIRED_SCALE:
+      return addInterpretRequiredScale( state, action.targetInterpretId );
+
+    case actionTypes.DELETE_INTERPRET_REQUIRED_SCALE:
+      return deleteInterpretRequiredScale( state, action.targetInterpretId, action.scaleIndex );
+
+    case actionTypes.DELETE_INTERPRET:
+      return deleteInterpret( state, action.targetInterpretId );
 
 
     default:

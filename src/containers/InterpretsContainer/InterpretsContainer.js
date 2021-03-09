@@ -8,7 +8,9 @@ import {
   deleteInterpret,
   changeInterpretText,
   changeInterpretValueLimits,
-  changeInterpretRequiredScale
+  changeInterpretRequiredScale,
+  addInterpretRequiredScale,
+  deleteInterpretRequiredScale
 } from '../../store/actions/index';
 
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
@@ -16,7 +18,7 @@ import InterpretEditor from '../../components/InterpretEditor/InterpretEditor';
 
 
 
-function InterpretsContainer( { interprets, testScales, onAddInterpret, onDeleteInterpret, onChangeInterpretText, onChangeInterpretValueLimits, onChangeInterpretRequiredScale } ) {
+function InterpretsContainer( { interprets, testScales, onAddInterpret, onDeleteInterpret, onChangeInterpretText, onChangeInterpretValueLimits, onChangeInterpretRequiredScale, onAddInterpretRequiredScale, onDeleteInterpretRequiredScale } ) {
   let interpretContent;
 
   if ( interprets !== undefined ) {
@@ -33,6 +35,8 @@ function InterpretsContainer( { interprets, testScales, onAddInterpret, onDelete
           valueLimits={ interpretValues.requiredScales.requiredValueLimits }
           changeInterpretValueLimits={ onChangeInterpretValueLimits }
           changeInterpretRequiredScale={ onChangeInterpretRequiredScale }
+          deleteInterpretRequiredScale={ onDeleteInterpretRequiredScale }
+          addInterpretRequiredScale={ onAddInterpretRequiredScale }
         />
       )
     );
@@ -58,10 +62,12 @@ function InterpretsContainer( { interprets, testScales, onAddInterpret, onDelete
 function mapDispatchToProps( dispatch ) {
   return {
     onAddInterpret: () => dispatch( addInterpret() ),
-    onDeleteInterpret: ( targetInterpretId ) => dispatch( deleteInterpret( targetInterpretId ) ),
     onChangeInterpretText: ( targetInterpretId, newIntepretText ) => dispatch( changeInterpretText( targetInterpretId, newIntepretText ) ),
     onChangeInterpretValueLimits: ( targetInterpretId, scaleIndex, fromLimit, toLimit ) => dispatch( changeInterpretValueLimits( targetInterpretId, scaleIndex, fromLimit, toLimit ) ),
-    onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) )
+    onChangeInterpretRequiredScale: ( targetInterpretId, scaleIndex, newScaleId ) => dispatch( changeInterpretRequiredScale( targetInterpretId, scaleIndex, newScaleId ) ),
+    onAddInterpretRequiredScale: ( targetInterpretId ) => dispatch( addInterpretRequiredScale( targetInterpretId ) ),
+    onDeleteInterpretRequiredScale: ( targetInterpretId, scaleIndex ) => dispatch( deleteInterpretRequiredScale( targetInterpretId, scaleIndex ) ),
+    onDeleteInterpret: ( targetInterpretId ) => dispatch( deleteInterpret( targetInterpretId ) )
   };
 }
 

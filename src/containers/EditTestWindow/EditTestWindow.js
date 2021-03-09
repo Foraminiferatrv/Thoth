@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import classes from './EditTestWindow.module.css';
+import classes from './EditTestWindow.module.scss';
 
 import { v1 as uuidv1 } from 'uuid';
 
@@ -12,40 +12,45 @@ import {
 
 import { withRouter } from 'react-router';
 
-import { Input } from '../../components/UI/Input/Input';
+import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import InterpretsContainer from '../InterpretsContainer/InterpretsContainer';
 import ScalesEditContainer from '../ScalesEditContainer/ScalesEditContainer';
 import QuestionsEditContainer from '../QuestionsEditContainer/QuestionsEditContainer';
 
 
-//FIXME:input allways updates element - needs fixing
-//FIXME: component rerenders on every keystroke
-//TODO: create individual component for each test area
 //TODO: destructure all props
+
 function EditTestWindow( props ) {
   const [testId] = useState( props.match.params.editTestId === undefined || props.match.params.editTestId === null ? uuidv1() : props.match.params.editTestId );
-  console.log( testId );
   return (
     <form className={ classes.EditTestWindow }>
-      <Input
-        placeholder='Назва методики...'
-        inputtype={ 'input' }
-        type={ 'text' }
-        inputlabel={ "Назва методики" }
-        onChange={ ( event ) => props.onAddTestName( event.target.value ) }
-        value={ props.testEditorState.testName }
-      />
+
+      <div className={ classes.TestName }>
+        <div className={ classes.ContainerHeader }>
+          <span > Назва методики:</span>
+        </div>
+        <div className={ classes.ContainerBody }>
+          <EditableInput
+            inputValue={ props.testEditorState.testName }
+            changed={ ( event ) => props.onAddTestName( event.target.value ) }
+          />
+        </div>
+      </div>
+
       <ScalesEditContainer
         testScales={ props.testEditorState.testScales }
       />
+
       <QuestionsEditContainer
         testQuestions={ props.testEditorState.testQuestions }
         testScales={ props.testEditorState.testScales }
       />
+
       <InterpretsContainer
         interprets={ props.testEditorState.testInterpretations }
         testScales={ props.testEditorState.testScales }
       />
+
       {/* TODO: Replace the submit button */ }
       <button onClick={ () => props.onSendTestData( props.testEditorState, testId ) } type="button">temp submit'</button>
     </form>

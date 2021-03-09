@@ -15,20 +15,24 @@ function EditableInput( props ) {
     changeEditStatus( !currentEdditStatus );
   }
 
+  function onEditComplete( event ) {
+    toggleEditStatus( editStatus );
+    props.changed( event )
+  }
+
   let componentContent = <Input
-    inputlabel={ props.letterIndex ? alphabet[props.inputIndex] : props.inputIndex + 1 }
+    inputlabel={ props.inputIndex !== undefined ? props.letterIndex ? alphabet[props.inputIndex] : props.inputIndex + 1 : null }
     inputtype='input'
     defaultValue={ props.inputValue }
-    onChange={ event => props.changed( event ) } //TODO: answerText might need to be replaced due to better reusability
-    //* FIXME:on change function is not flexible enough. */ 
-    onBlur={ toggleEditStatus }
+    // onChange={ event => props.changed( event ) }
+    onBlur={ onEditComplete }
     autoFocus
   />;
 
   if ( !editStatus ) {
     componentContent = <div className={ classes.InputValueContainer }>
-      <span className={ classes.InputIndex }>{ props.letterIndex ? alphabet[props.inputIndex] : props.inputIndex + 1 }</span>
-      <span className={ classes.InputValue } onClick={()=> toggleEditStatus( editStatus ) }>
+      <span className={ classes.InputIndex }>{ props.inputIndex !== undefined ? props.letterIndex ? alphabet[props.inputIndex] : props.inputIndex + 1 : null }</span>
+      <span className={ classes.InputValue } onClick={ () => toggleEditStatus( editStatus ) }>
         { props.inputValue }    {/* FIXME:Input name should always be readble even if a name is too long. */ }
       </span>
     </div>;

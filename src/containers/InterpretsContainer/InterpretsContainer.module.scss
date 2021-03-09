@@ -1,20 +1,16 @@
-// @import '../../variables/variables.scss';
-
 @use '../../scss/index.scss';
 
 .InterpretsContainer {
   width: 100%;
-  background-color: purple-palette(100);
+  background-color: index.purple-palette(50);
   margin-top: 35px;
   box-sizing: border-box;
   border-radius: 8px;
   box-shadow: 1px 3px 6px #aaaaaa;
 
-
-
   .ContainerHeader {
     color: #ebf5fc;
-    background-color: purple-palette(500);
+    background-color: index.purple-palette(500);
     border-radius: 8px 8px 0 0;
     padding: 7px 0;
     box-shadow: 0px 2px 1px #681d47;
@@ -26,21 +22,21 @@
   }
 
   .ContainerBody {
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     box-sizing: border-box;
 
     .AddButton {
       height: 70px;
       margin-top: 40px;
-      background-color: purple-palette(700);
-      color: purple-palette(100);
+      background-color: index.purple-palette(700);
+      color: index.purple-palette(100);
 
       &:hover {
-        background-color: purple-palette(600);
+        background-color: index.purple-palette(600);
       }
 
       &:active {
-        background-color: purple-palette(100);
+        background-color: index.purple-palette(100);
       }
 
       svg {
