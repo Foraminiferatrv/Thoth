@@ -18,7 +18,7 @@ import {
 import { connect } from 'react-redux';
 
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
-import { NewQuestion } from '../../components/NewQuestion/NewQuestion';
+import  NewQuestion  from '../../components/NewQuestion/NewQuestion';
 
 
 function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestion, onChangeQuestionText, onDeleteQestion, onAddNewRadioAnswer, onChangeRadioAnswerText, onDeleteRadioAnswer, onAddDependency, onChangeAnswerValue, onChangeScaleDependency, onDeleteDependency } ) {
@@ -63,7 +63,12 @@ function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestio
   );
 }
 
-
+function mapStateToProps( state ) {
+  return {
+    testQuestions: state.testEditorState.testQuestions,
+    testScales: state.testEditorState.testScales
+  };
+}
 
 function mapDispatchToProps( dispatch ) {
   return {
@@ -80,4 +85,4 @@ function mapDispatchToProps( dispatch ) {
   };
 }
 
-export default connect( null, mapDispatchToProps )( QuestionsEditContainer );
+export default connect( mapStateToProps, mapDispatchToProps )( QuestionsEditContainer );

@@ -49,6 +49,11 @@ function ScalesEditContainer( { testScales, onCreateScale, onChangeScaleName, on
   );
 }
 
+function mapStateToProps( state ) {
+  return {
+    testScales: state.testEditorState.testScales
+  };
+}
 
 function mapDispatchToProps( dispatch ) {
   return {
@@ -58,4 +63,4 @@ function mapDispatchToProps( dispatch ) {
   };
 }
 
-export default connect( null, mapDispatchToProps )( ScalesEditContainer );
+export default connect( mapStateToProps, mapDispatchToProps )( ScalesEditContainer );

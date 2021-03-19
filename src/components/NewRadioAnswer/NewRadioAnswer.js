@@ -9,14 +9,14 @@ import NumInput from '../NumInput/NumInput';
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 
-//TODO: Create individual component for scaleDependencies
+
 function NewRadioAnswer( props ) {
   let scaleDependenciesContent = null;
 
   if ( props.scaleDependencies !== undefined ) {
     scaleDependenciesContent = props.scaleDependencies.map( ( scaleData, index ) =>
       <div
-        key={ 'scaleDependencies' + index }
+        key={ 'scaleDeps' + index }
         className={ classes.AnswerValue }
       >
         <div className={ classes.LeftSide }>
@@ -53,7 +53,6 @@ function NewRadioAnswer( props ) {
             inputIndex={ props.answerIndex }
             answerIndex={ props.answerIndex }
             inputValue={ props.answerText }
-            deleted={ () => props.deleteRadioAnswer( props.questionId, props.answerId ) }
           />
         </div>
         <div className={ classes.AnswerValuesBlock }>

@@ -23,7 +23,6 @@ function createNewTest( state ) {
 }
 
 const setTestEditorData = ( state, testData ) => {
-  console.log( testData );
   return updateObject( state, testData );
 }
 
@@ -81,9 +80,11 @@ function deleteScale( state, targetScaleId ) {
 
 // questions functions
 function createNewQuestion( state ) {
-  let questionsCopy = {
-    ...state.testQuestions
-  };
+  // let questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
+
   questionsCopy = {
     ...questionsCopy,
     [ uuidv1() ]: {
@@ -97,9 +98,10 @@ function createNewQuestion( state ) {
 }
 
 function changeQuestionText( state, newQuestionText, targetQuestionId ) {
-  let questionsCopy = {
-    ...state.testQuestions
-  };
+  // let questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ] = {
     ...questionsCopy[ targetQuestionId ],
@@ -112,9 +114,11 @@ function changeQuestionText( state, newQuestionText, targetQuestionId ) {
 }
 
 function deleteQestion( state, targetQuestionId ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
+
   delete questionsCopy[ targetQuestionId ];
 
   return updateObject( state, {
@@ -126,9 +130,11 @@ function deleteQestion( state, targetQuestionId ) {
 
 //answer functions
 function addNewRadioAnswer( state, targetQuestionId ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
+
   questionsCopy[ targetQuestionId ].questionRadioAnswers = {
     ...questionsCopy[ targetQuestionId ].questionRadioAnswers,
     [ uuidv1() ]: {
@@ -146,9 +152,10 @@ function addNewRadioAnswer( state, targetQuestionId ) {
 }
 
 function changeRadioAnswerText( state, newAnswerText, targetQuestionId, answerId ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ] = {
     ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
@@ -161,9 +168,10 @@ function changeRadioAnswerText( state, newAnswerText, targetQuestionId, answerId
 }
 
 function deleteRadioAnswer( state, targetQuestionId, answerId ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
   delete questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ];
 
   return ( updateObject( state, {
@@ -172,27 +180,27 @@ function deleteRadioAnswer( state, targetQuestionId, answerId ) {
 }
 
 function addDependency( state, targetQuestionId, answerId ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
-
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.push( {
     scaleId: "",
     answerValue: 0
-  } )
+  } );
 
   return ( updateObject( state, {
     testQuestions: questionsCopy
-  } ) )
+  } ) );
 }
 
 
 function changeScaleDependency( state, targetQuestionId, answerId, depIndex, newValue ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
-
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies[ depIndex ].scaleId = newValue;
 
   return ( updateObject( state, {
@@ -201,9 +209,10 @@ function changeScaleDependency( state, targetQuestionId, answerId, depIndex, new
 }
 
 function deleteDependency( state, targetQuestionId, answerId, depIndex ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.splice( depIndex, 1 );
 
@@ -213,16 +222,27 @@ function deleteDependency( state, targetQuestionId, answerId, depIndex ) {
 }
 
 function changeAnswerValue( state, targetQuestionId, answerId, depIndex, newValue ) {
-  const questionsCopy = {
-    ...state.testQuestions
-  };
-  // const targetQuestionIndex = questionsCopy.indexOf( questionsCopy.filter( ( element ) => element.questionId === targetQuestionId )[ 0 ] );
+  // const questionsCopy = {
+  //   ...state.testQuestions
+  // };
+  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies[ depIndex ].answerValue = newValue;
-
-  return ( updateObject( state, {
-    testQuestions: questionsCopy
-  } ) );
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
+          [ answerId ]: {
+            ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
+          }
+        }
+      }
+    }
+  } );
 }
 //end answer functions
 
@@ -318,8 +338,6 @@ function deleteInterpretRequiredScale( state, targetInterpretId, scaleIndex ) {
   const interpretCopy = {
     ...state.testInterpretations
   };
-  console.log( interpretCopy[ targetInterpretId ].requiredScales[ scaleIndex ] );
-  // interpretCopy[ targetInterpretId ].requiredScales = interpretCopy[ targetInterpretId ].requiredScales.slice( scaleIndex, scaleIndex );
   interpretCopy[ targetInterpretId ].requiredScales.splice( scaleIndex, 1 )
 
   return ( updateObject( state, {

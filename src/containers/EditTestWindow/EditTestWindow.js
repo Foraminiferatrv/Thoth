@@ -37,14 +37,9 @@ function EditTestWindow( props ) {
         </div>
       </div>
 
-      <ScalesEditContainer
-        testScales={ props.testEditorState.testScales }
-      />
+      <ScalesEditContainer />
 
-      <QuestionsEditContainer
-        testQuestions={ props.testEditorState.testQuestions }
-        testScales={ props.testEditorState.testScales }
-      />
+      <QuestionsEditContainer />
 
       <InterpretsContainer
         interprets={ props.testEditorState.testInterpretations }

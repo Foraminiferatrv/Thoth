@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import classes from './NewQuestion.module.scss';
 
@@ -10,6 +10,7 @@ import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 
 function NewQuestion( props ) {
+  
   let radioAnswersContent = null;
 
   if ( props.radioAnswers !== undefined ) {
@@ -61,4 +62,4 @@ function NewQuestion( props ) {
   );
 }
 
-export { NewQuestion };
+export default React.memo( NewQuestion );
