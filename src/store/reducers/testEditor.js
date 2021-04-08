@@ -113,7 +113,7 @@ function changeQuestionText( state, newQuestionText, targetQuestionId ) {
     testQuestions: {
       ...state.testQuestions,
       [ targetQuestionId ]: {
-        ...questionsCopy. [ targetQuestionId ]
+        ...questionsCopy[ targetQuestionId ]
       }
     }
   };
@@ -253,6 +253,13 @@ function deleteDependency( state, targetQuestionId, answerId, depIndex ) {
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.splice( depIndex, 1 );
+
+  if ( questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.length === 0 ) {
+    questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.push( {
+      scaleId: "",
+      answerValue: 0
+    } );
+  };
 
   return ( {
     ...state,

@@ -16,24 +16,23 @@ export default function showInterpret( results, questions, scales, interprets ) 
   } );
 
 
-  
+
   //Calculating results.
-  console.log( interprets );
-  Object.entries( results ).forEach( ( [ questionId, answerId ] ) => (
+  Object.entries( results ).forEach( ( [ questionId, answerId ] ) => {
+    console.log( questions[ questionId ] );
     questions[ questionId ].questionRadioAnswers[ answerId ].scaleDependencies.forEach( dep => (
       scalesPoints = {
         ...scalesPoints,
         [ dep.scaleId ]: scalesPoints[ dep.scaleId ] + dep.answerValue
       }
     ) )
-  ) );
+  } );
 
 
 
   //Comparing avalible and required points. Pushing interpretaitons.
   Object.values( interprets ).forEach( interpretValues => {
     let interpretIsValid = true;
-
 
     const scaleId = interpretValues.requiredScales[ 0 ].requiredScaleId;
 
@@ -42,9 +41,11 @@ export default function showInterpret( results, questions, scales, interprets ) 
 
 
     interpretValues.requiredScales.forEach( requiredScale => {
-      interpretIsValid = interpretIsValid * checkInterpret( scalesPoints[ requiredScale.requiredScaleId ], requiredScale.requiredValueLimits );
-      console.log( interpretIsValid );
+      if ( !interpretIsValid || !checkInterpret( scalesPoints[ requiredScale.requiredScaleId ], requiredScale.requiredValueLimits ) ) {
+        interpretIsValid = false;
+      }
     } );
+
 
     if ( interpretIsValid ) {
       finalInterpret.push( interpretValues.interpretText );

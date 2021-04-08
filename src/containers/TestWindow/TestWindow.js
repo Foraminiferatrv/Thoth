@@ -31,7 +31,8 @@ function TestWindow( { testsData, match } ) {
           questionData={ questionData }
           questionId={ questionId }
           setResult={ setResult }
-      /> ) }
+          interpret={ () => console.log( interpretator( testResults, testsData[match.params.testId].testQuestions, testsData[match.params.testId].testScales, testsData[match.params.testId].testInterpretations ) ) }
+        /> ) }
       </FormControl>
       <AddItemButton
         buttonText={ 'interpretate!' }
