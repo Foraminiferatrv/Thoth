@@ -34,83 +34,89 @@ function addTestName( state, testName ) {
 
 // scale functions
 function createNewScale( state ) {
-  let updatedScales = {
+  let scalesCopy = {
     ...state.testScales
   };
-  updatedScales = {
-    ...updatedScales,
+  scalesCopy = {
+    ...scalesCopy,
     [ uuidv1() ]: {
       scaleName: ""
     }
   };
 
-  return updateObject( state, {
-    testScales: updatedScales
+  return ( {
+    ...state,
+    testScales: {
+      ...scalesCopy
+    }
   } );
 }
 
 function changeScaleName( state, scaleName, targetScaleId ) {
-  let scalesCopy = {
-    ...state.testScales
-  };
+  const scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
 
   scalesCopy[ targetScaleId ] = {
     ...scalesCopy[ targetScaleId ],
     scaleName: scaleName
   }
-  return ( updateObject( state, {
-    testScales: scalesCopy
-  } ) )
+  return ( {
+    ...state,
+    testScales: {
+      ...state.testScales,
+      [ targetScaleId ]: {
+        ...scalesCopy[ targetScaleId ]
+      }
+    }
+  } );
 
 }
 
 function deleteScale( state, targetScaleId ) {
-  const scalesCopy = {
-    ...state.testScales
-  };
+  const scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
 
   delete scalesCopy[ targetScaleId ];
 
-  return ( updateObject( state, {
-    testScales: scalesCopy
-  } ) );
+  return ( {
+    ...state,
+    testScales: {
+      ...scalesCopy
+    }
+  } );
 }
 //end scale functions
 
 
 // questions functions
 function createNewQuestion( state ) {
-  // let questionsCopy = {
-  //   ...state.testQuestions
-  // };
-  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
-
-  questionsCopy = {
-    ...questionsCopy,
-    [ uuidv1() ]: {
-      questionText: "",
-      questionRadioAnswers: {}
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ uuidv1() ]: {
+        questionText: "",
+        questionRadioAnswers: {}
+      }
     }
-  };
-  return updateObject( state, {
-    testQuestions: questionsCopy
   } );
 }
 
 function changeQuestionText( state, newQuestionText, targetQuestionId ) {
-  // let questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ] = {
     ...questionsCopy[ targetQuestionId ],
     questionText: newQuestionText
-  }
+  };
 
-  return updateObject( state, {
-    testQuestions: questionsCopy
-  } )
+  return {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...questionsCopy. [ targetQuestionId ]
+      }
+    }
+  };
 }
 
 function deleteQestion( state, targetQuestionId ) {
@@ -130,31 +136,29 @@ function deleteQestion( state, targetQuestionId ) {
 
 //answer functions
 function addNewRadioAnswer( state, targetQuestionId ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
-  const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
-  questionsCopy[ targetQuestionId ].questionRadioAnswers = {
-    ...questionsCopy[ targetQuestionId ].questionRadioAnswers,
-    [ uuidv1() ]: {
-      answerText: "",
-      scaleDependencies: [ {
-        scaleId: "",
-        answerValue: 0
-      } ]
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
+          [ uuidv1() ]: {
+            answerText: "",
+            scaleDependencies: [ {
+              scaleId: "",
+              answerValue: 0
+            } ]
+          }
+        }
+      }
     }
-  };
-
-  return updateObject( state, {
-    testQuestions: questionsCopy
   } );
 }
 
 function changeRadioAnswerText( state, newAnswerText, targetQuestionId, answerId ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ] = {
@@ -162,27 +166,42 @@ function changeRadioAnswerText( state, newAnswerText, targetQuestionId, answerId
     answerText: newAnswerText
   }
 
-  return ( updateObject( state, {
-    testQuestions: questionsCopy
-  } ) );
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
+          [ answerId ]: {
+            ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
+          }
+        }
+      }
+    }
+  } );
 }
 
 function deleteRadioAnswer( state, targetQuestionId, answerId ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
   delete questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ];
 
-  return ( updateObject( state, {
-    testQuestions: questionsCopy
-  } ) );
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...questionsCopy[ targetQuestionId ].questionRadioAnswers
+        }
+      }
+    }
+  } );
 }
 
 function addDependency( state, targetQuestionId, answerId ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.push( {
@@ -190,41 +209,69 @@ function addDependency( state, targetQuestionId, answerId ) {
     answerValue: 0
   } );
 
-  return ( updateObject( state, {
-    testQuestions: questionsCopy
-  } ) );
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
+          [ answerId ]: {
+            ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
+          }
+        }
+      }
+    }
+  } );
 }
 
 
 function changeScaleDependency( state, targetQuestionId, answerId, depIndex, newValue ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
+
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies[ depIndex ].scaleId = newValue;
 
-  return ( updateObject( state, {
-    testQuestions: questionsCopy
-  } ) );
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
+          [ answerId ]: {
+            ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
+          }
+        }
+      }
+    }
+  } );
 }
 
 function deleteDependency( state, targetQuestionId, answerId, depIndex ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies.splice( depIndex, 1 );
 
-  return ( updateObject( state, {
-    testQuestions: questionsCopy
-  } ) )
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.testQuestions,
+      [ targetQuestionId ]: {
+        ...state.testQuestions[ targetQuestionId ],
+        questionRadioAnswers: {
+          ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
+          [ answerId ]: {
+            ...questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ],
+          }
+        }
+      }
+    }
+  } );
 }
 
 function changeAnswerValue( state, targetQuestionId, answerId, depIndex, newValue ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   questionsCopy[ targetQuestionId ].questionRadioAnswers[ answerId ].scaleDependencies[ depIndex ].answerValue = newValue;
@@ -267,9 +314,12 @@ function addInterpret( state ) {
     }
   }
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) )
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...interpretCopy
+    }
+  } );
 }
 
 function changeInterpretText( state, targetInterpretId, newInterpretText ) {
@@ -283,9 +333,15 @@ function changeInterpretText( state, targetInterpretId, newInterpretText ) {
     interpretText: newInterpretText
   };
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) );
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...state.testInterpretations,
+      [ targetInterpretId ]: {
+        ...interpretCopy[ targetInterpretId ]
+      }
+    }
+  } );
 }
 
 function changeInterpretValueLimits( state, targetInterpretId, scaleIndex, fromLimit, toLimit ) {
@@ -299,9 +355,15 @@ function changeInterpretValueLimits( state, targetInterpretId, scaleIndex, fromL
     to: toLimit
   };
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) );
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...state.testInterpretations,
+      [ targetInterpretId ]: {
+        ...interpretCopy[ targetInterpretId ]
+      }
+    }
+  } );
 }
 
 function addInterpretRequiredScale( state, targetInterpretId ) {
@@ -317,9 +379,15 @@ function addInterpretRequiredScale( state, targetInterpretId ) {
     }
   } );
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) );
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...state.testInterpretations,
+      [ targetInterpretId ]: {
+        ...interpretCopy[ targetInterpretId ]
+      }
+    }
+  } );
 }
 
 function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, newScaleId ) {
@@ -329,9 +397,15 @@ function changeInterpretRequiredScale( state, targetInterpretId, scaleIndex, new
 
   interpretCopy[ targetInterpretId ].requiredScales[ scaleIndex ].requiredScaleId = newScaleId;
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) );
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...state.testInterpretations,
+      [ targetInterpretId ]: {
+        ...interpretCopy[ targetInterpretId ]
+      }
+    }
+  } );
 }
 
 function deleteInterpretRequiredScale( state, targetInterpretId, scaleIndex ) {
@@ -340,9 +414,15 @@ function deleteInterpretRequiredScale( state, targetInterpretId, scaleIndex ) {
   };
   interpretCopy[ targetInterpretId ].requiredScales.splice( scaleIndex, 1 )
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) );
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...state.testInterpretations,
+      [ targetInterpretId ]: {
+        ...interpretCopy[ targetInterpretId ]
+      }
+    }
+  } );
 }
 
 function deleteInterpret( state, targetInterpretId ) {
@@ -352,9 +432,12 @@ function deleteInterpret( state, targetInterpretId ) {
 
   delete interpretCopy[ targetInterpretId ];
 
-  return ( updateObject( state, {
-    testInterpretations: interpretCopy
-  } ) );
+  return ( {
+    ...state,
+    testInterpretations: {
+      ...interpretCopy
+    }
+  } );
 }
 
 

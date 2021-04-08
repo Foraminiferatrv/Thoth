@@ -1,3 +1,5 @@
+import React from 'react';
+
 import classes from './QuestionPage.module.css';
 
 import Radio from '@material-ui/core/Radio';
@@ -26,4 +28,4 @@ function QuestionPage( { questionData, questionId, setResult } ) {
   );
 }
 
-export default QuestionPage;
+export default React.memo( QuestionPage );

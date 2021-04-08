@@ -15,7 +15,10 @@ export default function showInterpret( results, questions, scales, interprets ) 
     [ key ]: 0
   } );
 
+
+  
   //Calculating results.
+  console.log( interprets );
   Object.entries( results ).forEach( ( [ questionId, answerId ] ) => (
     questions[ questionId ].questionRadioAnswers[ answerId ].scaleDependencies.forEach( dep => (
       scalesPoints = {
@@ -31,7 +34,6 @@ export default function showInterpret( results, questions, scales, interprets ) 
   Object.values( interprets ).forEach( interpretValues => {
     let interpretIsValid = true;
 
-    console.log( interpretValues );
 
     const scaleId = interpretValues.requiredScales[ 0 ].requiredScaleId;
 

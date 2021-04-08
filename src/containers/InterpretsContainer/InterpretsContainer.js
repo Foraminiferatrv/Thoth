@@ -20,7 +20,7 @@ import InterpretEditor from '../../components/InterpretEditor/InterpretEditor';
 
 function InterpretsContainer( { interprets, testScales, onAddInterpret, onDeleteInterpret, onChangeInterpretText, onChangeInterpretValueLimits, onChangeInterpretRequiredScale, onAddInterpretRequiredScale, onDeleteInterpretRequiredScale } ) {
   let interpretContent;
-
+  console.log( interprets );
   if ( interprets !== undefined ) {
     interpretContent = Object.entries( interprets ).map(
       ( [interpretId, interpretValues] ) => (
@@ -32,7 +32,6 @@ function InterpretsContainer( { interprets, testScales, onAddInterpret, onDelete
           interpretText={ interpretValues.interpretText }
           changeInterpretText={ onChangeInterpretText }
           deleteInterpret={ onDeleteInterpret }
-          valueLimits={ interpretValues.requiredScales.requiredValueLimits }
           changeInterpretValueLimits={ onChangeInterpretValueLimits }
           changeInterpretRequiredScale={ onChangeInterpretRequiredScale }
           deleteInterpretRequiredScale={ onDeleteInterpretRequiredScale }

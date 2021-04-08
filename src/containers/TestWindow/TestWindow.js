@@ -26,13 +26,12 @@ function TestWindow( { testsData, match } ) {
     <div className={ classes.TestWindow }>
       <FormControl>
         { testsData[match.params.testId].testName }
-
         { Object.entries( testsData[match.params.testId].testQuestions ).map( ( [questionId, questionData] ) => <QuestionPage
           key={ questionId }
           questionData={ questionData }
           questionId={ questionId }
           setResult={ setResult }
-        /> ) }
+      /> ) }
       </FormControl>
       <AddItemButton
         buttonText={ 'interpretate!' }
