@@ -1,6 +1,8 @@
 import React from 'react';
 
-import classes from './QuestionPage.module.css';
+import classes from './QuestionPage.module.scss';
+
+
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -18,9 +20,10 @@ function QuestionPage( { questionData, questionId, setResult, interpret } ) {
       <div className={ classes.QuestionText }>
         { questionData.questionText }
       </div>
-      <RadioGroup>
+      <RadioGroup >
         { Object.entries( questionData.questionRadioAnswers ).map( ( [answerId, answerData] ) =>
           <FormControlLabel
+            classes={ { label: classes.RadioAnswer } }
             key={ answerId }
             label={ answerData.answerText }
             value={ answerId }

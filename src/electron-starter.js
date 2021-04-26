@@ -15,8 +15,8 @@ const startUrl = process.env.ELECTRON_START_URL || url.format( {
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow( {
-    width: 1600,
-    height: 1200,
+    width: 1024,
+    height: 768,
     webPreferences: {
       preload: path.join( __dirname, 'preload.js' )
     }
