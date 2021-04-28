@@ -2,14 +2,14 @@ import React from 'react';
 
 import classes from './QuestionPage.module.scss';
 
+import CustomRadio from '../UI/CustomRadio/CustomRadio';
 
-
-import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 function QuestionPage( { questionData, questionId, setResult, interpret } ) {
+
   function changed( event ) {
     setResult( questionId, event.target.value );
     interpret();
@@ -17,23 +17,23 @@ function QuestionPage( { questionData, questionId, setResult, interpret } ) {
 
   return (
     <div className={ classes.QuestionPage }>
-      <div className={ classes.QuestionText }>
+      <span className={ classes.QuestionText }>
         { questionData.questionText }
-      </div>
-      <RadioGroup >
+      </span>
+      <RadioGroup classes={ { root: classes.AnswersBlock } } onChange={ ( event ) => changed( event ) }>
         { Object.entries( questionData.questionRadioAnswers ).map( ( [answerId, answerData] ) =>
           <FormControlLabel
             classes={ { label: classes.RadioAnswer } }
             key={ answerId }
             label={ answerData.answerText }
             value={ answerId }
-            control={ <Radio /> }
-            onChange={ ( event ) => changed( event ) }
+            control={ <CustomRadio /> }
           />
         ) }
       </RadioGroup>
     </div>
   );
 }
+
 
 export default React.memo( QuestionPage );
