@@ -2,6 +2,7 @@
 
 .InterpretsContainer {
   width: 100%;
+  min-width: 870px;
   background-color: index.purple-palette(50);
   margin-top: 35px;
   box-sizing: border-box;
@@ -16,7 +17,7 @@
     box-shadow: 0px 2px 1px #681d47;
 
     span {
-      font-weight: bold;
+     font-family: Rubik-SemiBold;
       font-size: 20px;
     }
   }

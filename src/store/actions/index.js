@@ -4,6 +4,7 @@ export {
   addTestName,
   createNewScale,
   changeScaleName,
+  changeScaleNumber,
   deleteScale,
   createNewQuestion,
   changeQuestionText,

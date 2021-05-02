@@ -24,7 +24,6 @@ function EditableInput( props ) {
     inputlabel={ props.inputIndex !== undefined ? props.letterIndex ? alphabet[props.inputIndex] : props.inputIndex + 1 : null }
     inputtype='input'
     defaultValue={ props.inputValue }
-    // onChange={ event => props.changed( event ) }
     onBlur={ onEditComplete }
     autoFocus
   />;

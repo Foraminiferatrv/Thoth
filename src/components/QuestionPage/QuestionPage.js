@@ -15,21 +15,31 @@ function QuestionPage( { questionData, questionId, setResult, interpret } ) {
     interpret();
   }
 
+  let radioAnswers;
+  if ( questionData.questionRadioAnswers !== undefined ) {
+    radioAnswers = Object.entries( questionData.questionRadioAnswers ).map( ( [answerId, answerData] ) =>
+      <FormControlLabel
+        classes={ { label: classes.RadioAnswer } }
+        key={ answerId }
+        label={ answerData.answerText }
+        value={ answerId }
+        control={ <CustomRadio /> }
+      />
+    );
+  }
+
+
   return (
     <div className={ classes.QuestionPage }>
-      <span className={ classes.QuestionText }>
-        { questionData.questionText }
-      </span>
+      <div className={ classes.TextContainer }>
+        <span className={ classes.QuestionText }>
+          { questionData.questionText }
+        </span>
+      </div>
       <RadioGroup classes={ { root: classes.AnswersBlock } } onChange={ ( event ) => changed( event ) }>
-        { Object.entries( questionData.questionRadioAnswers ).map( ( [answerId, answerData] ) =>
-          <FormControlLabel
-            classes={ { label: classes.RadioAnswer } }
-            key={ answerId }
-            label={ answerData.answerText }
-            value={ answerId }
-            control={ <CustomRadio /> }
-          />
-        ) }
+
+        { radioAnswers }
+
       </RadioGroup>
     </div>
   );

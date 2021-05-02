@@ -9,7 +9,7 @@
   text-decoration: none;
   display: inline-block;
   font-size: 15px;
-  font-weight: bold;
+  font-family: Rubik-Bold;
   padding: 0;
   cursor: pointer;
   border-radius: 7px;
@@ -18,10 +18,10 @@
     border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
   &:hover {
-    background-color: blue-palette(700);
+    background-color: index.blue-palette(700);
   }
 
   &:active {
-    background-color: blue-palette(200);
+    background-color: index.blue-palette(200);
   }
 }

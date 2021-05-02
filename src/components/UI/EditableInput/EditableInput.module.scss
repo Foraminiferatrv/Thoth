@@ -21,14 +21,15 @@
 
 .InputValue {
   margin: 0;
- border: 1px solid rgba(109, 109, 109, 0.50);
+  border: 1px solid rgba(109, 109, 109, 0.50);
   border-radius: 4px;
   padding: 6px 11px;
   display: block;
-  height: 35px;
+  min-height: 35px;
   box-sizing: border-box;
   width: 100%;
   cursor: pointer;
+  overflow-wrap: anywhere;
 }
 
 .ButtonBlock {

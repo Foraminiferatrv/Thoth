@@ -57,19 +57,12 @@ function TestWindow( { testsData, match } ) {
 
   return (
     <div className={ classes.TestWindow }>
-      <div className={ classes.TestContainer }>
-        <FormControl className={ classes.FormControl }>
-          {/* { testsData[match.params.testId].testName } */}
-          { testsCards[testCardIndex] }
-        </FormControl>
-        <div className={ classes.ButtonBlock }>
-          { prevButton }
-          { nextButton }
-        </div>
-        {/* <AddItemButton
-          buttonText={ 'interpretate!' }
-          clicked={ () => console.log( interpretator( testResults, testsData[match.params.testId].testQuestions, testsData[match.params.testId].testScales, testsData[match.params.testId].testInterpretations ) ) }
-        /> */}
+      <FormControl className={ classes.FormControl }>
+        { testsCards[testCardIndex] }
+      </FormControl>
+      <div className={ classes.ButtonBlock }>
+        { prevButton }
+        { nextButton }
       </div>
     </div >
   );

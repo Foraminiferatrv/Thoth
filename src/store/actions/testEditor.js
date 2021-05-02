@@ -29,6 +29,14 @@ export const createNewScale = () => {
   }
 }
 
+export const changeScaleNumber = ( targetScaleId, targetScaleNumber ) => {
+  return {
+    type: actionTypes.CHANGE_SCALE_NUMBER,
+    targetScaleId,
+    targetScaleNumber
+  }
+}
+
 export const changeScaleName = ( scaleName, targetScaleId ) => {
   return {
     type: actionTypes.CHANGE_SCALE_NAME,

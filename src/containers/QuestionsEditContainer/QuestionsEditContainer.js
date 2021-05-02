@@ -18,13 +18,15 @@ import {
 import { connect } from 'react-redux';
 
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
-import  NewQuestion  from '../../components/NewQuestion/NewQuestion';
+import NewQuestion from '../../components/NewQuestion/NewQuestion';
+
+import comparator from '../../utils/comparator';
 
 
 function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestion, onChangeQuestionText, onDeleteQestion, onAddNewRadioAnswer, onChangeRadioAnswerText, onDeleteRadioAnswer, onAddDependency, onChangeAnswerValue, onChangeScaleDependency, onDeleteDependency } ) {
   function qeustionCreator( testQuestionsObject ) {
     if ( testQuestionsObject !== undefined ) {
-      return Object.entries( testQuestionsObject ).map( ( [questionId, values], index ) => (
+      return Object.entries( testQuestionsObject ).sort( ( elementA, elementB ) => comparator( elementA[1].questionNumber, elementB[1].questionNumber ) ).map( ( [questionId, values], index ) => (
         <NewQuestion
           changeQuestionText={ onChangeQuestionText }
           questionText={ values.questionText }

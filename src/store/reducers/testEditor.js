@@ -1,12 +1,16 @@
 import {
   updateObject
-} from '../utility';
+} from '../../utils/utility';
 
 import * as actionTypes from '../actions/actionTypes';
 
 import {
   v1 as uuidv1
 } from 'uuid';
+
+import comparator from '../../utils/comparator';
+import arrayMove from 'array-move';
+
 
 const initialState = {};
 
@@ -40,6 +44,7 @@ function createNewScale( state ) {
   scalesCopy = {
     ...scalesCopy,
     [ uuidv1() ]: {
+      scaleNumber: Object.keys( state.testScales ).length ,
       scaleName: ""
     }
   };
@@ -71,6 +76,28 @@ function changeScaleName( state, scaleName, targetScaleId ) {
 
 }
 
+function changeScaleNumber( state, targetScaleId, targetScaleNumber ) {
+  let scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
+
+  let scalesArray = Object.entries( scalesCopy ).sort( ( elementA, elementB ) => comparator( elementA[ 1 ].scaleNumber, elementB[ 1 ].scaleNumber ) );
+  const targetScaleIndex = scalesArray.findIndex( element => element[ 0 ] === targetScaleId );
+
+  scalesArray = arrayMove( scalesArray, targetScaleIndex, targetScaleNumber );
+
+
+  scalesArray.forEach( ( element, index ) => scalesArray[ index ][ 1 ].scaleNumber = index );
+
+  scalesCopy = Object.fromEntries( scalesArray );
+
+
+  return ( {
+    ...state,
+    testScales: {
+      ...scalesCopy
+    }
+  } );
+}
+
 function deleteScale( state, targetScaleId ) {
   const scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
 
@@ -93,6 +120,7 @@ function createNewQuestion( state ) {
     testQuestions: {
       ...state.testQuestions,
       [ uuidv1() ]: {
+        questionNumber: [ Object.keys( state.testQuestions ).length + 1 ],
         questionText: "",
         questionRadioAnswers: {}
       }
@@ -146,6 +174,7 @@ function addNewRadioAnswer( state, targetQuestionId ) {
         questionRadioAnswers: {
           ...state.testQuestions[ targetQuestionId ].questionRadioAnswers,
           [ uuidv1() ]: {
+            answerNumber: [ Object.keys( state.testQuestions[ targetQuestionId ].questionRadioAnswers ).length + 1 ],
             answerText: "",
             scaleDependencies: [ {
               scaleId: "",
@@ -310,14 +339,15 @@ function addInterpret( state ) {
   interpretCopy = {
     ...interpretCopy,
     [ uuidv1() ]: {
+      interpretNumber: [ Object.keys( interpretCopy ).length + 1 ],
+      interpretText: "",
       requiredScales: [ {
         requiredScaleId: '',
         requiredValueLimits: {
           from: 0,
           to: 0
         }
-      } ],
-      interpretText: ""
+      } ]
     }
   }
 
@@ -472,9 +502,13 @@ function testEditor( state = initialState, action ) {
     case actionTypes.CHANGE_SCALE_NAME:
       return changeScaleName( state, action.scaleName, action.targetScaleId );
 
+    case actionTypes.CHANGE_SCALE_NUMBER:
+      return changeScaleNumber( state, action.targetScaleId, action.targetScaleNumber );
+
     case actionTypes.DELETE_SCALE:
       return deleteScale( state, action.scaleId );
 
+      //question reducers
     case actionTypes.CREATE_NEW_QUESTION:
       return createNewQuestion( state );
 

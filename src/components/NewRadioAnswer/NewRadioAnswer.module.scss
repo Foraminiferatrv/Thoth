@@ -7,14 +7,22 @@
   box-shadow: 0 2px 3px index.gray-palette(800);
   box-sizing: border-box;
   display: flex;
+  flex-direction: row;
 
-  .LeftSide {
+  .AnswerLeftSide {
     align-items: center;
     box-sizing: border-box;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     padding: 15px 20px;
     width: 100%;
+
+    @media screen and (max-width: 1200px) {
+      & {
+        flex-direction: column;
+      }
+    }
 
     .InputField {
       width: 100%;
@@ -32,6 +40,14 @@
       border-radius: 6px;
       box-shadow: inset 1px 1px 3px index.gray-palette(700);
 
+      @media screen and (max-width: 1200px) {
+        & {
+          width: 100%;
+          margin-top: 15px;
+        }
+      }
+
+
       .AnswerValue {
         box-sizing: border-box;
         background-color: index.blue-palette(100);
@@ -42,7 +58,7 @@
         box-shadow: 1px 1px 3px index.gray-palette(700);
 
 
-        .LeftSide {
+        .AnswerValueLeftSide {
           width: 100%;
           justify-content: center;
           align-items: center;

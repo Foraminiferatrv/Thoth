@@ -19,7 +19,7 @@ function NewRadioAnswer( props ) {
         key={ 'scaleDeps' + index }
         className={ classes.AnswerValue }
       >
-        <div className={ classes.LeftSide }>
+        <div className={ classes.AnswerValueLeftSide }>
           <ScalesList
             testScales={ props.testScales }
             selectedScale={ scaleData.scaleId }
@@ -44,7 +44,7 @@ function NewRadioAnswer( props ) {
 
   return (
     <div className={ classes.NewRadioAnswer }>
-      <div className={ classes.LeftSide }>
+      <div className={ classes.AnswerLeftSide }>
         <div className={ classes.InputField }>
           <EditableInput
             letterIndex

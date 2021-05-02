@@ -65,4 +65,4 @@ function mapDispatchToProps( dispatch ) {
   }
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( withRouter( EditTestWindow ) );
+export default connect( mapStateToProps, mapDispatchToProps )( withRouter( React.memo( EditTestWindow ) ) );

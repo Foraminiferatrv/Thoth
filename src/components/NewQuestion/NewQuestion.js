@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import classes from './NewQuestion.module.scss';
 
@@ -7,14 +7,15 @@ import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
+import comparator from '../../utils/comparator';
 
 
 function NewQuestion( props ) {
-  
+
   let radioAnswersContent = null;
 
   if ( props.radioAnswers !== undefined ) {
-    radioAnswersContent = Object.entries( props.radioAnswers ).map( ( [answerId, answerValues], index ) => (
+    radioAnswersContent = Object.entries( props.radioAnswers ).sort( ( elementA, elementB ) => comparator( elementA[1].answerNumber, elementB[1].answerNumber ) ).map( ( [answerId, answerValues], index ) => (
       <NewRadioAnswer
         key={ props.questionId.concat( index ) }
         questionId={ props.questionId }
