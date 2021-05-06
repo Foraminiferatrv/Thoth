@@ -29,11 +29,10 @@ export const createNewScale = () => {
   }
 }
 
-export const changeScaleNumber = ( targetScaleId, targetScaleNumber ) => {
+export const changeScaleNumber = ( newScalesArray ) => {
   return {
     type: actionTypes.CHANGE_SCALE_NUMBER,
-    targetScaleId,
-    targetScaleNumber
+    newScalesArray
   }
 }
 
@@ -52,9 +51,17 @@ export const deleteScale = ( scaleId ) => {
   }
 }
 
+//question actions
 export const createNewQuestion = () => {
   return {
     type: actionTypes.CREATE_NEW_QUESTION
+  }
+}
+
+export const changeQuestionNumber = ( newQuestionsArray ) => {
+  return {
+    type: actionTypes.CHANGE_QUESTION_NUMBER,
+    newQuestionsArray
   }
 }
 

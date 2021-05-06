@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 import classes from './ScalesEditContainer.module.scss';
 
@@ -11,36 +11,27 @@ import {
 
 import { connect } from 'react-redux';
 
+import { usePositionReorder } from '../../hooks/usePositionReorder';
+
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton';
 import ScaleEditor from '../../components/ScaleEditor/ScaleEditor';
 
 import comparator from '../../utils/comparator';
-import findIndex from '../../utils/findIndex';
-
-import { PlusButton } from '../../components/UI/PlusButton/PlusButton';
-import { MinusButton } from '../../components/UI/MinusButton/MinusButton';
 
 
 function ScalesEditContainer( { testScales, onCreateScale, onChangeScaleNumber, onChangeScaleName, onDeleteScale } ) {
+  const sortedScales = Object.entries( testScales ).sort( ( elementA, elementB ) => comparator( elementA[1].scaleNumber, elementB[1].scaleNumber ) );
 
-  const positions = useRef( [] ).current;
+  const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder( sortedScales, onChangeScaleNumber );
 
-  const setPositions = ( index, offset ) => {
-    positions[index] = offset;
+  useEffect( () => ( refreshOrder( sortedScales ) ), [testScales] );
 
-  }
-
-  const moveScale = ( scaleId, index, dragOffset ) => {
-    const targetIndex = findIndex( index, dragOffset, positions );
-    if ( targetIndex !== index ) onChangeScaleNumber( scaleId, targetIndex );
-  }
-
-  function scaleCreator( scalesObject ) {
-    if ( scalesObject !== undefined ) {
-      return Object.entries( scalesObject ).sort( ( elementA, elementB ) => comparator( elementA[1].scaleNumber, elementB[1].scaleNumber ) ).map( ( [scaleId, values], index ) => (
+  function scaleCreator( scalesArray ) {
+    if ( scalesArray !== undefined ) {
+      return order.map( ( [scaleId, values], index ) => (
         <ScaleEditor
-          setPositions={ setPositions }
-          moveScale={ moveScale }
+          updateOrder={ updateOrder }
+          updatePosition={ updatePosition }
           index={ index }
           key={ scaleId }
           scaleNumber={ values.scaleNumber }
@@ -62,19 +53,13 @@ function ScalesEditContainer( { testScales, onCreateScale, onChangeScaleNumber, 
         <span>Шкали</span>
       </div>
       <div className={ classes.ContainerBody }>
-        { scaleCreator( testScales ) }
+        { scaleCreator( order ) }
         <AddItemButton
           externalClasses={ classes.AddButton }
           buttonText="Додати шкалу"
           clicked={ onCreateScale }
         />
       </div>
-      <PlusButton
-        clicked={ () => onChangeScaleNumber( "d8fe9bc6-57d7-4b77-904a-157776cbd173" ) }
-      />
-      <MinusButton
-        clicked={ () => onChangeScaleNumber( "d8fe9bc6-57d7-4b77-904a-157776cbd173" ) }
-      />
     </div>
   );
 }
@@ -89,7 +74,7 @@ function mapDispatchToProps( dispatch ) {
   return {
     onCreateScale: () => dispatch( createNewScale() ),
     onChangeScaleName: ( scaleNameValue, scaleId ) => dispatch( changeScaleName( scaleNameValue, scaleId ) ),
-    onChangeScaleNumber: ( targetScaleId, targetScaleNumber ) => dispatch( changeScaleNumber( targetScaleId, targetScaleNumber ) ),
+    onChangeScaleNumber: ( newScalesArray ) => dispatch( changeScaleNumber( newScalesArray ) ),
     onDeleteScale: ( scaleId ) => dispatch( deleteScale( scaleId ) )
   };
 }

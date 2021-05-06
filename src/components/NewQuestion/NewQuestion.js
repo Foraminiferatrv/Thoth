@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classes from './NewQuestion.module.scss';
 
 import EditableInput from '../UI/EditableInput/EditableInput';
-import { NewRadioAnswer } from '../NewRadioAnswer/NewRadioAnswer';
+import NewRadioAnswer from '../NewRadioAnswer/NewRadioAnswer';
 import AddItemButton from '../UI/AddItemButton/AddItemButton';
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 import comparator from '../../utils/comparator';
 
+import { motion } from 'framer-motion';
+
+import { useMeasurePositions } from '../../hooks/useMeasurePositions';
+
 
 function NewQuestion( props ) {
+
+  const [isDragging, setDragging] = useState( false );
+
+  const ref = useMeasurePositions( ( position ) => props.updatePosition( props.questionIndex, position ) );
 
   let radioAnswersContent = null;
 
@@ -35,7 +43,21 @@ function NewQuestion( props ) {
   }
 
   return (
-    <div className={ classes.NewQuestion }>
+    < motion.div
+      layout
+      style={ { zIndex: isDragging ? 3 : 1 } }
+      ref={ ref }
+      initial={ false }
+      whileHover={ { scale: 1.01 } }
+      className={ classes.ScaleEditor }
+      drag="y"
+      onDragStart={ () => setDragging( true ) }
+      onDragEnd={ () => setDragging( false ) }
+      onViewportBoxUpdate={ ( _viewportBox, delta ) => {
+        isDragging && props.updateOrder( props.questionIndex, delta.y.translate );
+      } }
+      className={ classes.NewQuestion }
+    >
       <div className={ classes.QuestionBlock }>
         <div className={ classes.LeftSide }>
           <EditableInput
@@ -59,7 +81,7 @@ function NewQuestion( props ) {
           buttonText="Додати відповідь"
         />
       </div>
-    </div >
+    </motion.div >
   );
 }
 

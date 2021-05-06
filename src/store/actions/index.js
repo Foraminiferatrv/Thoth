@@ -6,7 +6,9 @@ export {
   changeScaleName,
   changeScaleNumber,
   deleteScale,
+  //questions actions
   createNewQuestion,
+  changeQuestionNumber,
   changeQuestionText,
   deleteQestion,
   addNewRadioAnswer,

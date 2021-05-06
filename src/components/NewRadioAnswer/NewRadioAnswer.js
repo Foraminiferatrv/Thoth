@@ -73,5 +73,5 @@ function NewRadioAnswer( props ) {
   );
 }
 
-export { NewRadioAnswer };
+export default React.memo( NewRadioAnswer );
 

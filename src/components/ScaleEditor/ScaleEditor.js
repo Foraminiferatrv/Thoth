@@ -5,44 +5,31 @@ import classes from './ScaleEditor.module.scss';
 import EditableInput from '../../components/UI/EditableInput/EditableInput';
 import DeleteSideButton from '../../components/UI/DeleteSideButton/DeleteSidebutton';
 
-import { motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
+
+import { useMeasurePositions } from '../../hooks/useMeasurePositions';
 
 
-function ScaleEditor( { scaleName, index, scaleId, scaleNumber, moveScale, changeScaleName, deleteScale, setPositions } ) {
+function ScaleEditor( { scaleName, index, scaleId, scaleNumber, changeScaleName, deleteScale, updatePosition, updateOrder } ) {
+
   const [isDragging, setDragging] = useState( false );
 
-  const ref = useRef( null );
-
-  useEffect( () => setPositions( index, {
-    height: ref.current.offsetHeight,
-    top: ref.current.offsetTop
-  } ) );
-
-  const dragY = useMotionValue( 0 );
+  const ref = useMeasurePositions( ( position ) => updatePosition( index, position ) );
 
 
   return (
     <motion.div
-      animate={ isDragging ? { zIndex: 1 } : { zIndex: 0, transition: { delay: 0.3 } } }
+      layout
+      style={ { zIndex: isDragging ? 3 : 1 } }
       ref={ ref }
       initial={ false }
       whileHover={ { scale: 1.01 } }
-      whileTap={ { scale: 1.03 } }
       className={ classes.ScaleEditor }
       drag="y"
-      layout
-      dragY={ dragY }
-      dragElastic={ 1 }
-      onDrag={ ( event, { offset } ) => moveScale( scaleId, index, offset.y ) }
       onDragStart={ () => setDragging( true ) }
       onDragEnd={ () => setDragging( false ) }
-      dragConstraints={ { top: 0, bottom: 0 } }
-      positionTransition={ ( { delta } ) => {
-        console.log(delta);
-        if ( isDragging ) {
-          dragY.set( dragY.get() + delta.y );
-        }
-        return !isDragging;
+      onViewportBoxUpdate={ ( _viewportBox, delta ) => {
+        isDragging && updateOrder( index, delta.y.translate );
       } }
     >
       <div className={ classes.LeftSide }>

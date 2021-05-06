@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import classes from './QuestionsEditContainer.module.scss';
 
 import {
   createNewQuestion,
   changeQuestionText,
+  changeQuestionNumber,
   deleteQestion,
   addNewRadioAnswer,
   changeRadioAnswerText,
@@ -22,12 +23,22 @@ import NewQuestion from '../../components/NewQuestion/NewQuestion';
 
 import comparator from '../../utils/comparator';
 
+import { usePositionReorder } from '../../hooks/usePositionReorder';
 
-function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestion, onChangeQuestionText, onDeleteQestion, onAddNewRadioAnswer, onChangeRadioAnswerText, onDeleteRadioAnswer, onAddDependency, onChangeAnswerValue, onChangeScaleDependency, onDeleteDependency } ) {
-  function qeustionCreator( testQuestionsObject ) {
-    if ( testQuestionsObject !== undefined ) {
-      return Object.entries( testQuestionsObject ).sort( ( elementA, elementB ) => comparator( elementA[1].questionNumber, elementB[1].questionNumber ) ).map( ( [questionId, values], index ) => (
+
+function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestion, onChangeQuestionText, onDeleteQestion, onAddNewRadioAnswer, onChangeQuestionNumber, onChangeRadioAnswerText, onDeleteRadioAnswer, onAddDependency, onChangeAnswerValue, onChangeScaleDependency, onDeleteDependency } ) {
+  const sortedQuestions = Object.entries( testQuestions ).sort( ( elementA, elementB ) => comparator( elementA[1].questionNumber, elementB[1].questionNumber ) );
+
+  const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder( sortedQuestions, onChangeQuestionNumber );
+
+  useEffect( () => ( refreshOrder( sortedQuestions ) ), [testQuestions] );
+
+  function qeustionCreator( testQuestionsArray ) {
+    if ( testQuestionsArray !== undefined ) {
+      return testQuestionsArray.map( ( [questionId, values], index ) => (
         <NewQuestion
+          updateOrder={ updateOrder }
+          updatePosition={ updatePosition }
           changeQuestionText={ onChangeQuestionText }
           questionText={ values.questionText }
           key={ questionId }
@@ -48,13 +59,15 @@ function QuestionsEditContainer( { testScales, testQuestions, onCreateNewQuestio
     }
     return null;
   }
+
+  
   return (
     <div className={ classes.QuestionsEditContainer }>
       <div className={ classes.ContainerHeader }>
         <span>Запитання</span>
       </div>
       <div className={ classes.ContainerBody }>
-        { qeustionCreator( testQuestions ) }
+        { qeustionCreator( order ) }
         <AddItemButton
           externalClasses={ classes.AddButton }
           buttonText="Додати запитання"
@@ -76,6 +89,7 @@ function mapDispatchToProps( dispatch ) {
   return {
     onCreateNewQuestion: () => dispatch( createNewQuestion() ),
     onChangeQuestionText: ( newQuestionText, targetQuestionId ) => dispatch( changeQuestionText( newQuestionText, targetQuestionId ) ),
+    onChangeQuestionNumber: () => dispatch( ( newQuestionsArray ) => changeQuestionNumber( newQuestionsArray ) ),
     onDeleteQestion: ( targetQuestionId ) => dispatch( deleteQestion( targetQuestionId ) ),
     onAddNewRadioAnswer: ( targetQuestionId ) => dispatch( addNewRadioAnswer( targetQuestionId ) ),
     onChangeRadioAnswerText: ( newAnswerText, targetQuestionId, answerId ) => dispatch( changeRadioAnswerText( newAnswerText, targetQuestionId, answerId ) ),

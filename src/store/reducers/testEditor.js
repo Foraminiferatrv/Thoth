@@ -9,7 +9,6 @@ import {
 } from 'uuid';
 
 import comparator from '../../utils/comparator';
-import arrayMove from 'array-move';
 
 
 const initialState = {};
@@ -44,7 +43,7 @@ function createNewScale( state ) {
   scalesCopy = {
     ...scalesCopy,
     [ uuidv1() ]: {
-      scaleNumber: Object.keys( state.testScales ).length ,
+      scaleNumber: Object.keys( state.testScales ).length,
       scaleName: ""
     }
   };
@@ -76,32 +75,31 @@ function changeScaleName( state, scaleName, targetScaleId ) {
 
 }
 
-function changeScaleNumber( state, targetScaleId, targetScaleNumber ) {
-  let scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
-
-  let scalesArray = Object.entries( scalesCopy ).sort( ( elementA, elementB ) => comparator( elementA[ 1 ].scaleNumber, elementB[ 1 ].scaleNumber ) );
-  const targetScaleIndex = scalesArray.findIndex( element => element[ 0 ] === targetScaleId );
-
-  scalesArray = arrayMove( scalesArray, targetScaleIndex, targetScaleNumber );
-
+function changeScaleNumber( state, newScalesArray ) {
+  let scalesArray = [ ...newScalesArray ];
 
   scalesArray.forEach( ( element, index ) => scalesArray[ index ][ 1 ].scaleNumber = index );
 
-  scalesCopy = Object.fromEntries( scalesArray );
+  let updatedScales = Object.fromEntries( scalesArray );
 
 
   return ( {
     ...state,
     testScales: {
-      ...scalesCopy
+      ...updatedScales
     }
   } );
 }
 
 function deleteScale( state, targetScaleId ) {
-  const scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
+  let scalesCopy = JSON.parse( JSON.stringify( state.testScales ) );
 
   delete scalesCopy[ targetScaleId ];
+
+  //After deleting a scale, we should reasign scale nubers to all ascales.
+  scalesCopy = Object.entries( scalesCopy ).sort( ( elementA, elementB ) => comparator( elementA[ 1 ].scaleNumber, elementB[ 1 ].scaleNumber ) );
+  scalesCopy.forEach( ( element, index ) => scalesCopy[ index ][ 1 ].scaleNumber = index );
+  scalesCopy = Object.fromEntries( scalesCopy );
 
   return ( {
     ...state,
@@ -128,6 +126,22 @@ function createNewQuestion( state ) {
   } );
 }
 
+function changeQuestionNumber( state, newQuestionsArray ) {
+  let questionsArray = [ ...newQuestionsArray ];
+
+  questionsArray.forEach( ( element, index ) => questionsArray[ index ][ 1 ].questionNumber = index );
+
+  let updatedQuestions = Object.fromEntries( questionsArray );
+
+
+  return ( {
+    ...state,
+    testQuestions: {
+      ...state.updatedQuestions,
+    }
+  } );
+}
+
 function changeQuestionText( state, newQuestionText, targetQuestionId ) {
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
@@ -148,9 +162,7 @@ function changeQuestionText( state, newQuestionText, targetQuestionId ) {
 }
 
 function deleteQestion( state, targetQuestionId ) {
-  // const questionsCopy = {
-  //   ...state.testQuestions
-  // };
+
   const questionsCopy = JSON.parse( JSON.stringify( state.testQuestions ) );
 
   delete questionsCopy[ targetQuestionId ];
@@ -503,7 +515,7 @@ function testEditor( state = initialState, action ) {
       return changeScaleName( state, action.scaleName, action.targetScaleId );
 
     case actionTypes.CHANGE_SCALE_NUMBER:
-      return changeScaleNumber( state, action.targetScaleId, action.targetScaleNumber );
+      return changeScaleNumber( state, action.newScalesArray );
 
     case actionTypes.DELETE_SCALE:
       return deleteScale( state, action.scaleId );
@@ -511,6 +523,9 @@ function testEditor( state = initialState, action ) {
       //question reducers
     case actionTypes.CREATE_NEW_QUESTION:
       return createNewQuestion( state );
+
+    case actionTypes.CHANGE_QUESTION_NUMBER:
+      return changeQuestionNumber( state,action.newQuestionsArray );
 
     case actionTypes.CHANGE_QUESTION_TEXT:
       return changeQuestionText( state, action.newQuestionText, action.targetQuestionId );
