@@ -1,5 +1,6 @@
 @use '../../scss/index.scss';
 
+
 .NewQuestion {
   display: flex;
   flex-direction: column;
@@ -16,6 +17,21 @@
     border-radius: 7px 7px 0 0;
     background-color: index.blue-palette(50);
     box-shadow: 0 2px 2px index.gray-palette(700);
+
+    .DragField{
+      color:index.blue-palette(800);
+      padding-left:8px;
+      transition-duration: 0.3s;
+
+      &:hover{
+        color:index.blue-palette(400);
+      }
+
+      &:active{
+          color:index.blue-palette(200);
+      }
+    }
+
 
     .LeftSide {
       padding: 23px 10px 23px 10px;

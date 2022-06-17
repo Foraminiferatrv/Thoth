@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import classes from './NewQuestion.module.scss';
 
@@ -9,14 +9,17 @@ import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 import comparator from '../../utils/comparator';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useDragControls } from 'framer-motion';
 
 import { useMeasurePositions } from '../../hooks/useMeasurePositions';
+
+import DragButton from '../UI/DragButton/DragButton';
 
 
 function NewQuestion( props ) {
 
   const [isDragging, setDragging] = useState( false );
+  const dragControls = useDragControls();
 
   const ref = useMeasurePositions( ( position ) => props.updatePosition( props.questionIndex, position ) );
 
@@ -42,23 +45,32 @@ function NewQuestion( props ) {
     ) );
   }
 
+
   return (
     < motion.div
-      layout
-      style={ { zIndex: isDragging ? 3 : 1 } }
       ref={ ref }
+      layout
       initial={ false }
-      whileHover={ { scale: 1.01 } }
-      className={ classes.ScaleEditor }
+      // style={ { zIndex: isDragging ? 10000 : 1 } }
+      dragControls={ dragControls }
       drag="y"
+      dragListener={ false }
+      whileDrag={ { scale: 1.01 } }
+      className={ classes.ScaleEditor }
       onDragStart={ () => setDragging( true ) }
-      onDragEnd={ () => setDragging( false ) }
+      onDragEnd={ () =>  setDragging( false ) }
       onViewportBoxUpdate={ ( _viewportBox, delta ) => {
         isDragging && props.updateOrder( props.questionIndex, delta.y.translate );
       } }
       className={ classes.NewQuestion }
     >
       <div className={ classes.QuestionBlock }>
+        <motion.div
+          className={ classes.DragField }
+          onMouseDown={ event => dragControls.start( event ) }
+        >
+          <DragButton />
+        </motion.div>
         <div className={ classes.LeftSide }>
           <EditableInput
             inputValue={ props.questionText }
