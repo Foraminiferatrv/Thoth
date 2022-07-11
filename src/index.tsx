@@ -15,6 +15,13 @@ import { testEditor } from './store/reducers/testEditor';
 import { app } from './store/reducers/app';
 
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+
 const rootReducer = combineReducers( {
   testEditorState: testEditor,
   appState: app

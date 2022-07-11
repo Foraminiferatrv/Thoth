@@ -1,9 +1,16 @@
-import classes from './TestCard.module.css';
+import classes from './TestCard.module.scss';
 
 import { Link } from 'react-router-dom';
 
 
-function TestCard({ testAdress, testName, clicked }) {
+interface Props {
+  testAdress: string,
+  testName: string,
+  clicked: React.MouseEventHandler
+}
+
+
+function TestCard({ testAdress, testName, clicked }: Props): JSX.Element {
   return (
     <div
       className={classes.Container}

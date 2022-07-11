@@ -4,12 +4,12 @@ import classes from './NewQuestion.module.scss';
 
 import EditableInput from '../UI/EditableInput/EditableInput';
 import NewRadioAnswer from '../NewRadioAnswer/NewRadioAnswer';
-import AddItemButton from '../UI/AddItemButton/AddItemButton';
+import AddItemButton from '../UI/AddItemButton/AddItemButton.tsx';
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton';
 
 import comparator from '../../utils/comparator';
 
-import { motion, useMotionValue, useDragControls } from 'framer-motion';
+import { motion, useDragControls } from 'framer-motion';
 
 import { useMeasurePositions } from '../../hooks/useMeasurePositions';
 
@@ -62,7 +62,7 @@ function NewQuestion( props ) {
       onViewportBoxUpdate={ ( _viewportBox, delta ) => {
         isDragging && props.updateOrder( props.questionIndex, delta.y.translate );
       } }
-      className={ classes.NewQuestion }
+      // className={ classes.NewQuestion }
     >
       <div className={ classes.QuestionBlock }>
         <motion.div

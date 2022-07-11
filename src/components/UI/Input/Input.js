@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './Input.module.css';
+import classes from './Input.module.scss';
 
 
 function Input( { inputtype, noLabel, inputlabel, selectOptions, selectDefaultValue, selectPlaceholder, ...rest } ) {
