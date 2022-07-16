@@ -1,22 +1,32 @@
+//app
+
+import { RouteComponentProps } from "react-router-dom"
+
 export interface Question {
   questionNumber: number,
   questionText: string | number,
   questionRadioAnswers: {}
 }
 
-export interface TestState {
+export interface Test {
   testName: string | number,
+  testScales: {},
+  testQuestions: {},
+  testInterpretations: {},
+}
+//TODO: add Scale type
+//TODO: change all types to redux toolkit pattern
+export interface StateWithScales extends Test {
   testScales: {
     [scaleId: string]: {
       scaleNumber: number,
       scaleName: string | number,
     }
-  },
-  testQuestions: {},
-  testInterpretations: {},
+  }
 }
 
-export interface StateWithQuestions extends TestState {
+
+export interface StateWithQuestions extends Test {
   testQuestions: {
     [questionId: string | number]: {
       questionRadioAnswers: {
@@ -31,7 +41,7 @@ export interface StateWithQuestions extends TestState {
   }
 }
 
-export interface StateWithInterprets extends TestState {
+export interface StateWithInterprets extends Test {
   testInterpretations: {
     [interpretId: string | number]: {
       interpretNumber: number,

@@ -1,5 +1,5 @@
 import ActionTypes from './actionTypes'
-import { Question } from '../reducers/types'
+import { Question } from '../../types/types'
 
 // TEST EDITOR ACTIONS
 export interface CreateNewTest {

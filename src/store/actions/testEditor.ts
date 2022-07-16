@@ -4,7 +4,7 @@ import ActionTypes from './actionTypes';
 
 import firebase from '../../firebase/firebase';
 
-import { Question } from '../reducers/types'
+import { Question } from '../../types/types'
 
 
 export const createNewTest = () => {

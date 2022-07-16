@@ -1,20 +1,26 @@
 import {
   updateObject
-} from '../../utils/utility';
+} from '../../../utils/utility'
 
-import ActionTypes from '../actions/actionTypes';
+import ActionTypes from '../../actions/actionTypes'
 
 import {
   v1 as uuidv1
-} from 'uuid';
+} from 'uuid'
 
-import comparator from '../../utils/comparator';
+import comparator from '../../../utils/comparator'
 
-import { Question, TestState, StateWithInterprets, StateWithQuestions } from "./types";
-import { TestEditorTypes } from '../actions/AllActionTypes';
+import {
+  Question,
+  Test,
+  StateWithInterprets,
+  StateWithQuestions,
+  StateWithScales
+} from "../../../types/types"
+import { TestEditorTypes } from '../../actions/AllActionTypes'
 
 
-const initialState = {};
+const initialState = {}
 
 
 function createNewTest(state: {}) {
@@ -23,20 +29,20 @@ function createNewTest(state: {}) {
     testScales: {},
     testQuestions: {},
     testInterpretations: {}
-  };
+  }
 
-  return updateObject(state, newTestObject);
+  return updateObject(state, newTestObject)
 }
 
 function setTestEditorData(
-  state: TestState,
+  state: Test,
   testData: {}
 ) {
-  return updateObject(state, testData);
+  return updateObject(state, testData)
 }
 
 function addTestName(
-  state: TestState,
+  state: Test,
   testName: string | number
 ) {
   return updateObject(state, {
@@ -45,32 +51,34 @@ function addTestName(
 }
 
 // scale functions
-function createNewScale(state: TestState) {
+function createNewScale(
+  state: StateWithScales
+) {
   let scalesCopy = {
     ...state.testScales
-  };
+  }
   scalesCopy = {
     ...scalesCopy,
     [uuidv1()]: {
       scaleNumber: Object.keys(state.testScales).length,
       scaleName: ""
     }
-  };
+  }
 
   return ({
     ...state,
     testScales: {
       ...scalesCopy
     }
-  });
+  })
 }
 
 function changeScaleName(
-  state: TestState,
+  state: StateWithScales,
   scaleName: string | number,
   targetScaleId: string | number
 ) {
-  const scalesCopy = JSON.parse(JSON.stringify(state.testScales));
+  const scalesCopy = JSON.parse(JSON.stringify(state.testScales))
 
   scalesCopy[targetScaleId] = {
     ...scalesCopy[targetScaleId],
@@ -84,19 +92,19 @@ function changeScaleName(
         ...scalesCopy[targetScaleId]
       }
     }
-  });
+  })
 
 }
 
 function changeScaleNumber(
-  state: TestState,
+  state: StateWithScales,
   newScalesArray: { scaleNumber: number }[][]
-): TestState {
-  let scalesArray = [...newScalesArray];
+) {
+  let scalesArray = [...newScalesArray]
 
-  scalesArray.forEach((_, index: number) => scalesArray[index][1].scaleNumber = index);
+  scalesArray.forEach((_, index: number) => scalesArray[index][1].scaleNumber = index)
 
-  let updatedScales = Object.fromEntries(scalesArray);
+  let updatedScales = Object.fromEntries(scalesArray)
 
 
   return ({
@@ -104,39 +112,39 @@ function changeScaleNumber(
     testScales: {
       ...updatedScales
     }
-  });
+  })
 }
 
 function deleteScale(
-  state: TestState,
+  state: StateWithScales,
   targetScaleId: string | number
 ) {
-  let scalesCopy = JSON.parse(JSON.stringify(state.testScales));
+  let scalesCopy = JSON.parse(JSON.stringify(state.testScales))
 
-  delete scalesCopy[targetScaleId];
+  delete scalesCopy[targetScaleId]
 
   //After deleting a scale, we should reasign scale numbers to all scales.
   scalesCopy = Object
-    .entries(scalesCopy as TestState["testScales"])
+    .entries(scalesCopy as StateWithScales["testScales"])
     .sort((elementA, elementB) => (
       comparator(elementA[1].scaleNumber, elementB[1].scaleNumber)
-    ));
-  scalesCopy.forEach((_: never, index: number) => scalesCopy[index][1].scaleNumber = index);
+    ))
+  scalesCopy.forEach((_: never, index: number) => scalesCopy[index][1].scaleNumber = index)
 
-  scalesCopy = Object.fromEntries(scalesCopy);
+  scalesCopy = Object.fromEntries(scalesCopy)
 
   return ({
     ...state,
     testScales: {
       ...scalesCopy
     }
-  });
+  })
 }
 //end scale functions
 
 
 // questions functions
-function createNewQuestion(state: TestState) {
+function createNewQuestion(state: Test) {
   return ({
     ...state,
     testQuestions: {
@@ -147,18 +155,18 @@ function createNewQuestion(state: TestState) {
         questionRadioAnswers: {}
       }
     }
-  });
+  })
 }
 
 function changeQuestionNumber(
-  state: TestState,
+  state: Test,
   newQuestionsArray: { [questionId: string]: Question }[]
 ) {
-  let questionsArray = [...newQuestionsArray];
+  let questionsArray = [...newQuestionsArray]
 
-  questionsArray.forEach((_, index) => questionsArray[index][1].questionNumber = index);
+  questionsArray.forEach((_, index) => questionsArray[index][1].questionNumber = index)
 
-  let updatedQuestions = Object.fromEntries(questionsArray as []);
+  let updatedQuestions = Object.fromEntries(questionsArray as [])
 
 
   return ({
@@ -166,20 +174,20 @@ function changeQuestionNumber(
     testQuestions: {
       ...updatedQuestions,
     }
-  });
+  })
 }
 
 function changeQuestionText(
-  state: TestState,
+  state: Test,
   newQuestionText: string | number,
   targetQuestionId: string | number
 ) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
   questionsCopy[targetQuestionId] = {
     ...questionsCopy[targetQuestionId],
     questionText: newQuestionText
-  };
+  }
 
   return {
     ...state,
@@ -189,14 +197,14 @@ function changeQuestionText(
         ...questionsCopy[targetQuestionId]
       }
     }
-  };
+  }
 }
 
-function deleteQestion(state: TestState, targetQuestionId: string | number) {
+function deleteQestion(state: Test, targetQuestionId: string | number) {
 
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
-  delete questionsCopy[targetQuestionId];
+  delete questionsCopy[targetQuestionId]
 
   return updateObject(state, {
     testQuestions: questionsCopy
@@ -227,7 +235,7 @@ function addNewRadioAnswer(state: StateWithQuestions, targetQuestionId: string |
         }
       }
     }
-  });
+  })
 }
 
 function changeRadioAnswerText(
@@ -236,7 +244,7 @@ function changeRadioAnswerText(
   targetQuestionId: string | number,
   answerId: string | number
 ) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
   questionsCopy[targetQuestionId].questionRadioAnswers[answerId] = {
     ...questionsCopy[targetQuestionId].questionRadioAnswers[answerId],
@@ -257,7 +265,7 @@ function changeRadioAnswerText(
         }
       }
     }
-  });
+  })
 }
 
 function deleteRadioAnswer(
@@ -265,8 +273,8 @@ function deleteRadioAnswer(
   targetQuestionId: string | number,
   answerId: string | number
 ) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
-  delete questionsCopy[targetQuestionId].questionRadioAnswers[answerId];
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
+  delete questionsCopy[targetQuestionId].questionRadioAnswers[answerId]
 
   return ({
     ...state,
@@ -279,19 +287,19 @@ function deleteRadioAnswer(
         }
       }
     }
-  });
+  })
 }
 
 function addDependency(
   state: StateWithQuestions,
   targetQuestionId: string | number,
   answerId: string | number) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
   questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.push({
     scaleId: "",
     answerValue: 0
-  });
+  })
 
   return ({
     ...state,
@@ -307,7 +315,7 @@ function addDependency(
         }
       }
     }
-  });
+  })
 }
 
 
@@ -318,9 +326,9 @@ function changeScaleDependency(
   depIndex: string | number,
   newValue: string | number
 ) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
-  questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].scaleId = newValue;
+  questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].scaleId = newValue
 
   return ({
     ...state,
@@ -336,7 +344,7 @@ function changeScaleDependency(
         }
       }
     }
-  });
+  })
 }
 
 function deleteDependency(
@@ -345,15 +353,15 @@ function deleteDependency(
   answerId: string | number,
   depIndex: number
 ) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
-  questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.splice(depIndex, 1);
+  questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.splice(depIndex, 1)
 
   if (questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.length === 0) {
     questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.push({
       scaleId: "",
       answerValue: 0
-    });
+    })
   };
 
   return ({
@@ -370,7 +378,7 @@ function deleteDependency(
         }
       }
     }
-  });
+  })
 }
 
 function changeAnswerValue(
@@ -379,9 +387,9 @@ function changeAnswerValue(
   answerId: string | number,
   depIndex: number,
   newValue: number) {
-  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions));
+  const questionsCopy = JSON.parse(JSON.stringify(state.testQuestions))
 
-  questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].answerValue = newValue;
+  questionsCopy[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].answerValue = newValue
   return ({
     ...state,
     testQuestions: {
@@ -396,16 +404,16 @@ function changeAnswerValue(
         }
       }
     }
-  });
+  })
 }
 //end answer functions
 
 
 //interpret functions
-function addInterpret(state: TestState) {
+function addInterpret(state: Test) {
   let interpretCopy = {
     ...state.testInterpretations
-  };
+  }
 
   interpretCopy = {
     ...interpretCopy,
@@ -427,7 +435,7 @@ function addInterpret(state: TestState) {
     testInterpretations: {
       ...interpretCopy
     }
-  });
+  })
 }
 
 function changeInterpretText(
@@ -437,13 +445,13 @@ function changeInterpretText(
 ) {
   const interpretCopy = {
     ...state.testInterpretations
-  };
+  }
 
 
   interpretCopy[targetInterpretId] = {
     ...interpretCopy[targetInterpretId],
     interpretText: newInterpretText
-  };
+  }
 
   return ({
     ...state,
@@ -453,7 +461,7 @@ function changeInterpretText(
         ...interpretCopy[targetInterpretId]
       }
     }
-  });
+  })
 }
 
 function changeInterpretValueLimits(
@@ -465,13 +473,13 @@ function changeInterpretValueLimits(
 ) {
   const interpretCopy = {
     ...state.testInterpretations
-  };
+  }
 
 
   interpretCopy[targetInterpretId].requiredScales[scaleIndex].requiredValueLimits = {
     from: fromLimit,
     to: toLimit
-  };
+  }
 
   return ({
     ...state,
@@ -481,7 +489,7 @@ function changeInterpretValueLimits(
         ...interpretCopy[targetInterpretId]
       }
     }
-  });
+  })
 }
 
 function addInterpretRequiredScale(
@@ -490,7 +498,7 @@ function addInterpretRequiredScale(
 ) {
   const interpretCopy = {
     ...state.testInterpretations
-  };
+  }
 
   interpretCopy[targetInterpretId].requiredScales.push({
     requiredScaleId: '',
@@ -498,7 +506,7 @@ function addInterpretRequiredScale(
       from: 0,
       to: 0
     }
-  });
+  })
 
   return ({
     ...state,
@@ -508,7 +516,7 @@ function addInterpretRequiredScale(
         ...interpretCopy[targetInterpretId]
       }
     }
-  });
+  })
 }
 
 function changeInterpretRequiredScale(
@@ -519,9 +527,9 @@ function changeInterpretRequiredScale(
 ) {
   const interpretCopy = {
     ...state.testInterpretations
-  };
+  }
 
-  interpretCopy[targetInterpretId].requiredScales[scaleIndex].requiredScaleId = newScaleId;
+  interpretCopy[targetInterpretId].requiredScales[scaleIndex].requiredScaleId = newScaleId
 
   return ({
     ...state,
@@ -531,7 +539,7 @@ function changeInterpretRequiredScale(
         ...interpretCopy[targetInterpretId]
       }
     }
-  });
+  })
 }
 
 function deleteInterpretRequiredScale(
@@ -541,7 +549,7 @@ function deleteInterpretRequiredScale(
 ) {
   const interpretCopy = {
     ...state.testInterpretations
-  };
+  }
   interpretCopy[targetInterpretId].requiredScales.splice(scaleIndex, 1)
 
   return ({
@@ -552,7 +560,7 @@ function deleteInterpretRequiredScale(
         ...interpretCopy[targetInterpretId]
       }
     }
-  });
+  })
 }
 
 function deleteInterpret(
@@ -561,16 +569,16 @@ function deleteInterpret(
 ) {
   const interpretCopy = {
     ...state.testInterpretations
-  };
+  }
 
-  delete interpretCopy[targetInterpretId];
+  delete interpretCopy[targetInterpretId]
 
   return ({
     ...state,
     testInterpretations: {
       ...interpretCopy
     }
-  });
+  })
 }
 
 
@@ -583,89 +591,89 @@ function deleteInterpret(
 function testEditor(state = initialState, action: TestEditorTypes) {
   switch (action.type) {
     case ActionTypes.CREATE_NEW_TEST:
-      return createNewTest(state);
+      return createNewTest(state)
 
     case ActionTypes.SET_TEST_EDITOR_DATA:
-      return setTestEditorData(state as TestState, action.testData);
+      return setTestEditorData(state as Test, action.testData)
 
     case ActionTypes.ADD_TEST_NAME:
-      return addTestName(state as TestState, action.testName);
+      return addTestName(state as Test, action.testName)
 
     //scales reducers
     case ActionTypes.CREATE_NEW_SCALE:
-      return createNewScale(state as TestState);
+      return createNewScale(state as Test)
 
     case ActionTypes.CHANGE_SCALE_NAME:
-      return changeScaleName(state as TestState, action.scaleName, action.targetScaleId);
+      return changeScaleName(state as Test, action.scaleName, action.targetScaleId)
 
     case ActionTypes.CHANGE_SCALE_NUMBER:
-      return changeScaleNumber(state as TestState, action.newScalesArray);
+      return changeScaleNumber(state as Test, action.newScalesArray)
 
     case ActionTypes.DELETE_SCALE:
-      return deleteScale(state as TestState, action.scaleId);
+      return deleteScale(state as Test, action.scaleId)
 
     //question reducers
     case ActionTypes.CREATE_NEW_QUESTION:
-      return createNewQuestion(state as TestState);
+      return createNewQuestion(state as Test)
 
     case ActionTypes.CHANGE_QUESTION_NUMBER:
-      return changeQuestionNumber(state as StateWithQuestions, action.newQuestionsArray);
+      return changeQuestionNumber(state as StateWithQuestions, action.newQuestionsArray)
 
     case ActionTypes.CHANGE_QUESTION_TEXT:
-      return changeQuestionText(state as StateWithQuestions, action.newQuestionText, action.targetQuestionId);
+      return changeQuestionText(state as StateWithQuestions, action.newQuestionText, action.targetQuestionId)
 
     case ActionTypes.DELETE_QUESTION:
-      return deleteQestion(state as StateWithQuestions, action.targetQuestionId);
+      return deleteQestion(state as StateWithQuestions, action.targetQuestionId)
 
     case ActionTypes.CREATE_NEW_RADIO_ANSWER:
-      return addNewRadioAnswer(state as StateWithQuestions, action.targetQuestionId);
+      return addNewRadioAnswer(state as StateWithQuestions, action.targetQuestionId)
 
     case ActionTypes.CHANGE_RADIO_ANSWER_TEXT:
-      return changeRadioAnswerText(state as StateWithQuestions, action.newAnswerText, action.targetQuestionId, action.answerId);
+      return changeRadioAnswerText(state as StateWithQuestions, action.newAnswerText, action.targetQuestionId, action.answerId)
 
     case ActionTypes.DELETE_RADIO_ANSWER:
-      return deleteRadioAnswer(state as StateWithQuestions, action.targetQuestionId, action.answerId);
+      return deleteRadioAnswer(state as StateWithQuestions, action.targetQuestionId, action.answerId)
 
     case ActionTypes.ADD_DEPENDENCY:
-      return addDependency(state as StateWithQuestions, action.targetQuestionId, action.answerId);
+      return addDependency(state as StateWithQuestions, action.targetQuestionId, action.answerId)
 
     case ActionTypes.CHANGE_SCALE_DEPENDENCY:
-      return changeScaleDependency(state as StateWithQuestions, action.targetQuestionId, action.answerId, action.depIndex, action.newValue);
+      return changeScaleDependency(state as StateWithQuestions, action.targetQuestionId, action.answerId, action.depIndex, action.newValue)
 
     case ActionTypes.DELETE_DEPENDENCY:
-      return deleteDependency(state as StateWithQuestions, action.targetQuestionId, action.answerId, action.depIndex);
+      return deleteDependency(state as StateWithQuestions, action.targetQuestionId, action.answerId, action.depIndex)
 
     case ActionTypes.CHANGE_ANSWER_VALUE:
-      return changeAnswerValue(state as StateWithQuestions, action.targetQuestionId, action.answerId, action.depIndex, action.newValue);
+      return changeAnswerValue(state as StateWithQuestions, action.targetQuestionId, action.answerId, action.depIndex, action.newValue)
 
     case ActionTypes.ADD_INTERPRET:
-      return addInterpret(state as StateWithQuestions);
+      return addInterpret(state as StateWithQuestions)
 
     //interprets reducers
     case ActionTypes.CHANGE_INTERPRET_TEXT:
-      return changeInterpretText(state as StateWithInterprets, action.targetInterpretId, action.newInterpretText);
+      return changeInterpretText(state as StateWithInterprets, action.targetInterpretId, action.newInterpretText)
 
     case ActionTypes.CHANGE_INTERPRET_VALUE_LIMITS:
       return changeInterpretValueLimits(state as StateWithInterprets, action.targetInterpretId, action.scaleIndex, action.fromLimit, action.toLimit)
 
     case ActionTypes.CHANGE_INTERPRET_REQUIRED_SCALE:
-      return changeInterpretRequiredScale(state as StateWithInterprets, action.targetInterpretId, action.scaleIndex, action.newScaleId);
+      return changeInterpretRequiredScale(state as StateWithInterprets, action.targetInterpretId, action.scaleIndex, action.newScaleId)
 
     case ActionTypes.ADD_INTERPRET_REQUIRED_SCALE:
-      return addInterpretRequiredScale(state as StateWithInterprets, action.targetInterpretId);
+      return addInterpretRequiredScale(state as StateWithInterprets, action.targetInterpretId)
 
     case ActionTypes.DELETE_INTERPRET_REQUIRED_SCALE:
-      return deleteInterpretRequiredScale(state as StateWithInterprets, action.targetInterpretId, action.scaleIndex);
+      return deleteInterpretRequiredScale(state as StateWithInterprets, action.targetInterpretId, action.scaleIndex)
 
     case ActionTypes.DELETE_INTERPRET:
-      return deleteInterpret(state as StateWithInterprets, action.targetInterpretId);
+      return deleteInterpret(state as StateWithInterprets, action.targetInterpretId)
 
 
     default:
-      return state;
+      return state
   }
 }
 
 export {
   testEditor
-};
+}

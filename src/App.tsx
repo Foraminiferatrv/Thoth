@@ -1,48 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
-import classes from './App.module.css';
+import classes from './App.module.css'
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom'
 
-import { connect, ConnectedProps } from 'react-redux';
+import { useAppDispatch, useAppSelector } from "./hooks/reduxHooks"
 
-import EditTestWindow from './containers/EditTestWindow/EditTestWindow';
-import TestWindow from './containers/TestWindow/TestWindow';
-import TestSelector from './containers/TestSelector/TestSelector';
-import TestEditSelector from './containers/TestEditSelector/TestEditSelector';
+import EditTestWindow from './containers/EditTestWindow/EditTestWindow'
+import TestWindow from './containers/TestWindow/TestWindow'
+import TestSelector from './containers/TestSelector/TestSelector'
+import TestEditSelector from './containers/TestEditSelector/TestEditSelector'
 
-import { initTests } from './store/actions/app';
-import { Dispatch } from 'redux';
-
-
-type ReduxProps = ConnectedProps<typeof connector>
-type Props = ReduxProps & {
-  appState: {},
-  onInitTests: () => {}
-}
+import { fetchTests } from './store/reducers/tests'
 
 
-function mapStateToProps(state: { appState: {} }) {
-  return {
-    appState: state.appState
-  }
-}
+function App() {
 
-function mapDispatchToProps(dispatch: Dispatch<>) {
-  return {
-    onInitTests: () => dispatch(initTests())
-  }
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps)
-
-
-
-function App({ appState, onInitTests }: Props) {
+  const testsData = useAppSelector((globalState) => globalState.tests)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    onInitTests();
-  }, [onInitTests]);
+    dispatch(fetchTests())
+  }, [dispatch])
 
   return (
     <div className={classes.App}>
@@ -50,12 +29,12 @@ function App({ appState, onInitTests }: Props) {
         <Route
           exact
           path="/"
-          component={() => <TestSelector testsData={appState.testsData} />}
+          component={() => <TestSelector testsData={testsData} />}
         />
         <Route
           exact
           path="/selectTestsEdit"
-          component={() => <TestEditSelector testsData={appState.testsData} />}
+          component={() => <TestEditSelector testsData={testsData} />}
         />
         <Route
           exact
@@ -64,19 +43,19 @@ function App({ appState, onInitTests }: Props) {
         />
         <Route
           exact
-          path='/testEdit/:editTestId'
+          path="/testEdit/:editTestId"
           component={() => <EditTestWindow />}
         />
         <Route
           exact
           path="/test/:testId"
-          component={() => <TestWindow testsData={appState.testsData} />}
+          component={() => <TestWindow testsData={testsData} />}
         />
         {/* <Redirect from="/" to="/" /> */}
       </Switch>
     </div>
-  );
+  )
 }
 
 
-export default connector(App);
+export default App
