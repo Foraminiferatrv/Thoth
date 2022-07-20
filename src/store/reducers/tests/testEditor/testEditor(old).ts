@@ -1,14 +1,14 @@
 import {
   updateObject
-} from '../../../utils/utility'
+} from '../../../../utils/utility'
 
-import ActionTypes from '../../actions/actionTypes'
+import ActionTypes from '../../../actions/actionTypes'
 
 import {
   v1 as uuidv1
 } from 'uuid'
 
-import comparator from '../../../utils/comparator'
+import comparator from '../../../../utils/comparator'
 
 import {
   Question,
@@ -16,8 +16,8 @@ import {
   StateWithInterprets,
   StateWithQuestions,
   StateWithScales
-} from "../../../types/types"
-import { TestEditorTypes } from '../../actions/AllActionTypes'
+} from "../../../../types/types"
+import { TestEditorTypes } from '../../../actions/AllActionTypes'
 
 
 const initialState = {}

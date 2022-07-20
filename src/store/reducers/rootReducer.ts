@@ -1,17 +1,14 @@
 import { combineReducers } from "redux"
 
-
-import { app } from "./app"
-import { testEditor } from "./testEditor/testEditor"
-import { testsReducer } from "./tests"
-
+// import { app } from "./app"
+import { testsReducer } from "./tests/tests"
 
 const rootReducer = combineReducers({
   // appState: app,
-  testEditorState: testEditor,
   tests: testsReducer
 })
 
+console.log(rootReducer)
 
 export default rootReducer
 

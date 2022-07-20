@@ -11,12 +11,12 @@ import TestWindow from './containers/TestWindow/TestWindow'
 import TestSelector from './containers/TestSelector/TestSelector'
 import TestEditSelector from './containers/TestEditSelector/TestEditSelector'
 
-import { fetchTests } from './store/reducers/tests'
+import { fetchTests } from './store/reducers/tests/tests'
+import { Test } from './types/types'
 
 
 function App() {
-
-  const testsData = useAppSelector((globalState) => globalState.tests)
+  const testsData = useAppSelector((globalState) => globalState.tests.testsData)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
