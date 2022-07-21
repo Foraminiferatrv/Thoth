@@ -1,11 +1,11 @@
-import classes from './TestCard.module.scss';
+import classes from './TestCard.module.scss'
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 
 interface Props {
   testAdress: string,
-  testName: string,
+  testName: string | number,
   clicked: React.MouseEventHandler
 }
 
@@ -23,7 +23,7 @@ function TestCard({ testAdress, testName, clicked }: Props): JSX.Element {
         {testName}
       </Link>
     </div>
-  );
+  )
 }
 
-export default TestCard;
+export default TestCard

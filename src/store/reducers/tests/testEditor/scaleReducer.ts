@@ -17,7 +17,7 @@ export const createNewScale: CaseReducer<Test> = (state: CompleteTest) => {
 
 export const changeScaleName:
   CaseReducer<CompleteTest, PayloadAction<{
-    scaleName: string | number,
+    scaleName: string ,
     targetScaleId: string | number
   }>> = (
     state,

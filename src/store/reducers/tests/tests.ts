@@ -1,6 +1,6 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import firebase from '../../../firebase/firebase'
-import { CompleteTest, Test } from "../../../types/types"
+import { CompleteTest, Test, Tests } from "../../../types/types"
 import { testEditorReducer } from "./testEditor/testEditor"
 
 
@@ -26,7 +26,7 @@ const postTest = createAsyncThunk(
 
 const tests = createSlice({
   name: "tests",
-  initialState: {} as Test,
+  initialState: {} as Tests,
   reducers: {},
   extraReducers: (builder) => {
     builder

@@ -7,6 +7,10 @@ export interface Test {
   testInterpretations: {},
 }
 
+export interface Tests {
+  [testId: string]: Test
+}
+
 export interface Scale {
   scaleNumber: number,
   scaleName: string | number,

@@ -13,8 +13,8 @@ const testEditorSlice = createSlice({
     testInterpretations: {}
   } as Test,
   reducers: {
-    setTestEditorData: (state, { payload: { testData } }: { payload: { testData: Test } }) => {
-      state = testData
+    setTestEditorData: (state, { payload }: { payload: Test }) => {
+      state = payload
     },
     createNewTest: (state) => {
       state = {
@@ -24,13 +24,13 @@ const testEditorSlice = createSlice({
         testInterpretations: {}
       }
     },
-    changeTestName: (state, { payload: { testName } }: { payload: { testName: string } }) => {
-      state.testName = testName
+    changeTestName: (state, { payload }: { payload: string }) => {
+      state.testName = payload
     },
 
     //scales functions
-    createNewScale,
     changeScaleName,
+    createNewScale,
     changeScaleNumber,
     deleteScale,
 

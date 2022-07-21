@@ -6,10 +6,10 @@ import NewTestCard from '../../components/NewTestCard/NewTestCard'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { setTestEditorData, createNewTest } from '../../store/reducers/tests/testEditor/testEditor'
 
-import { Test } from '../../types/types'
+import { Tests } from '../../types/types'
 
 
-function TestEditSelector({ testsData }: { testsData: Test }) {
+function TestEditSelector({ testsData }: { testsData: Tests }) {
   const dispatch = useAppDispatch()
 
   return (

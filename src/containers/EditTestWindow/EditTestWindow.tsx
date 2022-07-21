@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react'
 
 import classes from './EditTestWindow.module.scss'
 
 import { v1 as uuidv1 } from 'uuid'
 
-import { connect } from 'react-redux'
-import {
-  addTestName,
-  sendTestData
-} from '../../store/actions/index'
+import { addTestName, sendTestData } from '../../store/actions/index'
 
 import { withRouter } from 'react-router'
 
@@ -16,20 +12,30 @@ import EditableInput from '../../components/UI/EditableInput/EditableInput'
 import InterpretsContainer from '../InterpretsContainer/InterpretsContainer'
 import ScalesEditContainer from '../ScalesEditContainer/ScalesEditContainer'
 import QuestionsEditContainer from '../QuestionsEditContainer/QuestionsEditContainer'
-import { BrowserRouterProps } from 'react-router-dom'
-import { Test } from '../../types/types'
 
-type Props = {
-  match: BrowserRouterProps,
-  testEditorState: Test,
+import { RouteComponentProps } from 'react-router'
+
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+
+import { postTest } from '../../store/reducers/tests/tests'
+import { changeTestName } from '../../store/reducers/tests/testEditor/testEditor'
+
+interface MatchParams {
+  editTestId: string
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
 
 }
 
 
-//TODO: destructure all props
+//FIXME: storage updates with every single keystroke
 
-function EditTestWindow(props) {
-  const [testId] = useState(props.match.params.editTestId === undefined || props.match.params.editTestId === null ? uuidv1() : props.match.params.editTestId)
+function EditTestWindow({ match }: Props) {
+  const testEditorState = useAppSelector((globalState) => globalState.tests.testEdiorState)
+  const dispatch = useAppDispatch()
+
+  const [testId] = useState(match.params.editTestId === undefined || match.params.editTestId === null ? uuidv1() : match.params.editTestId)
   return (
     <form className={classes.EditTestWindow}>
 
@@ -39,35 +45,22 @@ function EditTestWindow(props) {
         </div>
         <div className={classes.ContainerBody}>
           <EditableInput
-            inputValue={props.testEditorState.testName}
-            changed={(event) => props.onAddTestName(event.target.value)}
+            inputValue={testEditorState.testName}
+            changed={(event: ChangeEvent<HTMLInputElement>) => changeTestName(event.target.value)}
           />
         </div>
       </div>
       <ScalesEditContainer />
       <QuestionsEditContainer />
       <InterpretsContainer
-        interprets={props.testEditorState.testInterpretations}
-        testScales={props.testEditorState.testScales}
+        interprets={testEditorState.testInterpretations}
+        testScales={testEditorState.testScales}
       />
 
       {/* TODO: Replace the submit button */}
-      <button onClick={() => props.onSendTestData({ testData: props.testEditorState, testId })} type="button">temp submit'</button>
+      <button onClick={() => dispatch(postTest({ testData: testEditorState, testId }))} type="button">temp submit'</button>
     </form>
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    testEditorState: state.testEditorState
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onAddTestName: (testNameValue) => dispatch(addTestName(testNameValue)),
-    onSendTestData: (testData, testId) => dispatch(sendTestData(testData, testId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(React.memo(EditTestWindow)))
+export default withRouter(React.memo(EditTestWindow))
