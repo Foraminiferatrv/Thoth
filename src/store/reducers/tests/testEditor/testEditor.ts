@@ -1,6 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-import { createNewScale, changeScaleName, changeScaleNumber, deleteScale } from "./scaleReducer"
+import {
+  createNewScale,
+  changeScaleName,
+  changeScaleNumber,
+  deleteScale
+} from "./scaleReducer"
+import {
+  createNewQuestion,
+  changeQuestionNumber,
+  changeQuestionText,
+  deleteQestion,
+  addNewRadioAnswer,
+  changeRadioAnswerText,
+  deleteRadioAnswer,
+  addDependency,
+  changeScaleDependency,
+  deleteDependency,
+  changeAnswerValue
+} from './questionReducer'
+import {
+  addInterpret,
+  changeInterpretText,
+  changeInterpretValueLimits,
+  addInterpretRequiredScale,
+  changeInterpretRequiredScale,
+  deleteInterpretRequiredScale,
+  deleteInterpret
+} from './interpretReducer'
+
 import { Test } from "../../../../types/types"
 
 
@@ -13,11 +41,11 @@ const testEditorSlice = createSlice({
     testInterpretations: {}
   } as Test,
   reducers: {
-    setTestEditorData: (state, { payload }: { payload: Test }) => {
-      state = payload
+    setTestEditorData: (_state, { payload }: { payload: Test }) => {
+      _state = payload
     },
-    createNewTest: (state) => {
-      state = {
+    createNewTest: (_state) => {
+      _state = {
         testName: "",
         testScales: {},
         testQuestions: {},
@@ -27,14 +55,31 @@ const testEditorSlice = createSlice({
     changeTestName: (state, { payload }: { payload: string }) => {
       state.testName = payload
     },
-
     //scales functions
     changeScaleName,
     createNewScale,
     changeScaleNumber,
     deleteScale,
-
     //questions functions
+    createNewQuestion,
+    changeQuestionNumber,
+    changeQuestionText,
+    deleteQestion,
+    addNewRadioAnswer,
+    changeRadioAnswerText,
+    deleteRadioAnswer,
+    addDependency,
+    changeScaleDependency,
+    deleteDependency,
+    changeAnswerValue,
+    //interpretations functions
+    addInterpret,
+    changeInterpretText,
+    changeInterpretValueLimits,
+    addInterpretRequiredScale,
+    changeInterpretRequiredScale,
+    deleteInterpretRequiredScale,
+    deleteInterpret
   }
 })
 

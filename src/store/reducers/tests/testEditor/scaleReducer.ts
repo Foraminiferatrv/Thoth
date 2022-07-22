@@ -8,6 +8,7 @@ import { CompleteTest, Scales, Test } from "../../../../types/types"
 
 export const createNewScale: CaseReducer<Test> = (state: CompleteTest) => {
   state.testScales = {
+    ...state.testScales,
     [uuidv1()]: {
       scaleNumber: Object.keys(state.testScales).length,
       scaleName: ""
@@ -17,7 +18,7 @@ export const createNewScale: CaseReducer<Test> = (state: CompleteTest) => {
 
 export const changeScaleName:
   CaseReducer<CompleteTest, PayloadAction<{
-    scaleName: string ,
+    scaleName: string,
     targetScaleId: string | number
   }>> = (
     state,

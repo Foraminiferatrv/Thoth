@@ -1,14 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit"
 import {
   v1 as uuidv1
 } from 'uuid'
 
-import { Question, TestQuestions } from "../../../../types/types"
+
+import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
+import { CompleteTest, Question, Test } from "../../../../types/types"
 
 
-function createNewQuestion(state: TestQuestions) {
-  state = {
-    ...state,
+export const createNewQuestion: CaseReducer<Test> = (state) => {
+  state.testQuestions = {
+    ...state.testQuestions,
     [uuidv1()]: {
       questionNumber: Object.keys(state).length + 1,
       questionText: "",
@@ -18,131 +19,170 @@ function createNewQuestion(state: TestQuestions) {
 }
 
 
-function changeQuestionNumber(
-  _state: TestQuestions,
-  newQuestionsArray: { [questionId: string]: Question }[]
-) {
-  let questionsArray = [...newQuestionsArray]
+export const changeQuestionNumber:
+  CaseReducer<CompleteTest, PayloadAction<{
+    newQuestionsArray: { [questionId: string]: Question }[]
+  }>> = (
+    state,
+    { payload: {
+      newQuestionsArray
+    } }
+  ) => {
+    let questionsArray = [...newQuestionsArray]
 
-  questionsArray.forEach((_, index) => questionsArray[index][1].questionNumber = index)
+    questionsArray.forEach((_, index) => questionsArray[index][1].questionNumber = index)
 
-  _state = Object.fromEntries(questionsArray as [])
-}
+    state.testQuestions = Object.fromEntries(questionsArray as [])
+  }
 
-function changeQuestionText(
-  state: TestQuestions,
-  newQuestionText: string | number,
-  targetQuestionId: string | number
-) {
-  state[targetQuestionId].questionText = newQuestionText
-}
+export const changeQuestionText:
+  CaseReducer<CompleteTest, PayloadAction<{
+    newQuestionText: string | number,
+    targetQuestionId: string | number
+  }>> = (
+    state,
+    { payload: {
+      newQuestionText,
+      targetQuestionId
+    } }
+  ) => {
+    state.testQuestions[targetQuestionId].questionText = newQuestionText
+  }
 
-function deleteQestion(
-  state: TestQuestions,
-  targetQuestionId: string | number
-) {
-  delete state[targetQuestionId]
-}
-//end question functions
+export const deleteQestion:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId
+    } }
+  ) => {
+    delete state.testQuestions[targetQuestionId]
+  }
+//end question export consts
 
 
-//answer functions
-function addNewRadioAnswer(
-  state: TestQuestions,
-  targetQuestionId: string | number
-) {
-  state[targetQuestionId].questionRadioAnswers = {
-    ...state[targetQuestionId].questionRadioAnswers,
-    [uuidv1()]: {
-      answerNumber: Object.keys(state[targetQuestionId].questionRadioAnswers).length + 1,
-      answerText: "",
-      scaleDependencies: [{
-        scaleId: "",
-        answerValue: 0
-      }]
+//answer export consts
+export const addNewRadioAnswer:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId
+    }
+    }) => {
+    state.testQuestions[targetQuestionId].questionRadioAnswers = {
+      ...state.testQuestions[targetQuestionId].questionRadioAnswers,
+      [uuidv1()]: {
+        answerNumber: Object.keys(state.testQuestions[targetQuestionId].questionRadioAnswers).length + 1,
+        answerText: "",
+        scaleDependencies: [{
+          scaleId: "",
+          answerValue: 0
+        }]
+      }
     }
   }
-}
 
-function changeRadioAnswerText(
-  state: TestQuestions,
-  newAnswerText: string | number,
-  targetQuestionId: string | number,
-  answerId: string | number
-) {
-  state[targetQuestionId].questionRadioAnswers[answerId].answerText = newAnswerText
-}
-
-function deleteRadioAnswer(
-  state: TestQuestions,
-  targetQuestionId: string | number,
-  answerId: string | number
-) {
-  delete state[targetQuestionId].questionRadioAnswers[answerId]
-}
-
-function addDependency(
-  state: TestQuestions,
-  targetQuestionId: string | number,
-  answerId: string | number) {
-  state[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.push({
-    scaleId: "",
-    answerValue: 0
-  })
-}
-
-
-function changeScaleDependency(
-  state: TestQuestions,
-  targetQuestionId: string | number,
-  answerId: string | number,
-  depIndex: number,
-  newValue: string | number
-) {
-
-  state[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].scaleId = newValue
-}
-
-function deleteDependency(
-  state: TestQuestions,
-  targetQuestionId: string | number,
-  answerId: string | number,
-  depIndex: number
-) {
-  state[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.splice(depIndex, 1)
-}
-
-function changeAnswerValue(
-  state: TestQuestions,
-  targetQuestionId: string | number,
-  answerId: string | number,
-  depIndex: number,
-  newValue: number
-) {
-  state[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].answerValue = newValue
-}
-//end answer functions
-
-
-const testQuestions = createSlice({
-  name: "testQuestions",
-  initialState: {} as TestQuestions,
-  reducers: {
-    createNewQuestion: (state) => createNewQuestion(state),
-    changeQuestionNumber: (state, { payload: { newQuestionsArray } }) => changeQuestionNumber(state, newQuestionsArray),
-    changeQuestionText: (state, { payload: { newQuestionText, targetQuestionId } }) => changeQuestionText(state, newQuestionText, targetQuestionId),
-    deleteQestion: (state, { payload: { targetQuestionId } }) => deleteQestion(state, targetQuestionId),
-    addNewRadioAnswer: (state, { payload: { targetQuestionId } }) => addNewRadioAnswer(state, targetQuestionId),
-    changeRadioAnswerText: (state, { payload: { newAnswerText, targetInterpretId, answerId } }) => changeRadioAnswerText(state, newAnswerText, targetInterpretId, answerId),
-    deleteRadioAnswer: (state, { payload: { targetQuestionId, answerId } }) => deleteRadioAnswer(state, targetQuestionId, answerId),
-    addDependency: (state, { payload: { targetQuestionId, answerId } }) => addDependency(state, targetQuestionId, answerId),
-    changeScaleDependency: (state, { payload: { targetQuestionId, answerId, depIndex, newValue } }) => changeScaleDependency(state, targetQuestionId, answerId, depIndex, newValue),
-    deleteDependency: (state, { payload: { targetQuestionId, answerId, depIndex } }) => deleteDependency(state, targetQuestionId, answerId, depIndex),
-    changeAnswerValue: (state, { payload: { targetQuestionId, answerId, depIndex, newValue } }) => changeAnswerValue(state, targetQuestionId, answerId, depIndex, newValue),
+export const changeRadioAnswerText:
+  CaseReducer<CompleteTest, PayloadAction<{
+    newAnswerText: string | number,
+    targetQuestionId: string | number,
+    answerId: string | number
+  }>> = (
+    state,
+    { payload: {
+      newAnswerText,
+      targetQuestionId,
+      answerId
+    } }
+  ) => {
+    state.testQuestions[targetQuestionId].questionRadioAnswers[answerId].answerText = newAnswerText
   }
-})
 
-const { actions, reducer } = testQuestions
+export const deleteRadioAnswer:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number,
+    answerId: string | number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId,
+      answerId
+    } }
+  ) => {
+    delete state.testQuestions[targetQuestionId].questionRadioAnswers[answerId]
+  }
 
-export { actions as questionsAntions }
-export { reducer as questionsReducer }
+export const addDependency:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number,
+    answerId: string | number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId,
+      answerId
+    } }
+  ) => {
+    state.testQuestions[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.push({
+      scaleId: "",
+      answerValue: 0
+    })
+  }
+
+
+export const changeScaleDependency:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number,
+    answerId: string | number,
+    depIndex: number,
+    newValue: string | number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId,
+      answerId,
+      depIndex,
+      newValue,
+    } }
+  ) => {
+
+    state.testQuestions[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].scaleId = newValue
+  }
+
+export const deleteDependency:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number,
+    answerId: string | number,
+    depIndex: number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId,
+      answerId,
+      depIndex
+    } }
+  ) => {
+    state.testQuestions[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies.splice(depIndex, 1)
+  }
+
+export const changeAnswerValue:
+  CaseReducer<CompleteTest, PayloadAction<{
+    targetQuestionId: string | number,
+    answerId: string | number,
+    depIndex: number,
+    newValue: number
+  }>> = (
+    state,
+    { payload: {
+      targetQuestionId,
+      answerId,
+      depIndex,
+      newValue,
+    } }
+  ) => {
+    state.testQuestions[targetQuestionId].questionRadioAnswers[answerId].scaleDependencies[depIndex].answerValue = newValue
+  }

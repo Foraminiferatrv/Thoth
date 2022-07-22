@@ -30,15 +30,15 @@ const tests = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTests.fulfilled, (_, action) => {
+      .addCase(fetchTests.fulfilled, (_1, action) => {
         return action.payload
       })
-      .addCase(fetchTests.rejected, (_, action) => {
+      .addCase(fetchTests.rejected, (_1, action) => {
         // throw new Error(action)
         console.log(action)
       })
-      .addCase(postTest.fulfilled, (_, action) => {
-
+      .addCase(postTest.fulfilled, () => {
+        
       })
   }
 })
