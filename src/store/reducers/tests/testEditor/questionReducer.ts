@@ -37,8 +37,8 @@ export const changeQuestionNumber:
 
 export const changeQuestionText:
   CaseReducer<CompleteTest, PayloadAction<{
-    newQuestionText: string | number,
-    targetQuestionId: string | number
+    newQuestionText: string,
+    targetQuestionId: string
   }>> = (
     state,
     { payload: {
@@ -51,7 +51,7 @@ export const changeQuestionText:
 
 export const deleteQestion:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number
+    targetQuestionId: string
   }>> = (
     state,
     { payload: {
@@ -66,7 +66,7 @@ export const deleteQestion:
 //answer export consts
 export const addNewRadioAnswer:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number
+    targetQuestionId: string
   }>> = (
     state,
     { payload: {
@@ -88,9 +88,9 @@ export const addNewRadioAnswer:
 
 export const changeRadioAnswerText:
   CaseReducer<CompleteTest, PayloadAction<{
-    newAnswerText: string | number,
-    targetQuestionId: string | number,
-    answerId: string | number
+    newAnswerText: string,
+    targetQuestionId: string,
+    answerId: string
   }>> = (
     state,
     { payload: {
@@ -104,8 +104,8 @@ export const changeRadioAnswerText:
 
 export const deleteRadioAnswer:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number,
-    answerId: string | number
+    targetQuestionId: string,
+    answerId: string
   }>> = (
     state,
     { payload: {
@@ -118,8 +118,8 @@ export const deleteRadioAnswer:
 
 export const addDependency:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number,
-    answerId: string | number
+    targetQuestionId: string,
+    answerId: string
   }>> = (
     state,
     { payload: {
@@ -136,10 +136,10 @@ export const addDependency:
 
 export const changeScaleDependency:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number,
-    answerId: string | number,
+    targetQuestionId: string,
+    answerId: string,
     depIndex: number,
-    newValue: string | number
+    newValue: string
   }>> = (
     state,
     { payload: {
@@ -155,8 +155,8 @@ export const changeScaleDependency:
 
 export const deleteDependency:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number,
-    answerId: string | number,
+    targetQuestionId: string,
+    answerId: string,
     depIndex: number
   }>> = (
     state,
@@ -171,8 +171,8 @@ export const deleteDependency:
 
 export const changeAnswerValue:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetQuestionId: string | number,
-    answerId: string | number,
+    targetQuestionId: string,
+    answerId: string,
     depIndex: number,
     newValue: number
   }>> = (

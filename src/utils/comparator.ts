@@ -1,4 +1,4 @@
-function comparator(elementA: any, elementB: any): number {
+function comparator(elementA: number, elementB: number): number {
   if (elementA < elementB) {
     return -1;
   }

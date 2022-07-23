@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {
   updateObject
 } from '../../../../utils/utility'

@@ -18,7 +18,7 @@ import { RouteComponentProps } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { postTest } from '../../store/reducers/tests/tests'
-import { changeTestName } from '../../store/reducers/tests/testEditor/testEditor'
+import { testEditorActions } from '../../store/reducers/tests/testEditor/testEditor'
 
 interface MatchParams {
   editTestId: string
@@ -34,6 +34,7 @@ interface Props extends RouteComponentProps<MatchParams> {
 function EditTestWindow({ match }: Props) {
   const testEditorState = useAppSelector((globalState) => globalState.tests.testEdiorState)
   const dispatch = useAppDispatch()
+  const { changeTestName } = testEditorActions
 
   const [testId] = useState(match.params.editTestId === undefined || match.params.editTestId === null ? uuidv1() : match.params.editTestId)
   return (

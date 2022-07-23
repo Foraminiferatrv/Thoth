@@ -25,8 +25,8 @@ export const addInterpret: CaseReducer<Test> = (state) => {
 
 export const changeInterpretText:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetInterpretId: string | number,
-    newInterpretText: string | number
+    targetInterpretId: string,
+    newInterpretText: string
   }>> = (
     state,
     { payload: {
@@ -39,7 +39,7 @@ export const changeInterpretText:
 
 export const changeInterpretValueLimits:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetInterpretId: string | number,
+    targetInterpretId: string,
     scaleIndex: number,
     fromLimit: number,
     toLimit: number
@@ -61,7 +61,7 @@ export const changeInterpretValueLimits:
 
 export const addInterpretRequiredScale:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetInterpretId: string | number
+    targetInterpretId: string
   }>> = (
     state,
     { payload: {
@@ -79,9 +79,9 @@ export const addInterpretRequiredScale:
 
 export const changeInterpretRequiredScale:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetInterpretId: string | number,
+    targetInterpretId: string,
     scaleIndex: number,
-    newScaleId: string | number
+    newScaleId: string
   }>> = (
     state,
     { payload: { targetInterpretId,
@@ -93,7 +93,7 @@ export const changeInterpretRequiredScale:
 
 export const deleteInterpretRequiredScale:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetInterpretId: string | number,
+    targetInterpretId: string,
     scaleIndex: number
   }>> = (
     state,
@@ -107,7 +107,7 @@ export const deleteInterpretRequiredScale:
 
 export const deleteInterpret:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetInterpretId: string | number
+    targetInterpretId: string
   }>> = (
     state,
     { payload: {

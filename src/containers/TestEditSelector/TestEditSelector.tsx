@@ -4,14 +4,15 @@ import TestCard from '../../components/TestCard/TestCard'
 import NewTestCard from '../../components/NewTestCard/NewTestCard'
 
 import { useAppDispatch } from '../../hooks/reduxHooks'
-import { setTestEditorData, createNewTest } from '../../store/reducers/tests/testEditor/testEditor'
+import { testEditorActions } from '../../store/reducers/tests/testEditor/testEditor'
 
 import { Tests } from '../../types/types'
 
 
 function TestEditSelector({ testsData }: { testsData: Tests }) {
   const dispatch = useAppDispatch()
-
+  const { setTestEditorData, createNewTest } = testEditorActions
+  
   return (
     <div className={classes.TestEditSelector}>
       < NewTestCard

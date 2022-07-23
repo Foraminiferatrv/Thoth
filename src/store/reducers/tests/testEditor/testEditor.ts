@@ -29,7 +29,7 @@ import {
   deleteInterpret
 } from './interpretReducer'
 
-import { Test } from "../../../../types/types"
+import { CompleteTest, Test } from "../../../../types/types"
 
 
 const testEditorSlice = createSlice({
@@ -39,7 +39,7 @@ const testEditorSlice = createSlice({
     testScales: {},
     testQuestions: {},
     testInterpretations: {}
-  } as Test,
+  } as CompleteTest,
   reducers: {
     setTestEditorData: (_state, { payload }: { payload: Test }) => {
       _state = payload
@@ -84,11 +84,7 @@ const testEditorSlice = createSlice({
 })
 
 
-export const {
-  changeTestName,
-  setTestEditorData,
-  createNewTest,
-} = testEditorSlice.actions
+export const testEditorActions = testEditorSlice.actions
 
 export const testEditorReducer = testEditorSlice.reducer
 // export { testEditorActions, testEditorReducer }

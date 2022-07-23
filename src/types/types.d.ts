@@ -1,7 +1,7 @@
 //app
 //Test Type
 export interface Test {
-  testName: string | number,
+  testName: string,
   testScales: {},
   testQuestions: {},
   testInterpretations: {},
@@ -13,13 +13,13 @@ export interface Tests {
 
 export interface Scale {
   scaleNumber: number,
-  scaleName: string | number,
+  scaleName: string,
 }
 
 export interface Scales {
   [scaleId: string]: {
     scaleNumber: number,
-    scaleName: string | number,
+    scaleName: string,
   }
 }
 
@@ -27,7 +27,7 @@ export interface StateWithScales extends Test {
   testScales: {
     [scaleId: string]: {
       scaleNumber: number,
-      scaleName: string | number,
+      scaleName: string,
     }
   }
 }
@@ -35,13 +35,13 @@ export interface StateWithScales extends Test {
 //Questions Types
 export interface Question {
   questionNumber: number,
-  questionText: string | number,
+  questionText: string,
   questionRadioAnswers: {
-    [answerId: string | number]: {
+    [answerId: string]: {
       answerNumber: number,
-      answerText: string | number,
+      answerText: string,
       scaleDependencies: {
-        scaleId: string | number,
+        scaleId: string,
         answerValue: number
       }[]
     }
@@ -49,20 +49,20 @@ export interface Question {
 }
 
 export interface TestQuestions {
-  [questionId: string | number]: Question
+  [questionId: string]: Question
 }
 
 export interface StateWithQuestions extends Test {
-  testQuestions: { [questionId: string | number]: Question }
+  testQuestions: { [questionId: string]: Question }
 }
 
 
 //Test Interpretations
 export interface Interpret {
   interpretNumber: number,
-  interpretText: string | number,
+  interpretText: string,
   requiredScales: {
-    requiredScaleId: string | number,
+    requiredScaleId: string,
     requiredValueLimits: {
       from: number,
       to: number
@@ -71,19 +71,19 @@ export interface Interpret {
 }
 
 export interface Interprets {
-  [interpretId: string | number]: Interpret
+  [interpretId: string]: Interpret
 }
 
 export interface StateWithInterprets extends Test {
   testInterpretations: {
-    [interpretId: string | number]: Interpret
+    [interpretId: string]: Interpret
   }
 }
 
 //comlete Test
 
 export interface CompleteTest {
-  testName: string | number,
+  testName: string,
   testScales: Scales,
   testQuestions: Questions,
   testInterpretations: Interprets,

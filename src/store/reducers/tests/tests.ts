@@ -1,6 +1,6 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import firebase from '../../../firebase/firebase'
-import { CompleteTest, Test, Tests } from "../../../types/types"
+import { CompleteTest, Tests } from "../../../types/types"
 import { testEditorReducer } from "./testEditor/testEditor"
 
 
@@ -38,7 +38,7 @@ const tests = createSlice({
         console.log(action)
       })
       .addCase(postTest.fulfilled, () => {
-        
+
       })
   }
 })

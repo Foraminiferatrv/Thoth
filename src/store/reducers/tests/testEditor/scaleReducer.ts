@@ -3,7 +3,7 @@ import { v1 as uuidv1 } from 'uuid'
 import comparator from '../../../../utils/comparator'
 
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
-import { CompleteTest, Scales, Test } from "../../../../types/types"
+import { CompleteTest, Scales, Test, Scale } from "../../../../types/types"
 
 
 export const createNewScale: CaseReducer<Test> = (state: CompleteTest) => {
@@ -19,7 +19,7 @@ export const createNewScale: CaseReducer<Test> = (state: CompleteTest) => {
 export const changeScaleName:
   CaseReducer<CompleteTest, PayloadAction<{
     scaleName: string,
-    targetScaleId: string | number
+    targetScaleId: string
   }>> = (
     state,
     { payload: {
@@ -32,7 +32,7 @@ export const changeScaleName:
 
 export const changeScaleNumber:
   CaseReducer<CompleteTest, PayloadAction<{
-    newScalesArray: { scaleNumber: number }[][],
+    newScalesArray: Scale[][],
   }>> = (
     state,
     { payload: { newScalesArray } }
@@ -45,7 +45,7 @@ export const changeScaleNumber:
 
 export const deleteScale:
   CaseReducer<CompleteTest, PayloadAction<{
-    targetScaleId: string | number
+    targetScaleId: string
   }>> = (
     state,
     { payload: {
