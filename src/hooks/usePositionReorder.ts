@@ -10,12 +10,22 @@ import {
 
 import arrayMove from "array-move"
 
+type Offset = {
+  top: number,
+  height: number
+}
 
 
-export function usePositionReorder<T>(initialState: T[], storeUpdate: (order: any[]) => void):[T[],()=>{},()=>{},([])=>void]{/*TODO:*/} {
+export function usePositionReorder<T>(initialState: T[], storeUpdate: (order: any[]) => void):
+  [
+    T[],
+    (i: number, offset: Offset) => void,
+    (i: number, dragOffset: number) => void,
+    (newOrder: T[]) => void
+  ] {
   const [order, setOrder] = useState(initialState)
 
-  const refreshOrder = (newOrder:T[]) => (
+  const refreshOrder = (newOrder: T[]) => (
     setOrder(newOrder)
   )
 
@@ -23,7 +33,7 @@ export function usePositionReorder<T>(initialState: T[], storeUpdate: (order: an
   // `Item` children, so we can later us that in calculations to decide when a dragging
   // `Item` should swap places with its siblings.
   const positions = useRef<{ top: number, height: number }[]>([]).current
-  const updatePosition = (i: number, offset: { top: number, height: number }) => (positions[i] = offset)
+  const updatePosition = (i: number, offset: Offset) => (positions[i] = offset)
 
   // Find the ideal index for a dragging item based on its position in the array, and its
   // current drag offset. If it's different to its current index, we swap this item with that
@@ -40,7 +50,7 @@ export function usePositionReorder<T>(initialState: T[], storeUpdate: (order: an
 
 const buffer = 30
 
-export const findIndex = (i: number, yOffset: number, positions: { top: number, height: number }[]) => {
+export const findIndex = (i: number, yOffset: number, positions: Offset[]) => {
   let target = i
   const {
     top,

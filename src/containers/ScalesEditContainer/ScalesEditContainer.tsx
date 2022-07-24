@@ -11,7 +11,6 @@ import comparator from '../../utils/comparator'
 
 import { testEditorActions } from '../../store/reducers/tests/testEditor/testEditor'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
-import { Scale } from '../../types/types'
 
 
 function ScalesEditContainer() {
@@ -25,7 +24,7 @@ function ScalesEditContainer() {
 
   useEffect(() => (refreshOrder(sortedScales)), [testScales, refreshOrder, sortedScales])
 
-  function scaleCreator(scalesArray: []) {
+  function scaleCreator(scalesArray: typeof order) {
     if (scalesArray !== undefined) {
       return order.map(([scaleId, values], index) => (
         <ScaleEditor
