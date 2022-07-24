@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import classes from './QuestionsEditContainer.module.scss'
 
@@ -46,12 +46,13 @@ function QuestionsEditContainer() {
     onDeleteDependency: (targetQuestionId: string, answerId: string, depIndex: number) => dispatch(deleteDependency({ targetQuestionId, answerId, depIndex })),
   }
 
-  const sortedQuestions = Object.entries(testQuestions).sort((elementA, elementB) => comparator(elementA[1].questionNumber, elementB[1].questionNumber))
+  const sortedQuestions = useMemo(() => Object.entries(testQuestions).sort((elementA, elementB) => comparator(elementA[1].questionNumber, elementB[1].questionNumber)), [testQuestions])
 
   const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder(sortedQuestions, dispatchWithAction.onChangeQuestionNumber)
+  const memoizedRefreshOrder = useCallback((sortedQuestions: any[]) => refreshOrder(sortedQuestions), [refreshOrder])
 
 
-  useEffect(() => (refreshOrder(sortedQuestions)), [testQuestions]) // refresh order of questions once position of qusetion has been changed
+  useEffect(() => (memoizedRefreshOrder(sortedQuestions)), [memoizedRefreshOrder, testQuestions, sortedQuestions]) // refresh order of questions once position of qusetion has been changed
 
   function qeustionCreator(testQuestionsArray: typeof order) { //create questions from sorted array
     if (testQuestionsArray !== undefined) {

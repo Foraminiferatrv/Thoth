@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import classes from './ScalesEditContainer.module.scss'
 
@@ -18,11 +18,12 @@ function ScalesEditContainer() {
   const dispatch = useAppDispatch()
   const { changeScaleName, createNewScale, changeScaleNumber, deleteScale } = testEditorActions
 
-  const sortedScales = Object.entries(testScales).sort((elementA, elementB) => comparator(elementA[1].scaleNumber, elementB[1].scaleNumber))
+  const sortedScales = useMemo(() => Object.entries(testScales).sort((elementA, elementB) => comparator(elementA[1].scaleNumber, elementB[1].scaleNumber)), [testScales])
 
   const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder(sortedScales, (newScalesArray) => changeScaleNumber({ newScalesArray }))
+  const memoizedRefreshOrder = useCallback((sortedScales: any[]) => refreshOrder(sortedScales), [refreshOrder])
 
-  useEffect(() => (refreshOrder(sortedScales)), [testScales, refreshOrder, sortedScales])
+  useEffect(() => (memoizedRefreshOrder(sortedScales)), [testScales, memoizedRefreshOrder, sortedScales])
 
   function scaleCreator(scalesArray: typeof order) {
     if (scalesArray !== undefined) {

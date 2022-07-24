@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import classes from './EditTestWindow.module.scss'
 
