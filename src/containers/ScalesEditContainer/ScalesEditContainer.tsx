@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 
 function ScalesEditContainer() {
-  const testScales = useAppSelector((globalState) => globalState.tests.testEdiorState.testScales)
+  const testScales = useAppSelector((globalState) => globalState.tests.testEditorState.testScales)
   const dispatch = useAppDispatch()
   const { changeScaleName, createNewScale, changeScaleNumber, deleteScale } = testEditorActions
 

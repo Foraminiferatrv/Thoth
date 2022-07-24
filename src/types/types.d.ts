@@ -48,7 +48,7 @@ export interface Question {
   }
 }
 
-export interface TestQuestions {
+export interface Questions {
   [questionId: string]: Question
 }
 

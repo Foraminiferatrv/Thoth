@@ -49,7 +49,7 @@ const { actions: testsActions, reducer: testsRootReducer } = tests
 
 const testsReducer = combineReducers({
   testsData: testsRootReducer,
-  testEdiorState: testEditorReducer
+  testEditorState: testEditorReducer
 })
 
 

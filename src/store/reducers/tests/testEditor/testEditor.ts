@@ -41,11 +41,11 @@ const testEditorSlice = createSlice({
     testInterpretations: {}
   } as CompleteTest,
   reducers: {
-    setTestEditorData: (_state, { payload }: { payload: Test }) => {
-      _state = payload
+    setTestEditorData: (_1, { payload }: { payload: Test }) => {
+      return payload
     },
-    createNewTest: (_state) => {
-      _state = {
+    createNewTest: () => {
+      return {
         testName: "",
         testScales: {},
         testQuestions: {},

@@ -12,7 +12,6 @@ import { Tests } from '../../types/types'
 function TestEditSelector({ testsData }: { testsData: Tests }) {
   const dispatch = useAppDispatch()
   const { setTestEditorData, createNewTest } = testEditorActions
-  
   return (
     <div className={classes.TestEditSelector}>
       < NewTestCard
