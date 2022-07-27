@@ -88,3 +88,9 @@ export interface CompleteTest {
   testQuestions: Questions,
   testInterpretations: Interprets,
 }
+
+//UsePositionReorder hook
+type Offset = {
+  top: number,
+  height: number
+}

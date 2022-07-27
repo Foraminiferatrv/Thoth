@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 interface Props {
   testAdress: string,
   testName: string | number,
-  clicked: React.MouseEventHandler
+  clicked?: React.MouseEventHandler
 }
 
 

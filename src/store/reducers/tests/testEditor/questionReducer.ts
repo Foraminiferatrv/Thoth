@@ -29,6 +29,11 @@ export const changeQuestionNumber:
     } }
   ) => {
     let questionsArray = [...newQuestionsArray]
+    questionsArray.forEach((_, index: number) => { // We have to coppy scales object, since immer freezes all numerable values
+      let questionCoppy = JSON.parse(JSON.stringify(questionsArray[index][1]))
+      questionCoppy.questionNumber = index
+      questionsArray[index][1] = questionCoppy
+    })
 
     questionsArray.forEach((_, index) => questionsArray[index][1].questionNumber = index)
 

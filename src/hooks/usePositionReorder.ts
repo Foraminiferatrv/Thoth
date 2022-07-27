@@ -9,11 +9,7 @@ import {
 } from "popmotion"
 
 import arrayMove from "array-move"
-
-type Offset = {
-  top: number,
-  height: number
-}
+import { Offset } from "../types/types"
 
 
 export function usePositionReorder<T>(initialState: T[], storeUpdate: (order: any[]) => void):

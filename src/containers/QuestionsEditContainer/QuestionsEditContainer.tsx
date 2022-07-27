@@ -51,7 +51,6 @@ function QuestionsEditContainer() {
   const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder(sortedQuestions, dispatchWithAction.onChangeQuestionNumber)
   const memoizedRefreshOrder = useCallback((sortedQuestions: any[]) => refreshOrder(sortedQuestions), [refreshOrder])
 
-
   useEffect(() => (memoizedRefreshOrder(sortedQuestions)), [memoizedRefreshOrder, testQuestions, sortedQuestions]) // refresh order of questions once position of qusetion has been changed
 
   function qeustionCreator(testQuestionsArray: typeof order) { //create questions from sorted array

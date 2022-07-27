@@ -16,11 +16,23 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 function ScalesEditContainer() {
   const testScales = useAppSelector((globalState) => globalState.tests.testEditorState.testScales)
   const dispatch = useAppDispatch()
-  const { changeScaleName, createNewScale, changeScaleNumber, deleteScale } = testEditorActions
+  const {
+    changeScaleName,
+    createNewScale,
+    changeScaleNumber,
+    deleteScale
+  } = testEditorActions
+
+  const dispatchWithAction = {  //creating dispatch functions with actions
+    onCreateScale: () => dispatch(createNewScale()),
+    onChangeScaleName: (scaleName: string, targetScaleId: string) => dispatch(changeScaleName({ scaleName, targetScaleId })),
+    onChangeScaleNumber: (newScalesArray: any[]) => dispatch(changeScaleNumber({ newScalesArray })),
+    onDeleteScale: (targetScaleId: string) => dispatch(deleteScale({ targetScaleId }))
+  }
 
   const sortedScales = useMemo(() => Object.entries(testScales).sort((elementA, elementB) => comparator(elementA[1].scaleNumber, elementB[1].scaleNumber)), [testScales])
 
-  const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder(sortedScales, (newScalesArray) => changeScaleNumber({ newScalesArray }))
+  const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder(sortedScales, (newScalesArray) => dispatchWithAction.onChangeScaleNumber(newScalesArray))
   const memoizedRefreshOrder = useCallback((sortedScales: any[]) => refreshOrder(sortedScales), [refreshOrder])
 
   useEffect(() => (memoizedRefreshOrder(sortedScales)), [testScales, memoizedRefreshOrder, sortedScales])
@@ -35,9 +47,9 @@ function ScalesEditContainer() {
           key={scaleId}
           scaleNumber={values.scaleNumber}
           scaleName={values.scaleName}
-          changeScaleName={(scaleName: string, targetScaleId: string) => dispatch(changeScaleName({ scaleName, targetScaleId }))}
+          changeScaleName={dispatchWithAction.onChangeScaleName}
           scaleId={scaleId}
-          deleteScale={(targetScaleId: string) => dispatch(deleteScale({ targetScaleId }))}
+          deleteScale={dispatchWithAction.onDeleteScale}
         />
       ))
     }
@@ -54,7 +66,7 @@ function ScalesEditContainer() {
         <AddItemButton
           externalClasses={classes.AddButton}
           buttonText="Додати шкалу"
-          clicked={() => dispatch(createNewScale())}
+          clicked={dispatchWithAction.onCreateScale}
         />
       </div>
     </div>

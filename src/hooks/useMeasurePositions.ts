@@ -14,7 +14,7 @@ type RefOffset = {
 }
 
 export function useMeasurePositions(update: (offset: Offset) => void) {
-  const ref = useRef<RefOffset>(null)
+  const ref = useRef<RefOffset | null>(null)
 
   useEffect(() => {
     update({

@@ -4,7 +4,7 @@ import classes from './DeleteSideButton.module.scss';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 interface Props {
-  externalClasses: string,
+  externalClasses?: string,
   clicked: React.MouseEventHandler
 }
 

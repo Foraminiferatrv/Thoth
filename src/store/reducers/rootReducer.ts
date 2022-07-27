@@ -8,8 +8,6 @@ const rootReducer = combineReducers({
   tests: testsReducer
 })
 
-console.log(rootReducer)
-
 export default rootReducer
 
 
