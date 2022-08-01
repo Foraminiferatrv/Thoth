@@ -5,7 +5,7 @@ import classes from './ScaleEditor.module.scss'
 import EditableInput from '../UI/EditableInput/EditableInput'
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton'
 
-import { motion } from 'framer-motion'
+import { motion, Reorder } from 'framer-motion'
 
 import { useMeasurePositions } from '../../hooks/useMeasurePositions'
 import { Offset } from '../../types/types'
