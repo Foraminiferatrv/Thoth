@@ -1,59 +1,37 @@
-import { useRef, useEffect, useState } from 'react'
-
 import classes from './ScaleEditor.module.scss'
 
 import EditableInput from '../UI/EditableInput/EditableInput'
 import DeleteSideButton from '../UI/DeleteSideButton/DeleteSidebutton'
+import DragButton from '../UI/DragButton/DragButton'
 
-import { motion, Reorder } from 'framer-motion'
-
-import { useMeasurePositions } from '../../hooks/useMeasurePositions'
-import { Offset } from '../../types/types'
-
+import { DragControls, motion } from 'framer-motion'
 
 interface Props {
   scaleName: string,
-  index: number,
   scaleId: string,
   scaleNumber: number,
   changeScaleName: (scaleName: string, targetScaleId: string) => void,
   deleteScale: (targetScaleId: string) => void,
-  updatePosition: (index: number, offset: Offset) => void,
-  updateOrder: (index: number, dragOffset: number) => void,
+  dragControls?: DragControls,
 }
 
 
 function ScaleEditor({
   scaleName,
-  index,
   scaleId,
   scaleNumber,
   changeScaleName,
   deleteScale,
-  updatePosition,
-  updateOrder
+  dragControls
 }: Props) {
-  const [isDragging, setDragging] = useState(false)
-
-  const ref = useMeasurePositions((position) => updatePosition(index, position))
-
 
   return (
     <motion.div
       layout
-      style={{ zIndex: isDragging ? 3 : 1 }}
-      ref={ref}
-      initial={false}
-      whileHover={{ scale: 1.01 }}
       className={classes.ScaleEditor}
-      drag="y"
-      onDragStart={() => setDragging(true)}
-      onDragEnd={() => setDragging(false)}
-      onViewportBoxUpdate={(_viewportBox, delta) => {
-        isDragging && updateOrder(index, delta.y.translate)
-      }}
     >
       <div className={classes.LeftSide}>
+        {dragControls && <DragButton onPointerDown={(e) => dragControls.start(e)} />}
         <EditableInput
           inputId={scaleId}
           inputValue={scaleName}

@@ -8,9 +8,17 @@
   box-sizing: border-box;
   background-color: index.light-green-palette(200);
   box-shadow: 0 1px 3px index.light-green-palette(800);
+  animation-duration: 0.2s;
+
+  &:hover{
+      background-color: index.light-green-palette(100);
+
+  }
 
   .LeftSide {
     padding: 15px 0;
     width: 100%;
+    display: flex;
+    margin-left: 14px;
   }
 }

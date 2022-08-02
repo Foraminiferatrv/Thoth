@@ -37,7 +37,6 @@ export const changeScaleNumber:
     state,
     { payload: { newScalesArray } }
   ) => {
-    console.log(newScalesArray)
     let scalesArray = [...newScalesArray]
     scalesArray.forEach((_, index: number) => { // We have to coppy scales object, since immer freezes all numerable values
       let scaleCopy = JSON.parse(JSON.stringify(scalesArray[index][1]))

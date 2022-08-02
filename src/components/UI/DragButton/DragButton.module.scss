@@ -2,9 +2,12 @@
 
 .DragButton{
 
-  cursor: move;
-  width: 100%;
+  cursor: grab;
   height: 100%;
   display: flex;
   align-items: center;
+
+  svg{
+    fill: index.gray-palette(800);
+  }
 }
