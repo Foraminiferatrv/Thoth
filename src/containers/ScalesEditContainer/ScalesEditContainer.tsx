@@ -7,8 +7,8 @@ import comparator from '../../utils/comparator'
 
 import { testEditorActions } from '../../store/reducers/tests/testEditor/testEditor'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
-import { Reorder, useDragControls } from 'framer-motion'
-import DragButton from '../../components/UI/DragButton/DragButton'
+import { Reorder } from 'framer-motion'
+import { ReorderItem } from '../../hoc/ReorderItem/ReorderItem'
 
 function ScalesEditContainer() {
   const testScales = useAppSelector((globalState) => globalState.tests.testEditorState.testScales)
@@ -29,9 +29,8 @@ function ScalesEditContainer() {
 
   const sortedScales = Object.entries(testScales).sort((elementA, elementB) => comparator(elementA[1].scaleNumber, elementB[1].scaleNumber))
 
-  const controls = useDragControls() // creating controls for draggable component
 
-  function scaleCreator(scalesArray: typeof sortedScales) {
+  function scaleCreator(scalesArray: typeof sortedScales) {//creating list of scales 
     if (scalesArray !== undefined) {
       return (
         <Reorder.Group
@@ -40,23 +39,19 @@ function ScalesEditContainer() {
         >
           {sortedScales.map((values) => {
             const [scaleId, scaleValues] = values // extracting scale id and scale data from the array
-            return <Reorder.Item
-              dragControls={controls}
-              dragListener={false}
+            return <ReorderItem
               value={values}
               key={scaleId}
               as={'div'}
             >
-              {/* <DragButton /> */}
               <ScaleEditor
                 scaleId={scaleId}
                 scaleName={scaleValues.scaleName}
                 changeScaleName={dispatchWithAction.onChangeScaleName}
                 scaleNumber={scaleValues.scaleNumber}
                 deleteScale={dispatchWithAction.onDeleteScale}
-                dragControls={controls}
               />
-            </Reorder.Item>
+            </ReorderItem>
           })}
         </Reorder.Group>
       )

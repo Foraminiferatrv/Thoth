@@ -31,7 +31,7 @@ function ScaleEditor({
       className={classes.ScaleEditor}
     >
       <div className={classes.LeftSide}>
-        {dragControls && <DragButton onPointerDown={(e) => dragControls.start(e)} />}
+        {dragControls && <DragButton onPointerDown={(e) =>  dragControls.start(e) } />}
         <EditableInput
           inputId={scaleId}
           inputValue={scaleName}

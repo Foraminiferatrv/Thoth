@@ -33,19 +33,21 @@ export interface StateWithScales extends Test {
 }
 
 //Questions Types
+export interface QuestionRadioAnswers {
+  [answerId: string]: {
+    answerNumber: number,
+    answerText: string,
+    scaleDependencies: {
+      scaleId: string,
+      answerValue: number
+    }[]
+  }
+}
+
 export interface Question {
   questionNumber: number,
   questionText: string,
-  questionRadioAnswers: {
-    [answerId: string]: {
-      answerNumber: number,
-      answerText: string,
-      scaleDependencies: {
-        scaleId: string,
-        answerValue: number
-      }[]
-    }
-  }
+  questionRadioAnswers: QuestionRadioAnswers
 }
 
 export interface Questions {

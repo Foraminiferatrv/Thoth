@@ -1,5 +1,3 @@
-import { useCallback, useEffect, useMemo } from 'react'
-
 import classes from './QuestionsEditContainer.module.scss'
 
 import AddItemButton from '../../components/UI/AddItemButton/AddItemButton'
@@ -7,10 +5,11 @@ import NewQuestion from '../../components/NewQuestion/NewQuestion'
 
 import comparator from '../../utils/comparator'
 
-import { usePositionReorder } from '../../hooks/usePositionReorder'
 import { testEditorActions } from '../../store/reducers/tests/testEditor/testEditor'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { Question } from '../../types/types'
+import { Reorder } from 'framer-motion'
+import { ReorderItem } from '../../hoc/ReorderItem/ReorderItem'
 
 
 
@@ -46,36 +45,44 @@ function QuestionsEditContainer() {
     onDeleteDependency: (targetQuestionId: string, answerId: string, depIndex: number) => dispatch(deleteDependency({ targetQuestionId, answerId, depIndex })),
   }
 
-  const sortedQuestions = useMemo(() => Object.entries(testQuestions).sort((elementA, elementB) => comparator(elementA[1].questionNumber, elementB[1].questionNumber)), [testQuestions])
+  const sortedQuestions = Object.entries(testQuestions).sort((elementA, elementB) => comparator(elementA[1].questionNumber, elementB[1].questionNumber))
 
-  const [order, updatePosition, updateOrder, refreshOrder] = usePositionReorder(sortedQuestions, dispatchWithAction.onChangeQuestionNumber)
-  const memoizedRefreshOrder = useCallback((sortedQuestions: any[]) => refreshOrder(sortedQuestions), [refreshOrder])
-
-  useEffect(() => (memoizedRefreshOrder(sortedQuestions)), [memoizedRefreshOrder, testQuestions, sortedQuestions]) // refresh order of questions once position of qusetion has been changed
-
-  function qeustionCreator(testQuestionsArray: typeof order) { //create questions from sorted array
+  function qeustionCreator(testQuestionsArray: typeof sortedQuestions) { //create questions from sorted array
     if (testQuestionsArray !== undefined) {
-      return testQuestionsArray.map(([questionId, values], index) => (
-        <NewQuestion
-          updateOrder={updateOrder}
-          updatePosition={updatePosition}
-          changeQuestionText={dispatchWithAction.onChangeQuestionText}
-          questionText={values.questionText}
-          key={questionId}
-          questionId={questionId}
-          questionIndex={index}
-          deleteQuestion={dispatchWithAction.onDeleteQestion}
-          radioAnswers={values.questionRadioAnswers}
-          newRadioAnswer={dispatchWithAction.onAddNewRadioAnswer}
-          changeRadioAnswerText={dispatchWithAction.onChangeRadioAnswerText}
-          deleteRadioAnswer={dispatchWithAction.onDeleteRadioAnswer}
-          testScales={testScales}
-          addDependency={dispatchWithAction.onAddDependency}
-          changeAnswerValue={dispatchWithAction.onChangeAnswerValue}
-          changeScaleDependency={dispatchWithAction.onChangeScaleDependency}
-          deleteDependency={dispatchWithAction.onDeleteDependency}
-        />
-      ))
+      return (
+        <Reorder.Group
+          values={sortedQuestions}
+          onReorder={(newOrder) => dispatchWithAction.onChangeQuestionNumber(newOrder)}
+        >
+          {testQuestionsArray.map((values, index) => {
+            const [questionId, questionValues] = values // extracting scale id and scale data from the array
+
+            return <ReorderItem
+              value={values}
+              key={questionId}
+              as={'div'}
+            >
+              <NewQuestion
+                questionIndex={index}
+                changeQuestionText={dispatchWithAction.onChangeQuestionText}
+                questionText={questionValues.questionText}
+                questionId={questionId}
+                deleteQuestion={dispatchWithAction.onDeleteQestion}
+                radioAnswers={questionValues.questionRadioAnswers}
+                newRadioAnswer={dispatchWithAction.onAddNewRadioAnswer}
+                changeRadioAnswerText={dispatchWithAction.onChangeRadioAnswerText}
+                deleteRadioAnswer={dispatchWithAction.onDeleteRadioAnswer}
+                testScales={testScales}
+                addDependency={dispatchWithAction.onAddDependency}
+                changeAnswerValue={dispatchWithAction.onChangeAnswerValue}
+                changeScaleDependency={dispatchWithAction.onChangeScaleDependency}
+                deleteDependency={dispatchWithAction.onDeleteDependency}
+              />
+            </ReorderItem>
+          })}
+        </Reorder.Group>
+      )
+
     }
     return null
   }
@@ -87,7 +94,7 @@ function QuestionsEditContainer() {
         <span>Запитання</span>
       </div>
       <div className={classes.ContainerBody}>
-        {qeustionCreator(order)}
+        {qeustionCreator(sortedQuestions)}
         <AddItemButton
           externalClasses={classes.AddButton}
           buttonText="Додати запитання"

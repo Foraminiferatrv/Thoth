@@ -7,11 +7,11 @@
     "@material-ui/icons": "^4.11.3",
     "@popmotion/popcorn": "^0.4.4",
     "@reduxjs/toolkit": "^1.8.3",
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.6.1",
+    "@types/node": "^18.6.4",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "array-move": "^3.0.1",
@@ -27,7 +27,7 @@
     "reduce-reducers": "^1.0.4",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "sass": "^1.54.0",
+    "sass": "^1.54.3",
     "save": "^2.5.0",
     "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
@@ -64,7 +64,7 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^8.3.4",
-    "electron": "^19.0.9",
+    "electron": "^19.0.11",
     "foreman": "^3.0.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4"
